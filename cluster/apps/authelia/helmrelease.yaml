@@ -50,5 +50,8 @@ spec:
           subPath: configuration.yaml
     configMap:
       enabled: false
+      authentication_backend:
+        ldap:
+          enabled: false
     secret:
       existingSecret: authelia
