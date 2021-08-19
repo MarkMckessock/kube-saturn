@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: flux-system
+  name: cluster-settings
+data:
+  METALLB_DEFAULT_POOL: 10.0.70.192/26
+  METALLB_COREDNS_POOL: 10.0.70.10/32
