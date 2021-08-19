@@ -35,11 +35,20 @@ spec:
             items:
             - key: users_database.yml
               path: users_database.yml
+        - name: config
+          secret:
+            secretName: authelia-config
+            items:
+            - key: configuration.yaml
+              path: configuration.yaml
       extraVolumeMounts:
         - name: users-database
           mountPath: /config/users_database.yml
           subPath: users_database.yml
+        - name: config
+          mountPath: /configuration.yaml
+          subPath: configuration.yaml
     configMap:
-      existingConfigMap: authelia-config
+      enabled: false
     secret:
       existingSecret: authelia
