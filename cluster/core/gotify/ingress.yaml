@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gotify
+  namespace: gotify
+  labels:
+    name: gotify
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+spec:
+  rules:
+  - host: gotify.${DOMAIN}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: gotify
+            port: 
+              number: 80
+  tls:
+    - hosts:
+      - gotify.${DOMAIN}
+      secretName: gotify-cert

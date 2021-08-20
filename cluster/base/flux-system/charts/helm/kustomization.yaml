@@ -8,3 +8,4 @@ resources:
   - longhorn-charts.yaml
   - metallb-charts.yaml
   - prometheus-community.yaml
+  - k8s-at-home.yaml
