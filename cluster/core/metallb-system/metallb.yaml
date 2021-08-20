@@ -27,6 +27,11 @@ spec:
         addresses:
         - ${METALLB_COREDNS_POOL}
         auto-assign: false
+      - name: omada-controller
+        protocol: layer2
+        addresses:
+        - ${METALLB_OMADA_POOL}
+        auto-assign: false
 
     prometheus:
       podMonitor:

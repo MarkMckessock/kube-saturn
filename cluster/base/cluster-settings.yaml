@@ -6,5 +6,6 @@ metadata:
 data:
   METALLB_DEFAULT_POOL: 10.0.70.192/26
   METALLB_COREDNS_POOL: 10.0.70.10/32
+  METALLB_OMADA_POOL: 10.0.70.11/32
   CLUSTER_ISSUER: letsencrypt-production
   STORAGE_CLASS: longhorn
