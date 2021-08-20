@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  namespace: vaulwarden
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: vaultwarden
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: vaultwarden/server
+      tag: 1.22.2
+    env:
+      TZ: "America/Toronto"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: bitwarden-config
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: vaultwarden.${DOMAIN}
+            paths:
+            - path: /
+              pathType: Prefix
+              service:
+                port: 80
+            - path: /notifications/hub/negotiate
+              pathType: Prefix
+              service:
+                port: 80
+            - path: /notifications/hub
+              pathType: Prefix
+              service:
+                port: 3012
+        tls:
+          - secretName: vaultwarden-cert
+            hosts:
+              - vaultwarden.markmckessock.com
