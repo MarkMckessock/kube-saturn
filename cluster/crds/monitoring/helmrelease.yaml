@@ -32,7 +32,7 @@ spec:
           hosts:
           - alertmanager.${DOMAIN}
       alertmanagerSpec:
-        externalUrl: alertmanager.${DOMAIN}
+        externalUrl: https://alertmanager.${DOMAIN}
     grafana:
       ingress:
         enabled: true
@@ -60,7 +60,7 @@ spec:
           hosts:
           - prometheus.${DOMAIN}
       prometheusSpec:
-        externalUrl: prometheus.${DOMAIN}
+        externalUrl: https://prometheus.${DOMAIN}
         storageSpec:
           volumeClaimTemplate:
             spec:
