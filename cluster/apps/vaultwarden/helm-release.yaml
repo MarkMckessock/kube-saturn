@@ -24,7 +24,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: bitwarden-config
+        existingClaim: vaultwarden-config
     ingress:
       main:
         enabled: true
