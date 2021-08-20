@@ -19,3 +19,5 @@ spec:
     domain: markmckessock.com
     service:
       loadBalancerIP: 10.0.70.10
+    watchedResourcers:
+      - Ingress
