@@ -7,3 +7,4 @@ resources:
   - k8s-gateway.yaml
   - longhorn-charts.yaml
   - metallb-charts.yaml
+  - prometheus-community.yaml
