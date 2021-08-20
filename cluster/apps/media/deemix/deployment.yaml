@@ -33,7 +33,7 @@ spec:
           - mountPath: /downloads
             name: media
       volumes:
-        - name: deemix-conifg
+        - name: deemix-config
           persistentVolumeClaim:
             claimName: deemix-config
         - name: media
