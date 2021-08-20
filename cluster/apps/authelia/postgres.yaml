@@ -66,4 +66,4 @@ spec:
     app: postgres
   ports:
   - port: 5432
-    targetPort: postgrs
+    targetPort: postgres
