@@ -62,6 +62,12 @@ spec:
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
         retentionSize: 24GB
+        ruleNamespaceSelector:
+          any: true
+        serviceMonitorSelector:
+          namespaceSelector:
+            matchNames:
+              - monitoring
         storageSpec:
           volumeClaimTemplate:
             spec:
