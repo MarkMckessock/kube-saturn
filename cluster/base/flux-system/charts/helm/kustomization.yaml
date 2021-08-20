@@ -4,6 +4,6 @@ resources:
   - authelia-charts.yaml
   - ingress-nginx-charts.yaml
   - jetstack-charts.yaml
-  - k8s-gateway-charts.yaml
+  - k8s-gateway.yaml
   - longhorn-charts.yaml
   - metallb-charts.yaml
