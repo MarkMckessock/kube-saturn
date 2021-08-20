@@ -61,6 +61,7 @@ spec:
           - prometheus.${DOMAIN}
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
+        retentionSize: 24GB
         storageSpec:
           volumeClaimTemplate:
             spec:
