@@ -11,7 +11,7 @@ spec:
   claimRef:
     apiVersion: v1
     kind: PersistentVolumeClaim
-    name: backup-vol
+    name: minio-vol
     namespace: minio
   nfs: 
     path: /mnt/user/volume-backup
