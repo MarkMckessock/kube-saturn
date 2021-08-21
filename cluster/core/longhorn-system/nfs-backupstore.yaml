@@ -41,7 +41,7 @@ metadata:
   name: longhorn-nfs-svc
   namespace: longhorn-system
 spec:
-  clusterIP: None
+  type: LoadBalancer
   selector:
     app: longhorn-nfs
   ports:
