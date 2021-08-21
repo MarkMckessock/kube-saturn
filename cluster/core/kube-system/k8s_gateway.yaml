@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    domain: markmckessock.com
+    domain: ${DOMAIN}
     service:
       loadBalancerIP: 10.0.70.10
     watchedResourcers:

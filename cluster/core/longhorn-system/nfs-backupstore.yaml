@@ -43,9 +43,8 @@ spec:
           periodSeconds: 5
       volumes:
         - name: nfs-volume
-          nfs:
-            path: /mnt/user/volume-backup
-            server: tower.markmckessock.com
+          persistentVolumeClaim:
+            claimName: backup-vol
 ---
 kind: Service
 apiVersion: v1
