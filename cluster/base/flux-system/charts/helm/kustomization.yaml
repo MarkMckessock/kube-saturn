@@ -10,4 +10,3 @@ resources:
   - prometheus-community.yaml
   - k8s-at-home.yaml
   - nfs-subdir-external-provisioner.yaml
-  - minio.yaml
