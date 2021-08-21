@@ -29,7 +29,7 @@ spec:
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
     persistence:
       recurringJobs:
-        enabled: true
+        enable: true
         jobList:
           - name: backup
             task: backup
