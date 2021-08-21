@@ -14,19 +14,17 @@ spec:
     spec:
       containers:
       - name: longhorn-nfs
-        image: itsthenetwork/nfs-server-alpine
+        image: erichough/nfs-server
         securityContext:
           privileged: true
         ports:
           - name: nfs
             containerPort: 2049
-          - name: mountd
-            containerPort: 20048
-          - name: rpcbind
-            containerPort: 111
         env:
-          - name: SHARED_DIRECTORY
-            value: /backup
+          - name: NFS_EXPORT_0
+            value: "/backup *(sec=sys,rw,no_root_squash,insecure)"
+          - name: NFS_LOG_LEVEL
+            value: DEBUG
         volumeMounts:
           - mountPath: /backup
             name: nfs-volume
@@ -41,13 +39,9 @@ metadata:
   name: longhorn-nfs-svc
   namespace: longhorn-system
 spec:
-  type: LoadBalancer
+  clusterIP: None
   selector:
     app: longhorn-nfs
   ports:
     - name: nfs
       port: 2049
-    - name: mountd
-      port: 20048
-    - name: rpcbind
-      port: 111
