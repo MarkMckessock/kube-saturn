@@ -32,11 +32,10 @@ spec:
         - --console-address
         - ":9001"
         env:
-        # Minio access key and secret key
-        - name: MINIO_ACCESS_KEY
-          value: ${MINIO_ACCESS_KEY}
-        - name: MINIO_SECRET_KEY
-          value: ${MINIO_SECRET_KEY}
+        - name: MINIO_ROOT_USER
+          value: ${MINIO_ROOT_USER}
+        - name: MINIO_ROOT_PASSWORD
+          value: ${MINIO_ROOT_PASSWORD}
         ports:
         - containerPort: 9000
           hostPort: 9000
