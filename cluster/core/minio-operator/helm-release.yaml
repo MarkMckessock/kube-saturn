@@ -17,6 +17,10 @@ spec:
       interval: 5m
   values:
     console:
+      image:
+        repository: minio/console
+        tag: v0.7.5
+        pullPolicy: IfNotPresent
       ingress:
         enabled: true
         annotations:
