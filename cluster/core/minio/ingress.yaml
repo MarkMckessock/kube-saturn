@@ -16,7 +16,8 @@ spec:
   - host: minio.${DOMAIN}
     http:
       paths:
-      - path: /
+      - pathType: Prefix
+        path: /
         backend:
           service:
             name: minio-service
