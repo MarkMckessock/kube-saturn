@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: longhorn-nfs
-        image: k8s.gcr.io/volume-nfs:0.8
+        image: itsthenetwork
         securityContext:
           privileged: true
         ports:
@@ -24,15 +24,16 @@ spec:
             containerPort: 20048
           - name: rpcbind
             containerPort: 111
+        env:
+          - name: SHARED_DIRECTORY
+            value: /backup
         volumeMounts:
-          - mountPath: /exports
+          - mountPath: /backup
             name: nfs-volume
       volumes:
         - name: nfs-volume
           persistentVolumeClaim:
             claimName: backup-vol
-      nodeSelector:
-        kubernetes.io/hostname: pve01
 ---
 kind: Service
 apiVersion: v1
@@ -40,6 +41,7 @@ metadata:
   name: longhorn-nfs-svc
   namespace: longhorn-system
 spec:
+  clusterIP: None
   selector:
     app: longhorn-nfs
   ports:
