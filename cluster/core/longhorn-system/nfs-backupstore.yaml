@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: longhorn-nfs
+  namespace: longhorn-system
+spec:
+  selector:
+    matchLabels:
+      app: longhorn-nfs
+  template:
+    metadata:
+      labels:
+        app: longhorn-nfs
+    spec:
+      containers:
+      - name: longhorn-nfs
+        image: longhornio/nfs-ganesha:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: EXPORT_ID
+          value: "14"
+        - name: EXPORT_PATH
+          value: /opt/backupstore
+        - name: PSEUDO_PATH
+          value: /opt/backupstore
+        - name: NFS_DISK_IMAGE_SIZE_MB
+          value: "4096"
+        command: ["bash", "-c", "chmod 700 /opt/backupstore && /opt/start_nfs.sh | tee /var/log/ganesha.log"]
+        volumeMounts:
+          - name: nfs-volume
+            mountPath: "/opt/backupstore"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "DAC_READ_SEARCH"]
+        livenessProbe:
+          exec:
+            command: ["bash", "-c", "grep \"No export entries found\" /var/log/ganesha.log > /dev/null 2>&1 ; [ $? -ne 0 ]"]
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+        - name: nfs-volume
+          nfs:
+            path: /mnt/user/volume-backup
+            server: tower.markmckessock.com
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: longhorn-nfs-svc
+  namespace: longhorn-system
+spec:
+  selector:
+    app: longhorn-nfs
+  clusterIP: None
+  ports:
+  - name: nfs
+    port: 1234
+    targetPort: 1234
