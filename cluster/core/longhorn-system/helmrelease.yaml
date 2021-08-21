@@ -30,5 +30,4 @@ spec:
     persistence:
       recurringJobs:
         enable: true
-        jobList: 
-          - '{"name":"backup", "task":"backup", "cron":"* */12 * * *", "retain":2}'
+        jobList: '[{"name":"backup", "task":"backup", "cron":"* */12 * * *", "retain":2}]'
