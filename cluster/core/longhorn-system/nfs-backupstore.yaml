@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: longhorn-nfs
-        image: itsthenetwork
+        image: itsthenetwork/nfs-server-alpine
         securityContext:
           privileged: true
         ports:
