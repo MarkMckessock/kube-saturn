@@ -43,3 +43,8 @@ spec:
             storageClassName: nfs-client
         metrics:
           enabled: true
+        secrets:
+          enabled: true
+          name: minio
+          accessKey: minio
+          secertKey: minio
