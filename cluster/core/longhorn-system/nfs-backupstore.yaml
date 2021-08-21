@@ -22,7 +22,7 @@ spec:
             containerPort: 2049
         env:
           - name: NFS_EXPORT_0
-            value: "/backup *(sec=sys,rw,no_root_squash,insecure)"
+            value: "/backup *(fsid=0,sec=sys,rw,no_root_squash,insecure)"
           - name: NFS_LOG_LEVEL
             value: DEBUG
         volumeMounts:
