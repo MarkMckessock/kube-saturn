@@ -35,6 +35,7 @@ spec:
           tag: RELEASE.2021-08-20T18-32-01Z
         namespace: minio-operator
         scheduler: {}
+        imagePullSecret: {}
         pools:
           - servers: 1
             volumesPerServer: 1
