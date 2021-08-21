@@ -36,6 +36,8 @@ spec:
           value: ${MINIO_ROOT_USER}
         - name: MINIO_ROOT_PASSWORD
           value: ${MINIO_ROOT_PASSWORD}
+        - name: MINIO_REGION_NAME
+          value: us-east-1
         ports:
         - containerPort: 9000
           hostPort: 9000
