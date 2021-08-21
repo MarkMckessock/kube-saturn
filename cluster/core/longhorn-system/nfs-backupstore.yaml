@@ -17,13 +17,13 @@ spec:
         image: k8s.gcr.io/volume-nfs:0.8
         securityContext:
           privileged: true
-      ports:
-        - name: nfs
-          containerPort: 2049
-        - name: mountd
-          containerPort: 20048
-        - name: rpcbind
-          containerPort: 111
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
       volumes:
         - name: nfs-volume
           persistentVolumeClaim:
