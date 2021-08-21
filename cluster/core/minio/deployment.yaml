@@ -37,7 +37,6 @@ spec:
           value: ${MINIO_ACCESS_KEY}
         - name: MINIO_SECRET_KEY
           value: ${MINIO_SECRET_KEY}
-        - name: 
         ports:
         - containerPort: 9000
           hostPort: 9000
