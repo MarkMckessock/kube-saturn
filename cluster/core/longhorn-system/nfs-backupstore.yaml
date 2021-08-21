@@ -24,6 +24,9 @@ spec:
             containerPort: 20048
           - name: rpcbind
             containerPort: 111
+        volumeMounts:
+          - mountPath: /exports
+            name: nfs-volume
       volumes:
         - name: nfs-volume
           persistentVolumeClaim:
