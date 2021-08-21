@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: longhorn-nfs
+      app: longhorn-nfs 
   template:
     metadata:
       labels:
@@ -28,6 +28,8 @@ spec:
         - name: nfs-volume
           persistentVolumeClaim:
             claimName: backup-vol
+      nodeSelector:
+        kubernetes.io/hostname: pve01
 ---
 kind: Service
 apiVersion: v1
