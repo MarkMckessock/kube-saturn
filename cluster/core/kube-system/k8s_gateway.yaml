@@ -19,5 +19,5 @@ spec:
     domain: ${DOMAIN}
     service:
       loadBalancerIP: 10.0.70.10
-    watchedResourcers:
+    watchedResources:
       - Ingress
