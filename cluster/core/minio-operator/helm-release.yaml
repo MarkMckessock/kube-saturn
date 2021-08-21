@@ -49,3 +49,4 @@ spec:
           accessKey: minio
           secertKey: minio
         certificate: {}
+        s3: {}
