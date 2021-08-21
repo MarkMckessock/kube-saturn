@@ -36,5 +36,6 @@ spec:
             volumesPerServer: 1
             size: 100Gi
             storageClassName: nfs-client
+            scheduler: {}
         metrics:
           enabled: true
