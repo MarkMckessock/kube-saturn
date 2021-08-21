@@ -32,6 +32,11 @@ spec:
         addresses:
         - ${METALLB_OMADA_POOL}
         auto-assign: false
+      - name: plex
+        protocol: layer2
+        addresses:
+        - ${METALLB_PLEX_POOL}
+        auto-assign: false
 
     prometheus:
       podMonitor:

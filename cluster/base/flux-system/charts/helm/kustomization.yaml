@@ -9,3 +9,4 @@ resources:
   - metallb-charts.yaml
   - prometheus-community.yaml
   - k8s-at-home.yaml
+  - nfs-subdir-external-provisioner.yaml
