@@ -25,6 +25,8 @@ spec:
             value: "/backup *(fsid=0,sec=sys,rw,no_root_squash,insecure)"
           - name: NFS_LOG_LEVEL
             value: DEBUG
+          - name: NFS_DISABLE_VERSION_3
+            value: "true"
         volumeMounts:
           - mountPath: /backup
             name: nfs-volume
