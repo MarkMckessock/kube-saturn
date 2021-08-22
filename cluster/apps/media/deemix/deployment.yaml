@@ -39,4 +39,4 @@ spec:
         - name: media
           nfs:
             path: /mnt/user/Media/music
-            server: tower.markmckessock.com
+            server: tower.${DOMAIN}
