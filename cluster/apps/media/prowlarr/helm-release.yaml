@@ -37,6 +37,11 @@ spec:
           - hosts:
               - "prowlarr.${DOMAIN}"
             secretName: prowlarr-cert
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
