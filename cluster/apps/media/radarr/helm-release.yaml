@@ -77,6 +77,8 @@ spec:
             server: tower.${DOMAIN}
             path: /mnt/user/Downloads
         mountPath: /complete
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
     resources:
       requests:
         memory: 250Mi
