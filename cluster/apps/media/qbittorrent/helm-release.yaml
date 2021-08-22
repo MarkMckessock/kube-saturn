@@ -90,7 +90,7 @@ spec:
             path: /mnt/user/Media
         mountPath: /media
     nodeSelector:
-      node-role.kubernetes.io/worker: "true"
+      node-role.kubernetes.io/worker: worker
     resources:
       requests:
         memory: 250Mi
