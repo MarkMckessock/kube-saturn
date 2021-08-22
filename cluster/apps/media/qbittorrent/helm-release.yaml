@@ -1,0 +1,119 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: qbittorrent
+      version: 12.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: binhex/arch-qbittorrentvpn
+      tag: 4.3.7-1-01
+    env:
+      TZ: "America/Toronto"
+      PUID: 1000
+      PGID: 1000
+      ENABLE_PRIVOXY: "no"
+      DEBUG: "true"
+      VPN_ENABLED: "yes"
+      LAN_NETWORK: 10.0.0.0/16,192.168.2.0/24
+      WEBUI_PORT: 8080
+      STRICT_PORT_FORWARD: yes
+      NAME_SERVERS: 209.222.18.222,84.200.69.80,37.235.1.174,1.1.1.1,209.222.18.218,37.235.1.177,84.200.70.40,1.0.0.1
+    envFrom:
+      - secretRef:
+          name: qbittorrent-vpn
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          bittorrent:
+            enabled: true
+            port: 50413
+            protocol: TCP
+            targetPort: 50413
+        externalTrafficPolicy: Local
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: "qbittorrent.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "qbittorrent.${DOMAIN}"
+    podSecurityContext:
+      supplementalGroups:
+        - 100
+      capabilities:
+        add: ["NET_ADMIN"]
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent-config
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: tower.${DOMAIN}
+            path: /mnt/user/Downloads
+        mountPath: /complete
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: tower.${DOMAIN}
+            path: /mnt/user/Media
+        mountPath: /media
+    nodeSelector:
+      node-role.kubernetes.io/worker: "true"
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 6000Mi
+    additionalContainers:
+      - name: exporter
+        image: ghcr.io/k8s-at-home/prometheus-qbittorrent-exporter:v1.2.0
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: QBITTORRENT_HOST
+            value: "http://localhost"
+          - name: QBITTORRENT_PORT
+            value: "8080"
+          - name: EXPORTER_PORT
+            value: "9022"
+          - name: EXPORTER_LOG_LEVEL
+            value: "INFO"
+          - name: METRICS_PREFIX
+            value: "qbittorrent"
+        envFrom:
+          - secretRef:
+              name: qbittorrent-creds
+        ports:
+          - name: metrics
+            containerPort: 9022
