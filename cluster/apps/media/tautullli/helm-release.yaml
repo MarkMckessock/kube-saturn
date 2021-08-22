@@ -31,7 +31,7 @@ spec:
         hosts:
           - host: "tautulli.${DOMAIN}"
             paths:
-              - path: /api
+              - path: /
                 pathType: Prefix
         tls:
           - hosts:
