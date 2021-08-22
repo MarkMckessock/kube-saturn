@@ -37,6 +37,9 @@ spec:
           - hosts:
               - "tautulli.${DOMAIN}"
             secretName: tautulli-cert
+    podSecurityContext:
+      supplementalGroups:
+        - 1000
     persistence:
       config:
         enabled: true
