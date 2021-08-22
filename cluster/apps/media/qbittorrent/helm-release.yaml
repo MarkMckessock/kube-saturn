@@ -65,7 +65,7 @@ spec:
               - "qbittorrent.${DOMAIN}"
     podSecurityContext:
       supplementalGroups:
-        - 100
+        - 1000
       capabilities:
         add: ["NET_ADMIN"]
     persistence:

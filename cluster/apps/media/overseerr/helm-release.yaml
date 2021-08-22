@@ -22,6 +22,9 @@ spec:
     env:
       TZ: "America/Toronto"
       LOG_LEVEL: "info"
+    podSecurityContext:
+      supplementalGroups:
+        - 1000
     ingress:
       main:
         enabled: true
