@@ -38,8 +38,10 @@ spec:
               - "tautulli.${DOMAIN}"
             secretName: tautulli-cert
     podSecurityContext:
-      supplementalGroups:
-        - 1000
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
