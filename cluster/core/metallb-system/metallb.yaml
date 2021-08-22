@@ -23,11 +23,6 @@ spec:
         protocol: layer2
         addresses:
         - "${METALLB_DEFAULT_POOL}"
-      - name: coredns-external
-        protocol: layer2
-        addresses:
-        - ${METALLB_COREDNS_POOL}
-        auto-assign: false
       - name: static
         protocol: layer2
         addresses:
