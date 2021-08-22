@@ -42,6 +42,8 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: "OnRootMismatch"
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
     persistence:
       config:
         enabled: true
