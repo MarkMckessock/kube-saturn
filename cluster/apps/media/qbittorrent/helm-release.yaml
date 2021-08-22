@@ -63,6 +63,7 @@ spec:
         tls:
           - hosts:
               - "qbittorrent.${DOMAIN}"
+            secretName: qbittorrent-cert
     podSecurityContext:
       supplementalGroups:
         - 1000
