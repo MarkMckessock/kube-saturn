@@ -113,9 +113,6 @@ spec:
             value: "INFO"
           - name: METRICS_PREFIX
             value: "qbittorrent"
-        envFrom:
-          - secretRef:
-              name: qbittorrent-creds
         ports:
           - name: metrics
             containerPort: 9022
