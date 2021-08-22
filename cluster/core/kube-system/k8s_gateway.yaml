@@ -18,6 +18,6 @@ spec:
   values:
     domain: ${DOMAIN}
     service:
-      loadBalancerIP: 10.0.70.10
+      loadBalancerIP: ${COREDNS_IP}
     watchedResources:
       - Ingress

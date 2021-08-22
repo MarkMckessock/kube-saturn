@@ -28,15 +28,10 @@ spec:
         addresses:
         - ${METALLB_COREDNS_POOL}
         auto-assign: false
-      - name: omada-controller
+      - name: static
         protocol: layer2
         addresses:
-        - ${METALLB_OMADA_POOL}
-        auto-assign: false
-      - name: plex
-        protocol: layer2
-        addresses:
-        - ${METALLB_PLEX_POOL}
+        - ${METALLB_STATIC_POOL}
         auto-assign: false
 
     prometheus:
