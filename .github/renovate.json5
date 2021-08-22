@@ -78,6 +78,14 @@
       "matchDatasources": ["helm"],
       "matchUpdateTypes": ["patch"],
       "labels": ["renovate/helm", "dep/patch"]
+    },
+    // Pinned versions
+    {
+      "matchDatasources": ["docker"],
+      "allowedVersions": "<13",
+      "matchPackageNames": [
+        "postgres",
+      ]
     }
   ]
 }
