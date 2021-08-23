@@ -42,7 +42,7 @@ spec:
           - name: PAPERLESS_OCR_LANGUAGE
             value: eng
       - name: redis
-        image: redis:6.0
+        image: redis:6.2
       nodeSelector:
         node-role.kubernetes.io/worker: worker
       volumes:
