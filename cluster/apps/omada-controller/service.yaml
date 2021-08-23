@@ -8,11 +8,11 @@ spec:
     app: omada-controller
   ports:
   - name: web-http
-    port: 8088
-    targetPort: web-http
+    port: 80
+    targetPort: nginx-http
   - name: web-https
-    port: 8043
-    targetPort: web-https
+    port: 443
+    targetPort: nginx-https
 ---
 apiVersion: v1
 kind: Service

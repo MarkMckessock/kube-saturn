@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: omada-controller 
+data:
+  nginx.conf: |
+    events { }
+
+    http {
+            server {
+                    listen 80 default_server;
+                    listen [::]:80 default_server;
+                    server_name _;
+                    return 301 https://$host$request_uri;
+            }
+
+            server {
+                    listen 443 ssl;
+                    server_name omada.${DOMAIN};
+
+                    ssl_certificate     /etc/ssl/certs/tls.crt;
+                    ssl_certificate_key /etc/ssl/certs/tls.key;
+
+                    location / {
+                            proxy_pass https://localhost:8043;
+                    }
+            }
+    }

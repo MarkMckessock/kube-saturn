@@ -50,9 +50,31 @@ spec:
         env:
           - name: TZ
             value: America/Toronto
+      - name: nginx
+        image: nginx
+        ports:
+          - name: nginx-http
+            containerPort: 80
+          - name: nginx-https
+            containerPort: 443
+        volumeMounts:
+          - mountPath: /etc/nginx/nginx.conf
+            name: nginx-config
+          - name: omada-cert
+            mountPath: /etc/ssl/certs/tls.crt
+            subPath: tls.crt
+          - name: omada-cert
+            mountPath: /etc/ssl/certs/tls.key
+            subPath: tls.key
       nodeSelector:
         node-role.kubernetes.io/worker: worker
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: omada-data
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+        - name: omada-cert
+          secret:
+            secretName: omada-cert

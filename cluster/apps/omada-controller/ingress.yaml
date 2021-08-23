@@ -21,7 +21,7 @@ spec:
           service:
             name: omada-ui
             port: 
-              number: 8043
+              number: 443
   tls:
     - hosts:
       - omada.${DOMAIN}
