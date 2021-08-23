@@ -8,7 +8,7 @@ spec:
     app: omada-controller
   ports:
   - port: 8043
-    targetPort: web
+    targetPort: web-https
 ---
 apiVersion: v1
 kind: Service
