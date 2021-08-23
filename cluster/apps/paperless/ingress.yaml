@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: paperless
+  namespace: paperless
+  labels:
+    name: paperless
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+spec:
+  rules:
+  - host: paperless.${DOMAIN}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: paperless
+            port: 
+              number: 8000
+  tls:
+    - hosts:
+      - paperless.${DOMAIN}
+      secretName: paperless-cert
