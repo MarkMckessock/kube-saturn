@@ -15,10 +15,6 @@ spec:
       containers:
       - name: paperless
         image: jonaswinkler/paperless-ng:1.4.5
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - name: paperless
           containerPort: 8000
