@@ -58,4 +58,4 @@ spec:
             claimName: paperless-data
         - name: media
           persistentVolumeClaim:
-            claimName: paperless-medias
+            claimName: paperless-media
