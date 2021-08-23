@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omada-controller
+  namespace: omada-controller
+spec:
+  selector:
+    matchLabels:
+      app: omada-controller
+  template:
+    metadata:
+      labels:
+        app: omada-controller
+    spec:
+      containers:
+      - name: omada-controller
+        image: mbentley/omada-controller:4.4
+        ports:
+        - name: web-http
+          containerPort: 8088
+        - name: web-https
+          containerPort: 8043
+        - name: 29810-tcp
+          containerPort: 29810
+          protocol: TCP
+        - name: 29810-udp
+          containerPort: 29810
+          protocol: UDP
+        - name: 29811-tcp
+          containerPort: 29811
+          protocol: TCP
+        - name: 29811-udp
+          containerPort: 29811
+          protocol: UDP
+        - name: 29812-tcp
+          containerPort: 29812
+          protocol: TCP
+        - name: 29812-udp
+          containerPort: 29812
+          protocol: UDP
+        - name: 29813-tcp
+          containerPort: 29813
+          protocol: TCP
+        - name: 29813-udp
+          containerPort: 29813
+          protocol: UDP
+        volumeMounts:
+          - mountPath: /opt/tplink/EAPController/data
+            name: data
+        env:
+          - name: TZ
+            value: America/Toronto
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: omada-data
