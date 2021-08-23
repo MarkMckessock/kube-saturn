@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: omada-ui
+  namespace: omada-controller
+  labels:
+    name: omada-ui
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  rules:
+  - host: omada.${DOMAIN}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: omada-ui
+            port: 
+              number: 8043
+  tls:
+    - hosts:
+      - omada.${DOMAIN}
+      secretName: omada-cert

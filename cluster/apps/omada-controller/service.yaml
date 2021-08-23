@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada-ui
+  namespace: omada-controller
+spec:
+  selector:
+    app: omada-controller
+  ports:
+  - port: 8043
+    targetPort: web
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada-controller-tcp
+  namespace: omada-controller
+  annotations:
+    metallb.universe.tf/allow-shared-ip: OMADA
+spec:
+  type: LoadBalancer
+  loadBalancerIP: ${OMADA_CONTROLLER_IP}
+  selector:
+    app: omada-controller
+  ports:
+    - port: 29810
+      protocol: TCP
+      targetPort: 29810
+    - port: 29811
+      protocol: TCP
+      targetPort: 29811
+    - port: 29812
+      protocol: TCP
+      targetPort: 29812
+    - port: 29813
+      protocol: TCP
+      targetPort: 29813
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada-controller-udp
+  namespace: omada-controller
+  annotations:
+    metallb.universe.tf/allow-shared-ip: OMADA
+spec:
+  type: LoadBalancer
+  loadBalancerIP: ${OMADA_CONTROLLER_IP}
+  selector:
+    app: omada-controller
+  ports:
+    - port: 29810
+      protocol: UDP
+      targetPort: 29810
+    - port: 29811
+      protocol: UDP
+      targetPort: 29811
+    - port: 29812
+      protocol: UDP
+      targetPort: 29812
+    - port: 29813
+      protocol: UDP
+      targetPort: 29813
+
