@@ -23,16 +23,20 @@ spec:
   selector:
     app: omada-controller
   ports:
-    - port: 29810
+    - name: 29810-tcp
+      port: 29810
       protocol: TCP
       targetPort: 29810
-    - port: 29811
+    - name: 29811-tcp
+      port: 29811
       protocol: TCP
       targetPort: 29811
-    - port: 29812
+    - name: 29812-tcp
+      port: 29812
       protocol: TCP
       targetPort: 29812
-    - port: 29813
+    - name: 29813-tcp
+      port: 29813
       protocol: TCP
       targetPort: 29813
 ---
@@ -49,16 +53,20 @@ spec:
   selector:
     app: omada-controller
   ports:
-    - port: 29810
+    - name: 29810-udp
+      port: 29810
       protocol: UDP
       targetPort: 29810
-    - port: 29811
+    - name: 29811-udp
+      port: 29811
       protocol: UDP
       targetPort: 29811
-    - port: 29812
+    - name: 29812-udp
+      port: 29812
       protocol: UDP
       targetPort: 29812
-    - port: 29813
+    - name: 29813-udp
+      port: 29813
       protocol: UDP
       targetPort: 29813
 
