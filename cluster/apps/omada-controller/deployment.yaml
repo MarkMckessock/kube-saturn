@@ -60,6 +60,7 @@ spec:
         volumeMounts:
           - mountPath: /etc/nginx/nginx.conf
             name: nginx-config
+            subPath: nginx.conf
           - name: omada-cert
             mountPath: /etc/ssl/certs/tls.crt
             subPath: tls.crt
