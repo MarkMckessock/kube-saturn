@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperess-consume
+  namespace: paperless
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ${STORAGE_CLASS}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperess-media
+  namespace: paperless
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ${STORAGE_CLASS}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperess-data
+  namespace: paperless
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ${STORAGE_CLASS}
