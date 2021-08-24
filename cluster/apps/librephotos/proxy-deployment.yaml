@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: librephotos
-      app.kubernetes.io/component: proxy
+        app.kubernetes.io/component: proxy
     spec:
       containers:
       - name: proxy

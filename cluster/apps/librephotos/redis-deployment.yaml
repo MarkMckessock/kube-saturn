@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: librephotos
-      app.kubernetes.io/component: redis
+        app.kubernetes.io/component: redis
     spec:
       containers:
       - name: redis

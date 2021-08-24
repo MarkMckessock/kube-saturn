@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: librephotos
-      app.kubernetes.io/component: postgres
+        app.kubernetes.io/component: postgres
     spec:
       containers:
       - name: postgres
