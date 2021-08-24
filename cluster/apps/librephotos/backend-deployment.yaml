@@ -45,7 +45,16 @@ spec:
           - secretRef:
               name: librephotos
         ports:
-          - containerPort: 8001
+          - name: backend
+            containerPort: 8001
+        readinessProbe:
+          tcpSocket:
+            port: backend
+          initialDelaySeconds: 15
+        livenessProbe:
+          tcpSocket:
+            port: backend
+          initialDelaySeconds: 15
       nodeSelector:
         node-role.kubernetes.io/worker: worker
       volumes:
