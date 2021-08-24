@@ -5,6 +5,9 @@ metadata:
   namespace: firefly-iii
   labels:
     name: firefly-iii
+  annotations:
+    nginx.ingress.kubernetes.io/auth-signin: https://auth.${DOMAIN}
+    nginx.ingress.kubernetes.io/auth-url: http://authelia.authelia.svc.cluster.local/api/verify
 spec:
   rules:
   - host: firefly.${DOMAIN}
