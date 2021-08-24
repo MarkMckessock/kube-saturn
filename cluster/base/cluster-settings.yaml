@@ -9,5 +9,6 @@ data:
   COREDNS_IP: 10.0.70.128
   OMADA_CONTROLLER_IP: 10.0.70.129
   PLEX_IP: 10.0.70.130
+  MQTT_IP: 10.0.70.131
   CLUSTER_ISSUER: letsencrypt-production
   STORAGE_CLASS: longhorn
