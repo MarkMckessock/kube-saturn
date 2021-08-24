@@ -25,7 +25,7 @@ spec:
         - name: APP_ENV
           value: "production"
         - name: DB_HOST
-          value: postgres.firefly
+          value: postgres.firefly-iii
         - name: DB_CONNECTION
           value: pgsql
         - name: DB_DATABASE
