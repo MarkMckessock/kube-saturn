@@ -27,10 +27,13 @@ spec:
         volumeMounts:
           - name: ca-cert
             mountPath: /certs/ca.crt
+            subPath: ca.crt
           - name: server-cert
             mountPath: /certs/server.crt
+            subPath: server.crt
           - name: server-key
             mountPath: /certs/server.key
+            subPath: server.key
           - name: mosquitto-config
             mountPath: /mosquitto/config/mosquitto.conf
             subPath: mosquitto.conf
