@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: reallibrephotos/librephotos-frontend
+        image: reallibrephotos/librephotos-frontend:dev
       nodeSelector:
         node-role.kubernetes.io/worker: worker

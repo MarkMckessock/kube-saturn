@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: reallibrephotos/librephotos
+        image: reallibrephotos/librephotos:dev
         volumeMounts:
           - mountPath: /data
             name: data
