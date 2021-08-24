@@ -36,6 +36,8 @@ spec:
               secretKeyRef:
                 name: monica
                 key: DB_PASSWORD
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
       volumes:
         - name: mysql-data
           persistentVolumeClaim:

@@ -44,6 +44,8 @@ spec:
           - hosts:
               - "monica.${DOMAIN}"
             secretName: monica-cert
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
     persistence:
       config:
         enabled: true
