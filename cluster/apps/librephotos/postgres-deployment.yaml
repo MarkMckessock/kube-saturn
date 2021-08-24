@@ -19,6 +19,8 @@ spec:
         image: postgres:13
         securityContext:
           runAsUser: 999
+          fsGroup: 999
+          fsGroupChangePolicy: "OnRootMismatch"
         command:
           - postgres
           - -c 
