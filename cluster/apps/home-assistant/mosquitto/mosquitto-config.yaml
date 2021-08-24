@@ -5,7 +5,7 @@ metadata:
     namespace: home-assistant
 type: Opaque
 stringData:
-    mosquitto.conf: ENC[AES256_GCM,data:mIL5rB5wg6Cd+i43x8/MSRCZMVzQN2V/z88+pS83RMwPk0FlrL6ZXCGagwGURggOJkUR5DWTBXt2pbK/BqKPyWr8O+unDrxKB+d6fidPYJ7cz2Tdp5L4fbLPEWasVLlji32YvZZmyHckHN1juX0D3NFf25Bd3YYISy50QfW0zDjM2BMVKQ6qYqm5Ulr4AuTaLe/nH9aBFVCWIMDZu02r1/CGEUY=,iv:EEbX0GXzelVw+d2uupuhNRE2ql2xNnO5sRZEKXgmhhs=,tag:JI1xTwJI/kXOekOuwmy6oQ==,type:str]
+    mosquitto.conf: ENC[AES256_GCM,data:Mtw/fT2sK0Y6nSNxwmH861YYYUOTCux+ajEHNVgLurlPvWFujZn5SZ1VZZSn1O0RIa4RF9rYMNhUQAvHIIJqXCBjWl/zpZGPhidEZnvvCaUDJFMuvuIJpD8HDpdARNOriq+kuu2XL/kHJx3GRV/By/DB8SFq3yC/Rr9qhpS6o05Bhw==,iv:MzzGyS3wRU3M8eZqneL703945TAdXIjfOujf02L7hOk=,tag:kOhVIGQLAoaJOdMj24cvYg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,14 +15,14 @@ sops:
         - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5VzR2cEp3UGRZV2FBV3Er
-            Y0JJeTN4R2w0dnRFK0huWUxGNUtISzdIM3hzCnNldzRrVTg0Mm0reWlOekswTmVH
-            N3lwMWg0a1VjRzdFYnBPVnY0THJIOTgKLS0tIGFCWXpoeGRKNGdBay9EVWpLdzFN
-            WVpsb2h5eDI2Q3FERUZBRDNJazJkMlUKzECjM1LFBKovI039jcYIErXPTzBtFo2+
-            nrWSPYAc43HKV5Z4wsdXZMEcrh+ITQSfs4zBZk+3r4QTdRMV7UlqdA==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAzRkZwZFRxM2Jza1dhSUF4
+            dmdZV1VnMXQrZ1JzdTBON255anVId3ZNWFdBCndlNUd4c1o3NWNyVDJBRXU1V2Fn
+            dEhKTVI3QmR2SFRLbVJHQ29HczJlNWsKLS0tIDF0MkovZTNFaE1jeWQzSGRxdWcr
+            VU5QczdIcnFnd0R2ZWNhTHZKZmNVNkkKeTScjqcEEtFBUyYbmSn30wi7YSDMCXhQ
+            M36ML2hln+fZjk9KiQcs+GEabPuGCXvIpCLzqw5qs0w6NYEmI5wzCA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-08-24T15:20:39Z"
-    mac: ENC[AES256_GCM,data:JayhQIvDD9IzCpxj2X8RxaaOB8/VSeU7viEAer0QMK7Iq8fR7UeEEJ8Iq7wUDnqiRAWqmMiI9lbPDgK8356NRb9wm4fjEXoMClFfHAlZrOEi9aoe6aic4/zUvJSX0cx9AiHnIfRoyFqZFjbq1ewk2rmdo0LTAsdrEjkYZwMcZDY=,iv:82hTx7UI2K2epIJ8JCtflw7Z6nROQM9B+sHuR97R4dA=,tag:1E9uDOBJdb0JbNgF/iZ2Dw==,type:str]
+    lastmodified: "2021-08-24T15:36:54Z"
+    mac: ENC[AES256_GCM,data:vs67YehE63TIUn4AXM/912JYb4mswS2EXI8rwPXOX9lDLkJVRb8lMG0d1firW7hN9B09thms51iwGEFXUufoGtMl/+vpnF/F3oTNZfwYIUJr8SK5UEDEBe9oiMrh1wlwM2O6c1XukSUat0Kezxc0WrlVuUfZu0ps487gCG65Hoo=,iv:CkdO3MgPpMN5O8B0PPfWixqC8HKOUhoyOyE6pn+MRQU=,tag:IpGDldQFsISyn1bwA6k3VQ==,type:str]
     pgp: []
     encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.7.1
