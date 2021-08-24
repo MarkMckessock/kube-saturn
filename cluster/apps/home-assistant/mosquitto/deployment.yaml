@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt
+spec:
+  selector:
+    matchLabels:
+      app: mqtt
+  template:
+    metadata:
+      labels:
+        app: mqtt
+    spec:
+      containers:
+      - name: mqtt
+        image: eclipse-mosquitto:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: mqtt
+          containerPort: 1883
+        - name: http
+          containerPort: 9001
+        volumeMounts:
+          - name: ca-cert
+            mountPath: /certs/ca.crt
+          - name: server-cert
+            mountPath: /certs/server.crt
+          - name: server-key
+            mountPath: /certs/server.key
+          - name: mosquitto-config
+            mountPath: /mosquitto/config/mosquitto.conf
+      volumes:
+        - name: ca-cert
+          secret:
+            secretName: ha-certs
+            items:
+            - key: ca.crt
+              path: ca.crt
+        - name: server-cert
+          secret:
+            secretName: ha-certs
+            items:
+            - key: server.crt
+              path: server.crt
+        - name: server-key
+          secret:
+            secretName: ha-certs
+            items:
+            - key: server.key
+              path: server.key
+        - name: mosquitto-config
+          secret:
+            secretName: mosquitto-config
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
