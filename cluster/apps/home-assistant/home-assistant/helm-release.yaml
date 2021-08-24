@@ -1,0 +1,102 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 10.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2021.8.8
+    env:
+      TZ: "America/Toronto"
+    envFrom:
+      - secretRef:
+          name: home-assistant
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    service:
+      main:
+        type: LoadBalancer
+        externalIPs:
+          - "${SVC_HOME_ASSISTANT_ADDR}"
+        externalTrafficPolicy: Local
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx-public
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: "hass.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "hass.${DOMAIN}"
+            secretName: hass-cert
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant-config
+      cacert:
+        enabled: true
+        type: custom
+        volumeSpec:
+          secret:
+            secretName: ha-certs
+            items:
+            - key: ca.crt
+              path: ca.crt
+        mountPath: /certs/ca.crt
+        subPath: ca.crt
+      ha-cert:
+        enabled: true
+        type: custom
+        volumeSpec:
+          secret:
+            secretName: ha-certs
+            items:
+            - key: ha.crt
+              path: ha.crt
+        mountPath: /certs/ha.crt
+        subPath: ha.crt
+      ha-key:
+        enabled: true
+        type: custom
+        volumeSpec:
+          secret:
+            secretName: ha-certs
+            items:
+            - key: ha.key
+              path: ha.key
+        mountPath: /certs/ha.key
+        subPath: ha.key
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        memory: 4000Mi
