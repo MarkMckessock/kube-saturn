@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudflare-ddns
+  namespace: kube-system
 spec:
   selector:
     matchLabels:
@@ -20,4 +21,4 @@ spec:
             cpu: "500m"
         envFrom:
           - secretRef:
-              name: cloudflare-token
+              name: cloudflare-ddns-creds
