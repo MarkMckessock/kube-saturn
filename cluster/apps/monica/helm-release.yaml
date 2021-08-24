@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: monica
+  namespace: monica
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: monica
+      version: 6.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: monica
+      tag: 3.1.1-apache
+    env:
+      TZ: "America/Toronto"
+      DB_HOST: mysql.monica
+      APP_URL: https://monica.${DOMAIN}
+      APP_ENV: production
+      APP_TRUSTED_PROXIES: "*"
+    envFrom:
+      - secretRef:
+          name: monica
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: "monica.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "monica.${DOMAIN}"
+            secretName: monica-cert
+    persistence:
+      config:
+        enabled: true
+        existingClaim: monica-config
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 750Mi
