@@ -17,15 +17,14 @@ spec:
       containers:
       - name: postgres
         image: postgres:13
-        command:
-          - postgres
-          - -c 
-          - fsync=off 
-          - -c 
-          - synchronous_commit=off 
-          - -c 
-          - full_page_writes=off 
-          - -c 
+        args:
+          - -c
+          - fsync=off
+          - -c
+          - synchronous_commit=off
+          - -c
+          - full_page_writes=off
+          - -c
           - random_page_cost=1.0
         ports:
         - containerPort: 5432
@@ -54,7 +53,3 @@ spec:
             claimName: postgres-data
       nodeSelector:
         node-role.kubernetes.io/worker: worker
-      securityContext:
-        runAsUser: 999
-        fsGroup: 999
-        fsGroupChangePolicy: "OnRootMismatch"
