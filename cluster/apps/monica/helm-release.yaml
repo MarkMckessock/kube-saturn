@@ -25,6 +25,22 @@ spec:
       APP_URL: https://monica.${DOMAIN}
       APP_ENV: production
       APP_TRUSTED_PROXIES: "*"
+      APP_KEY:
+        valueFrom:
+          secretKeyRef:
+            name: monica
+            key: APP_KEY
+      DB_DATABASE: monica
+      DB_USERNAME:
+        valueFrom:
+          secretKeyRef:
+            name: monica
+            key: DB_USERNAME
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: monica
+            key: DB_PASSWORD
     envFrom:
       - secretRef:
           name: monica
