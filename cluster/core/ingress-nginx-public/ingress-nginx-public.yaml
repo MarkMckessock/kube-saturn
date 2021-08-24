@@ -20,6 +20,7 @@ spec:
         enabled: true
         name: nginx-public
         default: false
+        controllerValue: "k8s.io/ingress-nginx-public"
       service:
         loadBalancerIP: ${INGRESS_NGINX_PUBLIC_IP}
       metrics:
