@@ -21,9 +21,6 @@ spec:
       tag: 2021.8.8
     env:
       TZ: "America/Toronto"
-    envFrom:
-      - secretRef:
-          name: home-assistant
     hostNetwork: true
     dnsPolicy: ClusterFirstWithHostNet
     service:
