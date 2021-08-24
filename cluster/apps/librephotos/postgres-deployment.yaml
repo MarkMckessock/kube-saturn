@@ -17,10 +17,6 @@ spec:
       containers:
       - name: postgres
         image: postgres:13
-        securityContext:
-          runAsUser: 999
-          fsGroup: 999
-          fsGroupChangePolicy: "OnRootMismatch"
         command:
           - postgres
           - -c 
@@ -58,3 +54,7 @@ spec:
             claimName: postgres-data
       nodeSelector:
         node-role.kubernetes.io/worker: worker
+      securityContext:
+        runAsUser: 999
+        fsGroup: 999
+        fsGroupChangePolicy: "OnRootMismatch"
