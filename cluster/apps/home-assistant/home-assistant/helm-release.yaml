@@ -21,14 +21,6 @@ spec:
       tag: 2021.8.8
     env:
       TZ: "America/Toronto"
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
-    service:
-      main:
-        type: LoadBalancer
-        externalIPs:
-          - "${SVC_HOME_ASSISTANT_ADDR}"
-        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
