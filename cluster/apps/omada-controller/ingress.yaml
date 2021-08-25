@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
-  ingressClassName: nginx-public
+  ingressClassName: nginx
   rules:
   - host: omada.${DOMAIN}
     http:
