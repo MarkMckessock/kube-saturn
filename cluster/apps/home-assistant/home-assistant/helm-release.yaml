@@ -29,14 +29,14 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-          - host: "hass.${DOMAIN}"
+          - host: "homeassistant.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hass.${DOMAIN}"
-            secretName: hass-cert
+              - "homeassistant.${DOMAIN}"
+            secretName: homeassistant-cert
     probes:
       liveness:
         enabled: false
