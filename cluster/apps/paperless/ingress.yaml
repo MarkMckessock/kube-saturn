@@ -6,10 +6,10 @@ metadata:
   labels:
     name: paperless
   annotations:
-    kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
 spec:
+  ingressClassName: nginx
   rules:
   - host: paperless.${DOMAIN}
     http:

@@ -6,11 +6,11 @@ metadata:
   labels:
     name: omada-ui
   annotations:
-    kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
+  ingressClassName: nginx-public
   rules:
   - host: omada.${DOMAIN}
     http:
