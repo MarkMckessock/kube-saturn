@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openeats
+  namespace: openeats
+data:
+  MYSQL_DATABASE: openeats
+  API_URL: 0.0.0.0:8000
+  API_PORT: "8000"
+  DJANGO_SETTINGS_MODULE: base.settings
+  DJANGO_DEBUG: "true"
+  ALLOWED_HOST: "*"
+  HTTP_X_FORWARDED_PROTO: "true"
+  NODE_ENV: production
+  NODE_URL: 127.0.0.1:8080
+  NODE_API_URL: https://openeats.markmckessock.com
+  NODE_LOCALE: en

@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openeats
+  namespace: openeats
+  labels:
+    name: openeats
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: openeats.${DOMAIN}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nginx
+            port: 
+              number: 80
+  tls:
+    - hosts:
+      - openeats.${DOMAIN}
+      secretName: openeats-cert
