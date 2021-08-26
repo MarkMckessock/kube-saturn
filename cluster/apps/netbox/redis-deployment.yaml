@@ -18,6 +18,12 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
+        command:
+          - redis-server
+          - --appendonly 
+          - "yes"
+          - --requirepass
+          - ${REDIS_TASKS_PASSWORD}
       nodeSelector:
         node-role.kubernetes.io/worker: worker
 ---
@@ -41,5 +47,9 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
+        command:
+          - redis-server
+          - --requirepass
+          - ${REDIS_CACHE_PASSWORD}
       nodeSelector:
         node-role.kubernetes.io/worker: worker

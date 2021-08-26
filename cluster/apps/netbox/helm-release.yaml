@@ -43,10 +43,14 @@ spec:
     tasksRedis:
       database: 0
       host: netbox-redis
+      existingSecretName: netbox
+      existingSecretKey: redis_tasks_password
 
     cachingRedis:
       database: 0
       host: netbox-redis-cache
+      existingSecretName: netbox
+      existingSecretKey: redis_cache_password
     
     persistence:
       enabled: true
