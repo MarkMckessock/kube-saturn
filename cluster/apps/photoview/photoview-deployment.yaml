@@ -28,7 +28,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: photoview
-                key: MAXBOX_TOKEN
+                key: MAPBOX_TOKEN
           - name: PHOTOVIEW_MYSQL_URL
             valueFrom:
               secretKeyRef:
