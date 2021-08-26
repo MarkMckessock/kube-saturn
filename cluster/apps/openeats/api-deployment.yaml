@@ -29,6 +29,8 @@ spec:
             name: static-files
           - mountPath: /code/site-media
             name: site-media
+        ports:
+          - containerPort: 8000
       volumes:
         - name: static-files
           persistentVolumeClaim:
