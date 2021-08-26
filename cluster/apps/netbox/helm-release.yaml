@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      tag: v2.11
     email:
       server: smtp.sendgrid.net
       port: 587
