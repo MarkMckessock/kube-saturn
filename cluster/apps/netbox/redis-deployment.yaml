@@ -24,7 +24,7 @@ spec:
               secretKeyRef:
                 name: netbox
                 key: redis_task_password
-        args:
+        command:
           - sh
           - -c
           - redis-server
@@ -59,7 +59,7 @@ spec:
               secretKeyRef:
                 name: netbox
                 key: redis_cache_password
-        args:
+        command:
           - sh
           - -c
           - redis-server
