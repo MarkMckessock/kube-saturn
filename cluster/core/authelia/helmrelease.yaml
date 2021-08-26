@@ -19,7 +19,7 @@ spec:
     domain: ${DOMAIN}
     ingress:
       enabled: true
-      ingressClassName: nginx
+      className: nginx
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
