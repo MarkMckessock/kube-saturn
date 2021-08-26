@@ -14,18 +14,29 @@ spec:
     spec:
       containers:
       - name: papermerge
-        image: eugenci/papermerge-worker:v2.0.0
+        image: linuxserver/papermerge:version-v2.0.1
         volumeMounts:
-          - mountPath: /opt/media
-            name: papermerge-media
-        envFrom:
-          - secretRef:
-              name: papermerge
+          - name: papermerge-data
+            mountPath: /data
+          - name: papermerge-config
+            mountPath: /config
+        env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: America/Toronto
+          - name: REDIS_URL
+            value: redis
         ports:
           - containerPort: 8000
       volumes:
-        - name: papermerge-media
+        - name: papermerge-data
           persistentVolumeClaim:
-            claimName: papermerge-media
+            claimName: papermerge-data
+        - name: papermerge-config
+          persistentVolumeClaim:
+            claimName: papermerge-config
       nodeSelector:
         node-role.kubernetes.io/worker: worker
