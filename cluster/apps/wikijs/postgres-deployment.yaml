@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: wikijs
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
+            subPath: wikijs
+        envFrom:
+          - secretRef:
+              name: wikijs
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker

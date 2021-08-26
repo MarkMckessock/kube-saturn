@@ -1,30 +1,41 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: vaultwarden
-  namespace: vaultwarden
+  name: wikijs
+  namespace: wikijs
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: vaultwarden
-      version: 3.0.1
+      chart: wikijs
+      version: 6.0.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: vaultwarden/server
-      tag: 1.22.2
     env:
       TZ: "America/Toronto"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: vaultwarden-config
+      DB_TYPE: postgres
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_NAME: 
+        valueFrom:
+          secretKeyRef:
+            name: wikijs
+            key: POSTGRES_DB
+      DB_USER:
+        valueFrom:
+          secretKeyRef:
+            name: wikijs
+            key: POSTGRES_USER
+      DB_PASS:
+        valueFrom:
+          secretKeyRef:
+            name: wikijs
+            key: POSTGRES_PASSWORD
     ingress:
       main:
         enabled: true
@@ -33,21 +44,13 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-          - host: vaultwarden.${DOMAIN}
+          - host: wikijs.${DOMAIN}
             paths:
             - path: /
               pathType: Prefix
               service:
-                port: 80
-            - path: /notifications/hub/negotiate
-              pathType: Prefix
-              service:
-                port: 80
-            - path: /notifications/hub
-              pathType: Prefix
-              service:
-                port: 3012
+                port: 3000
         tls:
-          - secretName: vaultwarden-cert
+          - secretName: wikijs-cert
             hosts:
-              - vaultwarden.${DOMAIN}
+              - wikijs.${DOMAIN}
