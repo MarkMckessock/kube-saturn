@@ -18,7 +18,8 @@ spec:
       - name: web
         image: openeats/openeats-web
         args:
-          - "yarn start"
+          - yarn
+          - start
         envFrom:
           - configMapRef:
               name: openeats
