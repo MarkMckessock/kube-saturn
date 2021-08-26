@@ -10,3 +10,4 @@ resources:
   - prometheus-community.yaml
   - k8s-at-home.yaml
   - bootc.yaml
+  - bitnami.yaml

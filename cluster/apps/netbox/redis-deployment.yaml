@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: netbox
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:6-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: netbox
+                key: redis_task_password
+        args:
+          - sh
+          - -c
+          - redis-server
+          - --appendonly 
+          - "yes"
+          - --requirepass
+          - $REDIS_PASSWORD
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cache
+  namespace: netbox
+spec:
+  selector:
+    matchLabels:
+      app: redis-cache
+  template:
+    metadata:
+      labels:
+        app: redis-cache
+    spec:
+      containers:
+      - name: redis-cache
+        image: redis:6-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: netbox
+                key: redis_cache_password
+        args:
+          - sh
+          - -c
+          - redis-server
+          - --requirepass
+          - $REDIS_PASSWORD
