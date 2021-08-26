@@ -23,7 +23,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: netbox
-                key: redis_task_password
+                key: redis_tasks_password
         command:
           - sh
           - -c
