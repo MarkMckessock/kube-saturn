@@ -25,7 +25,7 @@ spec:
 
     remoteAuth:
       enabled: true
-      header: Remote-Email
+      header: HTTP_REMOTE_USER
 
     existingSecret: netbox
 
