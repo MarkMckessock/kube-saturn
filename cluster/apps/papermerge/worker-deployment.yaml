@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: papermerge-worker
+  namespace: papermerge
+spec:
+  selector:
+    matchLabels:
+      app: papermerge-worker
+  template:
+    metadata:
+      labels:
+        app: papermerge-worker
+    spec:
+      containers:
+      - name: worker
+        image: eugenci/papermerge-worker:v2.0.0
+        volumeMounts:
+          - mountPath: /opt/media
+            name: papermerge-media
+        envFrom:
+          - secretRef:
+              name: papermerge
+      volumes:
+        - name: papermerge-media
+          persistentVolumeClaim:
+            claimName: papermerge-media
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
