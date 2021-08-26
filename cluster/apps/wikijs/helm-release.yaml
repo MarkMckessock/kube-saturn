@@ -54,3 +54,5 @@ spec:
           - secretName: wikijs-cert
             hosts:
               - wikijs.${DOMAIN}
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
