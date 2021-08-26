@@ -18,20 +18,6 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
-        env:
-          - name: REDIS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: netbox
-                key: redis_tasks_password
-        command:
-          - sh
-          - -c
-          - redis-server
-          - --appendonly 
-          - "yes"
-          - --requirepass
-          - $REDIS_PASSWORD
       nodeSelector:
         node-role.kubernetes.io/worker: worker
 ---
@@ -55,17 +41,5 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
-        env:
-          - name: REDIS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: netbox
-                key: redis_cache_password
-        command:
-          - sh
-          - -c
-          - redis-server
-          - --requirepass
-          - $REDIS_PASSWORD
       nodeSelector:
         node-role.kubernetes.io/worker: worker
