@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx-public
   rules:
   - host: gotify.${DOMAIN}
     http:
