@@ -1,13 +1,9 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: web
   namespace: openeats
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: openeats
-      app.kubernetes.io/component: web
   template:
     metadata:
       labels:
