@@ -52,3 +52,5 @@ spec:
         cpu: 500m
       limits:
         memory: 750Mi
+    nodeSelector:
+      node-role.kubernetes.io/worker: worker
