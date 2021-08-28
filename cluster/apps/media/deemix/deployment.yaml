@@ -40,3 +40,5 @@ spec:
           nfs:
             path: /mnt/user/Media/music
             server: tower.${DOMAIN}
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
