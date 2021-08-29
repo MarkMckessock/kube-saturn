@@ -74,7 +74,6 @@ spec:
         - secretName: netbox-cert
           hosts:
             - netbox.${DOMAIN}
-    
     nodeSelector:
       node-role.kubernetes.io/worker: worker
     
