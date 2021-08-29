@@ -35,3 +35,5 @@ spec:
     defaultSettings:
       defaultDataLocality: best-effort
       replicaSoftAntiAffinity: true
+      systemManagedComponentsNodeSelector:
+        node-role.kubernetes.io/storage: storage
