@@ -48,4 +48,4 @@ spec:
         - name: storage # must match the volume name, above
           mountPath: "/storage"
       nodeSelector:
-      node-role.kubernetes.io/worker: worker
+        node-role.kubernetes.io/worker: worker
