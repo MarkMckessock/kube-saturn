@@ -29,3 +29,5 @@ spec:
         - name: gotify-config
           persistentVolumeClaim:
             claimName: gotify-config
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
