@@ -31,3 +31,5 @@ spec:
       recurringJobs:
         enable: true
         jobList: '[{"name":"backup", "task":"backup", "cron":"* */12 * * *", "retain":2}]'
+    defaultSettings:
+      defaultDataLocality: best-effort
