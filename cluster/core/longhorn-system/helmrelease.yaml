@@ -35,4 +35,28 @@ spec:
     defaultSettings:
       defaultDataLocality: best-effort
       replicaSoftAntiAffinity: true
-      systemManagedComponentsNodeSelector: "node-role.kubernetes.io/worker:worker"
+      taintToleration: node-role.kubernetes.io/longhorn:NoSchedule
+    longhornManager: 
+      tolerations:
+      - key: "node-role.kubernetes.io/longhorn"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
+    longhornDriver:
+      tolerations:
+      - key: "node-role.kubernetes.io/longhorn"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
+    longhornUI:
+      tolerations:
+      - key: "node-role.kubernetes.io/longhorn"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
