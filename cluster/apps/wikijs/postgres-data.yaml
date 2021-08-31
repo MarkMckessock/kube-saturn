@@ -3,8 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-data
   namespace: wikijs
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce
