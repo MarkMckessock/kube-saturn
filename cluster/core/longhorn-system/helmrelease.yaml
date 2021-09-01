@@ -27,11 +27,10 @@ spec:
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
-    persistence:
-      defaultClassReplicasCount: 3
-      recurringJobs:
-        enable: true
-        jobList: '[{"name":"backup", "task":"backup", "cron":"* */12 * * *", "retain":2}]'
+    # persistence:
+    #   recurringJobs:
+    #     enable: true
+    #     jobList: '[{"name":"backup", "task":"backup", "cron":"* */12 * * *", "retain":2}]'
     defaultSettings:
       defaultDataLocality: best-effort
       replicaSoftAntiAffinity: true
