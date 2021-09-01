@@ -35,6 +35,7 @@ spec:
       defaultDataLocality: best-effort
       replicaSoftAntiAffinity: true
       taintToleration: node-role.kubernetes.io/longhorn:NoSchedule
+      replicaAutoBalance: best-effort
     longhornManager: 
       tolerations:
       - key: "node-role.kubernetes.io/longhorn"
