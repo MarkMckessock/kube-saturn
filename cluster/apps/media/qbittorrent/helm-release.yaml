@@ -64,9 +64,6 @@ spec:
           - hosts:
               - "qbittorrent.${DOMAIN}"
             secretName: qbittorrent-cert
-    podSecurityContext:
-      supplementalGroups:
-        - 1000
     securityContext:
       capabilities:
         add: ["NET_ADMIN"]
