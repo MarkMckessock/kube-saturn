@@ -95,21 +95,10 @@ spec:
         cpu: 500m
       limits:
         memory: 6000Mi
-    additionalContainers:
-      - name: exporter
-        image: ghcr.io/k8s-at-home/prometheus-qbittorrent-exporter:v1.2.0
-        imagePullPolicy: IfNotPresent
+    metrics:
+      enabled: false
+      prometheusRule:
+        enabled: false
+      exporter:
         env:
-          - name: QBITTORRENT_HOST
-            value: "http://localhost"
-          - name: QBITTORRENT_PORT
-            value: "8080"
-          - name: EXPORTER_PORT
-            value: "9022"
-          - name: EXPORTER_LOG_LEVEL
-            value: "INFO"
-          - name: METRICS_PREFIX
-            value: "qbittorrent"
-        ports:
-          - name: metrics
-            containerPort: 9022
+          user: admin
