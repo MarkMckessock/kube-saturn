@@ -89,3 +89,7 @@ spec:
         memory: 100Mi
       limits:
         memory: 4000Mi
+    metrics:
+      enabled: false
+      prometheusRule:
+        enabled: false
