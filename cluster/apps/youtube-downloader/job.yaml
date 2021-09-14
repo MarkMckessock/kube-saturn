@@ -8,6 +8,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            app: youtube-dl
         spec:
           containers:
           - name: youtube-dl

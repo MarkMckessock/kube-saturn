@@ -5,38 +5,38 @@ metadata:
   namespace: youtube-dl
 data:
   channels.yaml: |
-    - https://www.youtube.com/channel/UC6nSFpj9HTCZ5t-N3Rm3-HA # VSauce
-    - https://www.youtube.com/channel/UC9RM-iSvTu1uPJb8X5yp3EQ # Wendover Productions
-    - https://www.youtube.com/channel/UCBa659QWEk1AI4Tg--mrJ2A # Tom Scott
-    - https://www.youtube.com/channel/UCr3cBLTYmIK9kY0F_OdFWFQ # Casually Explained
-    - https://www.youtube.com/user/everyframeapainting # Every Frame A Painting
-    - https://www.youtube.com/user/FRANKIEonPCin1080p # FrankieonPCin1080p
-    - https://www.youtube.com/user/IVSoftware # IV Software
-    - https://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q # Kurzgesagt
-    - https://www.youtube.com/channel/UCJkMlOu7faDgqh4PfzbpLdg # Nerdwriter
-    - https://www.youtube.com/channel/UCcM_6ay33BNpChknCrMCgig # Phillip Bloom
-    - https://www.youtube.com/channel/UC1JTQBa5QxZCpXrFSkMxmPw # Raycevik
-    - https://www.youtube.com/channel/UCR1D15p_vdP3HkrH8wgjQRw # Internet Historian
-    - https://www.youtube.com/c/InternetHistorianIncognitoMode # Internet Historian - Incognito Mode
-    - https://www.youtube.com/channel/UCtUbO6rBht0daVIOGML3c8w # Summoning Salt
-    - https://www.youtube.com/channel/UCuCkxoKLYO_EQ2GeFtbM_bw # Half as Interesting
-    - https://www.youtube.com/channel/UCdTH9d3ViHVlyQq3BMaCuIQ # OFFCANNY
-    - https://www.youtube.com/channel/UCekQr9znsk2vWxBo3YiLq2w # You Such at Cooking
-    - https://www.youtube.com/channel/UCto7D1L-MiRoOziCXK9uT5Q # Let's Game It Out
-    - https://www.youtube.com/channel/UCtqxG9IrHFU_ID1khGvx9sA # All Gas No Brakes
-    - https://www.youtube.com/channel/UCSZS1EiwrdzVq_9oWc7uHWw # The Ghost of Nubian Fidance
-    - https://www.youtube.com/channel/UCJwm_zLM2YDgicgpQsEWyCg # The Future Files
-    # - https://www.youtube.com/c/DavesGarage # Dave's Garage
-    - https://www.youtube.com/channel/UCj4XGwdMzgXbNq7fIbVvKpA # Lost Haus (Funhaus Archive)
-    - https://www.youtube.com/c/veritasium # Veritassium
-    - https://www.youtube.com/c/MickGordon # Mick Gordon
-    - https://www.youtube.com/c/PaymoneyWubby # PayMoneyWubby
-    - https://www.youtube.com/channel/UC6yeqgmyqhDyMPzE4wwxQig # Ryan's Shorts
-    - https://www.youtube.com/c/IanKung # Ian Kung
-    - https://www.youtube.com/user/videogamedunkey # VideoGameDunkey
-    - https://www.youtube.com/c/JunsKitchen # Jun's Kitchen
-    - https://www.youtube.com/c/tomatoanus # Tomatoanus
-    - https://www.youtube.com/c/Tantacrul # Tantacrul
+    - https://www.youtube.com/c/vsauce1/videos # VSauce
+    - https://www.youtube.com/c/Wendoverproductions/videos # Wendover Productions
+    - https://www.youtube.com/c/TomScottGo/videos # Tom Scott
+    - https://www.youtube.com/c/CasuallyExplained/videos # Casually Explained
+    - https://www.youtube.com/c/everyframeapainting/videos # Every Frame A Painting
+    - https://www.youtube.com/c/frankieonpc/videos # FrankieonPCin1080p
+    - https://www.youtube.com/user/IVSoftware/videos # IV Software
+    - https://www.youtube.com/c/inanutshell/videos # Kurzgesagt
+    - https://www.youtube.com/user/Nerdwriter1/videos # Nerdwriter
+    - https://www.youtube.com/c/philipbloom/videos # Phillip Bloom
+    - https://www.youtube.com/c/Raycevick/videos # Raycevik
+    - https://www.youtube.com/c/InternetHistorian/videos # Internet Historian
+    - https://www.youtube.com/c/InternetHistorianIncognitoMode/videos # Internet Historian - Incognito Mode
+    - https://www.youtube.com/c/SummoningSalt/videos # Summoning Salt
+    - https://www.youtube.com/c/halfasinteresting/videos # Half as Interesting
+    - https://www.youtube.com/c/OFFCANNY/videos # OFFCANNY
+    - https://www.youtube.com/c/yousuckatcooking/videos # You Such at Cooking
+    - https://www.youtube.com/c/LetsGameItOut/videos # Let's Game It Out
+    - https://www.youtube.com/channel/UCtqxG9IrHFU_ID1khGvx9sA/videos # All Gas No Brakes
+    - https://www.youtube.com/channel/UCSZS1EiwrdzVq_9oWc7uHWw/videos # The Ghost of Nubian Fidance
+    - https://www.youtube.com/c/TheFutureFiles/videos # The Future Files
+    # - https://www.youtube.com/c/DavesGarage/videos # Dave's Garage
+    - https://www.youtube.com/channel/UCj4XGwdMzgXbNq7fIbVvKpA/videos # Lost Haus (Funhaus Archive)
+    - https://www.youtube.com/c/veritasium/videos # Veritassium
+    - https://www.youtube.com/c/MickGordon/videos # Mick Gordon
+    - https://www.youtube.com/c/PaymoneyWubby/videos # PayMoneyWubby
+    # - https://www.youtube.com/c/RyansShorts/videos # Ryan's Shorts
+    - https://www.youtube.com/c/IanKung/videos # Ian Kung
+    - https://www.youtube.com/user/videogamedunkey/videos # VideoGameDunkey
+    - https://www.youtube.com/c/JunsKitchen/videos # Jun's Kitchen
+    - https://www.youtube.com/c/tomatoanus/videos # Tomatoanus
+    - https://www.youtube.com/c/Tantacrul/videos # Tantacrul
   playlists.yaml: |
     - https://www.youtube.com/playlist?list=PLzG0-EPHLnE6vf_KK1quf67yyqdP3-Hk3 # Personal Favorites
     - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hl3KrDBs6Vcc_5XDZbqPABC # Iconic Arms
