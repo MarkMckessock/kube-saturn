@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: youtube-dl
-            image: markmckessock/youtube-dl:v1.1
+            image: markmckessock/youtube-dl:v1.2
             imagePullPolicy: IfNotPresent
             env:
               - name: DOWNLOAD_FOLDER
