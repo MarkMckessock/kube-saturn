@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: youtube-dl-config
+  namespace: youtube-dl
+data:
+  channels.yaml: |
+    - https://www.youtube.com/channel/UC6nSFpj9HTCZ5t-N3Rm3-HA #VSauce
+    - https://www.youtube.com/channel/UC9RM-iSvTu1uPJb8X5yp3EQ # Wendover Productions
+    - https://www.youtube.com/channel/UCBa659QWEk1AI4Tg--mrJ2A # Tom Scott
+    - https://www.youtube.com/channel/UCr3cBLTYmIK9kY0F_OdFWFQ # Casually Explained
+    - https://www.youtube.com/user/everyframeapainting # Every Frame A Painting
+    - https://www.youtube.com/user/FRANKIEonPCin1080p # FrankieonPCin1080p
+    - https://www.youtube.com/user/IVSoftware # IV Software
+    - https://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q # Kurzgesagt
+    - https://www.youtube.com/channel/UCJkMlOu7faDgqh4PfzbpLdg # Nerdwriter
+    - https://www.youtube.com/channel/UCcM_6ay33BNpChknCrMCgig # Phillip Bloom
+    - https://www.youtube.com/channel/UC1JTQBa5QxZCpXrFSkMxmPw # Raycevik
+    - https://www.youtube.com/channel/UCR1D15p_vdP3HkrH8wgjQRw # Internet Historian
+    - https://www.youtube.com/c/InternetHistorianIncognitoMode # Internet Historian - Incognito Mode
+    - https://www.youtube.com/channel/UCtUbO6rBht0daVIOGML3c8w # Summoning Salt
+    - https://www.youtube.com/channel/UCuCkxoKLYO_EQ2GeFtbM_bw # Half as Interesting
+    - https://www.youtube.com/channel/UCdTH9d3ViHVlyQq3BMaCuIQ # OFFCANNY
+    - https://www.youtube.com/channel/UCekQr9znsk2vWxBo3YiLq2w # You Such at Cooking
+    - https://www.youtube.com/channel/UCto7D1L-MiRoOziCXK9uT5Q # Let's Game It Out
+    - https://www.youtube.com/channel/UCtqxG9IrHFU_ID1khGvx9sA # All Gas No Brakes
+    - https://www.youtube.com/channel/UCSZS1EiwrdzVq_9oWc7uHWw # The Ghost of Nubian Fidance
+    - https://www.youtube.com/channel/UCJwm_zLM2YDgicgpQsEWyCg # The Future Files
+    - https://www.youtube.com/c/DavesGarage # Dave's Garage
+    - https://www.youtube.com/channel/UCj4XGwdMzgXbNq7fIbVvKpA # Lost Haus (Funhaus Archive)
+    - https://www.youtube.com/c/veritasium # Veritassium
+    - https://www.youtube.com/c/MickGordon # Mick Gordon
+    - https://www.youtube.com/c/PaymoneyWubby # PayMoneyWubby
+    - https://www.youtube.com/channel/UC6yeqgmyqhDyMPzE4wwxQig # Ryan's Shorts
+    - https://www.youtube.com/c/IanKung # Ian Kung
+    - https://www.youtube.com/user/videogamedunkey # VideoGameDunkey
+    - https://www.youtube.com/c/JunsKitchen # Jun's Kitchen
+    - https://www.youtube.com/c/tomatoanus # Tomatoanus
+    - https://www.youtube.com/c/Tantacrul" # Tantacrul
+  playlists.yaml: |
+    - https://www.youtube.com/playlist?list=PLzG0-EPHLnE6vf_KK1quf67yyqdP3-Hk3 # Personal Favorites
+    - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hl3KrDBs6Vcc_5XDZbqPABC # Iconic Arms
+    - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hk9m-sEG_fouQrtzjOC3-pQ # RetroAhoy
+    - https://www.youtube.com/playlist?list=PLOQZmjD6P2HmB4Ml5wYWdl9_9riQGw_5A # Ahoy Specials
+    - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hm8lLVEEYR3MYMMh8uXwgu0 # Ahoy: A Brief History Of...
+    - https://www.youtube.com/playlist?list=PLbSrsoORyaJqoWzkMvA8RbmXCUrQ2AYu8 # Funhaus Livestreams #1
+    - https://www.youtube.com/playlist?list=PLz4_sLyNGBW_nRutaaYLd6b9w-VlVsAR3 # Funhaus Livestreams #2
+    - https://www.youtube.com/playlist?list=PLp62WBCimTowDMMCATtv36pwUY6XlQp4T # Funhaus Livestreams #3
+    - https://www.youtube.com/playlist?list=PLz4_sLyNGBW-oTdv_q_RJ7utjMnHXkouc # Inside Gaming Livestreams #1
+    - https://www.youtube.com/playlist?list=PLJ_TJFLc25JR3VZ7Xe-cmt4k3bMKBZ5Tm # Best of the Worst
+    - https://www.youtube.com/playlist?list=PLBitIgZ_UvGFpaXZVX-Dwf9sMC65xqLfM # Soviet Womble
+    - https://www.youtube.com/playlist?list=PLa_iNJiztvixdlcWZx8cbixTzmzzcmXjG # Enth Apple - Fallout 3 Lore
+    - https://www.youtube.com/playlist?list=PLa_iNJiztvizDvFKdx6XG--LBytgaw6bC # Enth Apple - Fallout NV Lore
+    - https://www.youtube.com/playlist?list=PLa_iNJiztviyi5_QymzF6EHEvZNbAgNwq" # Enth Apple - Fallout 4 Lore
