@@ -21,6 +21,8 @@ spec:
                 value: /downloads
               - name: ARCHIVE_FILE_PATH
                 value: /archive/archive.txt
+              - name: COOKIE_FILE_PATH
+                value: /app/cookies.txt
             volumeMounts:
               - mountPath: /downloads
                 name: downloads
@@ -32,6 +34,9 @@ spec:
               - mountPath: /app/playlists.yaml
                 name: playlists
                 subPath: playlists.yaml
+              - mountPath: /app/cookies.txt
+                name: cookies
+                subPath: cookies.txt
           volumes:
             - name: downloads
               nfs:
@@ -52,4 +57,10 @@ spec:
                 items:
                   - key: playlists.yaml
                     path: playlists.yaml
+            - name: cookies
+              secret:
+                secretName: youtube-secret
+                items:
+                  - key: cookies.txt
+                    path: cookies.txt
           restartPolicy: Never
