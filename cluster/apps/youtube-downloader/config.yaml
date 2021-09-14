@@ -36,7 +36,7 @@ data:
     - https://www.youtube.com/user/videogamedunkey # VideoGameDunkey
     - https://www.youtube.com/c/JunsKitchen # Jun's Kitchen
     - https://www.youtube.com/c/tomatoanus # Tomatoanus
-    - https://www.youtube.com/c/Tantacrul" # Tantacrul
+    - https://www.youtube.com/c/Tantacrul # Tantacrul
   playlists.yaml: |
     - https://www.youtube.com/playlist?list=PLzG0-EPHLnE6vf_KK1quf67yyqdP3-Hk3 # Personal Favorites
     - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hl3KrDBs6Vcc_5XDZbqPABC # Iconic Arms
