@@ -14,16 +14,13 @@ spec:
         spec:
           containers:
           - name: youtube-dl
-            image: markmckessock/youtube-dl:v1.2
+            image: markmckessock/youtube-dl:v1.3
             imagePullPolicy: IfNotPresent
             env:
               - name: DOWNLOAD_FOLDER
                 value: /downloads
               - name: ARCHIVE_FILE_PATH
                 value: /archive/archive.txt
-            envFrom:
-              - secretRef:
-                  name: youtube-secret
             volumeMounts:
               - mountPath: /downloads
                 name: downloads
@@ -35,6 +32,9 @@ spec:
               - mountPath: /app/playlists.yaml
                 name: playlists
                 subPath: playlists.yaml
+              - mountPath: /app/cookies.txt
+                name: cookies
+                subPath: cookies.txt
           volumes:
             - name: downloads
               nfs:
@@ -55,4 +55,10 @@ spec:
                 items:
                   - key: playlists.yaml
                     path: playlists.yaml
+            - name: cookies
+              secret:
+                secretName: youtube-secret
+                items:
+                  - key: cookies.txt
+                    path: cookies.txt
           restartPolicy: Never
