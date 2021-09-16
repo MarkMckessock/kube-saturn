@@ -4,25 +4,51 @@ metadata:
     name: youtube-dl-config
     namespace: youtube-dl
 data:
-    channels.yaml: ENC[AES256_GCM,data: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,iv:2eGCoEXLRX7/vw4jzzlwhs8TnpuL0WQZv7UkaCmYxVA=,tag:14rLBBQ2rHiOxzOu3ARLDQ==,type:str]
-    playlists.yaml: ENC[AES256_GCM,data:OIfZR2f8+v+FYqPBp0fzCHqNKP5OxBfiE4ba92Lilb8gJA0KDxZTZy8ouLfBVgmC1W50puSqKOVRA9h98qSMdLiLr8HUN5tuWUZXBFJaw0YLA6ob0X9ZviEQfZsYz1+r7vX2pNmQcTeA9fh/Yq3QvjCLd+MN6SYT3sDoAdO9sfj0T9v45bknnQ9rULwg+FS5Geplm9YHwOOBBT6yaW7qv/dU5ycBTy6FB7K3NXu53AZdRl8SExddZ1RlFDqhgm9v9Om7E7kiwuwmujUlTSG6OmVS2Gs9liwTFvtqJLqCjuVXpE799e8+3TK009wwroKYwXRQJ2jCLOGdT0LZ6XV4efJLJpa6Zzg6YPxiJOReYYPIOIYjWzHvMdPxoOxztItCRAIBSEeLunbkcOM8RUsJwcVeFNT7f47VgBvmcoqC1/sOhwKdQIb0dU5HZt8luYV4HA4sxD+H4rymrUetA+RYe1NnQQoUBhLoOBdsRZerJbQ1ZPUssCPfyc80zoxG+nrcgBS6BqYPf+lSNHN49qU/tx+o7XNkCaAxApLYihW4MTk6oXkLBVrw7GNjjde59UHjuKALiNcYXpEeJBTumNCqh0Y2Y9ehO+yYV70Wg74rSMnqMynn+ctcylVjunSvgLRKW6YEwJVqR8/gkpKXOJpk1Tv5EzbIF/9+aS2F9Q7FkIgF6mGzsi40hEx0L+7phIhi4F8u7FTFsQHDeQAbOnTBgbpxYnF6y/40fNEjti+0sP7DyQ4gvcnOQ9tFCUxhyUUQgY9dXcV8pYmxq8rH2kDXslwRaqtbRRw7fM8Kkx32U6+lcd85z2L2e+6lKiM93WCTqeDLl8Tb+ykAlVKKmaVRXzosGR3tkOSvSmOnJrn12rjN04uNPgOWxGlQhboGK+t68qGSwpecvYRrnJ5/TzuaaVNjdP5tWje9FGlMPWGebuXqpVyDn6mj4XaWHP7reBeTTOfaSh71//YKlW0RP72h80qjoEdLDVsJz+vXzVNCTrOVxEhXsvvrtU++j5YsYsDdW6DZcPcJRZ4SO4qWeZ2QGLQ3nRT6UYUEsmvWx1P7ZXiYlw+E0NOGT3PdITNNUyeHwChGPSGcc8jChMyuIJIRfc9MCHMXVoLDr5N8h4M2OvKSVzRdmZkLcT6ADUhkgZG5zrbDdHBqjX5J7HFqCWVcZLJQ7b4BJjQsQRgpifOLiqLNZuwSNnvUyJedsJqDEJeCchHvcFyKVQ2VYdFm2YA+9bHAr1wuKgwKcwprApweaYS6bW8zIyZ2PdZ+vbVyuF7LiO3AhAp+NudiNu9t206ORAhE2K7T1Z5lnnbfdU3SQv5mpHB8vQwchs9csf1Zsxno7F1k4nA6NGKUhljPiQNgEmuH8kJMby8JrdIkiHWqM2wIG/OShgkA4AXfEnAxQPSRoJ2L6F/3RRl9WhuO7hXg+MY96MRwcOALIWEADtT4sR/eFGskIs4gBIk6OywQ34/sPECN1PowywDCuCfYLQZFbQ8jWI5rbMjEb2TMNAGu5MQhSwNDGpxITQtjWZvPrED10qSrgS408+MWMH7JLnVS93eFCZkEuzj5eS5EhUgMJq92KtC9A93UT0uX4uILyvJ9Dm4+5OOvdQW/QvLraa75npZ33yGbcbP0KB4sxoC5020pfj+xAITLyYUz0HBbGPzA7bpT2Umh2AjwzadpVt81+wvevhcpPCEo9i0jOad0WnbVK+fXHevPPoIpMu8oPAYTNIE//ffMYKOXVifbFm9OZW8BpbMfFaK89YBQWprDljGzjbK/u6Jy1o1Q/oQAK5PCEFdQLnylxLRlniCugjvAzZdbqvqOs2EA6I17CsC6ePDuwxBj2lwP,iv:3UmzxlewCFbiAJGnq+Fs09ePzvOcmCxCzMjASkeFkms=,tag:fzjdmg515Lmbe1a5nv42uw==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBOZFdCWWNNeE82am9hY2Np
-            MnRBbDMxT0Z4UXF2Mm5YTG5Eb3JtaS9pVWgwClpOTmpHTkdHSW0zTnVzQ05hL2RN
-            SDkxNWJZWkdzSG41OWlZdmtjTkJvNlUKLS0tIElZdGpvNzBCeVhWYmEreGRmTXVZ
-            OVFWRmRvMnA2Yi9pRmV4WFlndlIyd0UK/sr9zFGal23udKamLHdlFF6JbQ8xN9xq
-            ljY0NS88qGwEITodFDsOvJYj2aFaJq5SFLKHOKNulHkCRiOZRYWMXQ==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2021-09-14T04:23:31Z"
-    mac: ENC[AES256_GCM,data:TZIXfgY6Wlht5ZHPljOz2Es52iaI3Eg/wmD0cTLdijb+eOG/YVUpfG2L3spfbIV2pEa+NEDvI2rQTRPbtpIPOT3FJbARkNXshjbqwXkuAHAMirRAwUr6B/C2urS3Z3mCFIQ+s92/B/tstY1v85sJNtmSk4HSGaf/xegL9kE/hck=,iv:T1NSNtFt6yZ43QnBW04Mj2hlUUtQuChMfCZd8826KDI=,tag:ad6T4MYEiSowv1K1QIjugg==,type:str]
-    pgp: []
-    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
-    version: 3.7.1
+    channels.yaml: |
+        - https://www.youtube.com/c/vsauce1/videos # VSauce
+        - https://www.youtube.com/c/Wendoverproductions/videos # Wendover Productions
+        - https://www.youtube.com/c/TomScottGo/videos # Tom Scott
+        - https://www.youtube.com/c/CasuallyExplained/videos # Casually Explained
+        - https://www.youtube.com/c/everyframeapainting/videos # Every Frame A Painting
+        - https://www.youtube.com/c/frankieonpc/videos # FrankieonPCin1080p
+        - https://www.youtube.com/user/IVSoftware/videos # IV Software
+        - https://www.youtube.com/c/inanutshell/videos # Kurzgesagt
+        - https://www.youtube.com/user/Nerdwriter1/videos # Nerdwriter
+        - https://www.youtube.com/c/philipbloom/videos # Phillip Bloom
+        - https://www.youtube.com/c/Raycevick/videos # Raycevik
+        - https://www.youtube.com/c/InternetHistorian/videos # Internet Historian
+        - https://www.youtube.com/c/InternetHistorianIncognitoMode/videos # Internet Historian - Incognito Mode
+        - https://www.youtube.com/c/SummoningSalt/videos # Summoning Salt
+        - https://www.youtube.com/c/halfasinteresting/videos # Half as Interesting
+        - https://www.youtube.com/c/OFFCANNY/videos # OFFCANNY
+        - https://www.youtube.com/c/yousuckatcooking/videos # You Such at Cooking
+        - https://www.youtube.com/c/LetsGameItOut/videos # Let's Game It Out
+        - https://www.youtube.com/channel/UCtqxG9IrHFU_ID1khGvx9sA/videos # All Gas No Brakes
+        - https://www.youtube.com/channel/UCSZS1EiwrdzVq_9oWc7uHWw/videos # The Ghost of Nubian Fidance
+        - https://www.youtube.com/c/TheFutureFiles/videos # The Future Files
+        # - https://www.youtube.com/c/DavesGarage/videos # Dave's Garage
+        - https://www.youtube.com/channel/UCj4XGwdMzgXbNq7fIbVvKpA/videos # Lost Haus (Funhaus Archive)
+        - https://www.youtube.com/c/veritasium/videos # Veritassium
+        - https://www.youtube.com/c/MickGordon/videos # Mick Gordon
+        - https://www.youtube.com/c/PaymoneyWubby/videos # PayMoneyWubby
+        # - https://www.youtube.com/c/RyansShorts/videos # Ryan's Shorts
+        - https://www.youtube.com/c/IanKung/videos # Ian Kung
+        - https://www.youtube.com/user/videogamedunkey/videos # VideoGameDunkey
+        - https://www.youtube.com/c/JunsKitchen/videos # Jun's Kitchen
+        - https://www.youtube.com/c/tomatoanus/videos # Tomatoanus
+        - https://www.youtube.com/c/Tantacrul/videos # Tantacrul
+    playlists.yaml: |-
+        - https://www.youtube.com/playlist?list=PLzG0-EPHLnE6vf_KK1quf67yyqdP3-Hk3 # Personal Favorites
+        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hl3KrDBs6Vcc_5XDZbqPABC # Iconic Arms
+        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hk9m-sEG_fouQrtzjOC3-pQ # RetroAhoy
+        - https://www.youtube.com/playlist?list=PLOQZmjD6P2HmB4Ml5wYWdl9_9riQGw_5A # Ahoy Specials
+        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hm8lLVEEYR3MYMMh8uXwgu0 # Ahoy: A Brief History Of...
+        # - https://www.youtube.com/playlist?list=PLbSrsoORyaJqoWzkMvA8RbmXCUrQ2AYu8 # Funhaus Livestreams #1
+        # - https://www.youtube.com/playlist?list=PLz4_sLyNGBW_nRutaaYLd6b9w-VlVsAR3 # Funhaus Livestreams #2
+        # - https://www.youtube.com/playlist?list=PLp62WBCimTowDMMCATtv36pwUY6XlQp4T # Funhaus Livestreams #3
+        # - https://www.youtube.com/playlist?list=PLz4_sLyNGBW-oTdv_q_RJ7utjMnHXkouc # Inside Gaming Livestreams #1
+        - https://www.youtube.com/playlist?list=PLJ_TJFLc25JR3VZ7Xe-cmt4k3bMKBZ5Tm # Best of the Worst
+        - https://www.youtube.com/playlist?list=PLBitIgZ_UvGFpaXZVX-Dwf9sMC65xqLfM # Soviet Womble
+        - https://www.youtube.com/playlist?list=PLa_iNJiztvixdlcWZx8cbixTzmzzcmXjG # Enth Apple - Fallout 3 Lore
+        - https://www.youtube.com/playlist?list=PLa_iNJiztvizDvFKdx6XG--LBytgaw6bC # Enth Apple - Fallout NV Lore
+        - https://www.youtube.com/playlist?list=PLa_iNJiztviyi5_QymzF6EHEvZNbAgNwq # Enth Apple - Fallout 4 Lore
