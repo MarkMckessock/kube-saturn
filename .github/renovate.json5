@@ -87,6 +87,15 @@
         "postgres",
       ]
     },
+    // version strategies
+    {
+      "matchDatasources": ["docker"],
+      "versioning": "loose",
+      "matchPackageNames": [
+        "ghcr.io/k8s-at-home/plex",
+        "ghcr.io/k8s-at-home/qbittorrent"
+      ]
+    },
     {
       "matchDatasources": ["docker"],
       "automerge": true,
