@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: qbittorrent-config
   namespace: media
+  labels:
+    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce
