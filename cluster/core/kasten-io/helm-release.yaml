@@ -33,7 +33,7 @@ spec:
       create: true
       class: nginx
       host: "k10.${DOMAIN}"
-      urlPath: /
+      urlPath: ""
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
