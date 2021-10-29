@@ -29,5 +29,5 @@ spec:
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
     defaultSettings:
       defaultDataLocality: best-effort
-      # replicaSoftAntiAffinity: true
+      replicaSoftAntiAffinity: true
       replicaAutoBalance: best-effort
