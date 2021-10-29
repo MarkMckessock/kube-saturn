@@ -67,8 +67,6 @@ spec:
           - name: omada-cert
             mountPath: /etc/ssl/certs/tls.key
             subPath: tls.key
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
       volumes:
         - name: data
           persistentVolumeClaim:

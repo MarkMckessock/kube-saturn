@@ -52,8 +52,6 @@ spec:
           - hosts:
               - "radarr-4k.${DOMAIN}"
             secretName: radarr-4k-cert
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

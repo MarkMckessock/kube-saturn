@@ -81,8 +81,6 @@ spec:
               path: ha.key
         mountPath: /certs/ha.key
         subPath: ha.key
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     resources:
       requests:
         cpu: 100m

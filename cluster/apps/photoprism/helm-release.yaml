@@ -37,8 +37,6 @@ spec:
           - hosts:
               - "photoprism.${DOMAIN}"
             secretName: photoprism-cert
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     persistence:
       config:
         enabled: true

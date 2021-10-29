@@ -41,8 +41,6 @@ spec:
           - hosts:
               - "overseerr.${DOMAIN}"
             secretName: overseerr-cert
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     persistence:
       config:
         enabled: true

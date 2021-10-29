@@ -51,5 +51,3 @@ spec:
           - secretName: vaultwarden-cert
             hosts:
               - vaultwarden.${DOMAIN}
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker

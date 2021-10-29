@@ -33,8 +33,6 @@ spec:
             value: "photoview"
           - name: MYSQL_RANDOM_ROOT_PASSWORD
             value: "1"
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
       volumes:
         - name: mysql-data
           persistentVolumeClaim:

@@ -24,8 +24,6 @@ spec:
           - "yes"
           - --requirepass
           - ${REDIS_TASKS_PASSWORD}
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -51,5 +49,3 @@ spec:
           - redis-server
           - --requirepass
           - ${REDIS_CACHE_PASSWORD}
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

@@ -43,5 +43,3 @@ spec:
         - name: public-ui
           persistentVolumeClaim:
             claimName: openeats-public-ui
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

@@ -38,5 +38,3 @@ spec:
         - name: papermerge-config
           persistentVolumeClaim:
             claimName: papermerge-config
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

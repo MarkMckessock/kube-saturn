@@ -38,5 +38,3 @@ spec:
         - name: site-media
           persistentVolumeClaim:
             claimName: openeats-site-media
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

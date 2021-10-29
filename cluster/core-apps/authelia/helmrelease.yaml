@@ -17,9 +17,6 @@ spec:
       interval: 5m
   values:
     domain: ${DOMAIN}
-    selectors:
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
     ingress:
       enabled: true
       className: nginx

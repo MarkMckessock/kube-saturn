@@ -36,8 +36,6 @@ spec:
           - hosts:
               - "grocy.${DOMAIN}"
             secretName: grocy-cert
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     persistence:
       config:
         enabled: true

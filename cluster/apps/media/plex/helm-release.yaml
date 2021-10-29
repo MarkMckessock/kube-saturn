@@ -63,8 +63,6 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
-    nodeSelector:
-      node-role.kubernetes.io/worker: worker
     resources:
       requests:
         cpu: 1000m

@@ -59,5 +59,3 @@ spec:
         - name: mosquitto-config
           secret:
             secretName: mosquitto-config
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

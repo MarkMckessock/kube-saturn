@@ -31,5 +31,3 @@ spec:
         - name: mariadb-data
           persistentVolumeClaim:
             claimName: mariadb-data
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

@@ -32,8 +32,6 @@ spec:
               secretKeyRef:
                 name: netbox
                 key: db_password
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
