@@ -62,15 +62,8 @@ spec:
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
         retentionSize: 24GB
+        ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
-        ruleNamespaceSelector:
-          matchExpressions:
-          - key: "non-existent-label"
-            operator: "DoesNotExist"
-        serviceMonitorSelector:
-          namespaceSelector:
-            matchNames:
-              - monitoring
         storageSpec:
           volumeClaimTemplate:
             spec:
