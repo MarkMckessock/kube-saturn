@@ -32,3 +32,5 @@ spec:
           serviceMonitor:
             enabled: true
             namespace: monitoring
+      admissionWebhook:
+        enabled: false
