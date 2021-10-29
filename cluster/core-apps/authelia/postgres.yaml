@@ -55,8 +55,6 @@ spec:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: postgres-data
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
 ---
 apiVersion: v1
 kind: Service
