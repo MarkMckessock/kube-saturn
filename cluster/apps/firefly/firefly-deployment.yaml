@@ -52,5 +52,3 @@ spec:
         - name: firefly-iii-upload
           persistentVolumeClaim:
             claimName: firefly-iii-upload
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
