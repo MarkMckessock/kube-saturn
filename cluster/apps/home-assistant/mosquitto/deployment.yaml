@@ -25,37 +25,31 @@ spec:
         - name: http
           containerPort: 9001
         volumeMounts:
-          - name: ca-cert
-            mountPath: /certs/ca.crt
-            subPath: ca.crt
-          - name: server-cert
-            mountPath: /certs/server.crt
-            subPath: server.crt
-          - name: server-key
-            mountPath: /certs/server.key
-            subPath: server.key
+          - name: tls-key
+            mountPath: /certs/tls.key
+            subPath: tls.key
+          - name: tls-crt
+            mountPath: /certs/tls.crt
+            subPath: tls.crt
           - name: mosquitto-config
             mountPath: /mosquitto/config/mosquitto.conf
             subPath: mosquitto.conf
+          - name: mosquitto-config
+            mountPath: /mosquitto/config/passwd
+            subPath: passwd
       volumes:
-        - name: ca-cert
+        - name: tls-cert
           secret:
-            secretName: ha-certs
+            secretName: mosquitto-ssl
             items:
-            - key: ca.crt
-              path: ca.crt
-        - name: server-cert
+            - key: tls.crt
+              path: tls.crt
+        - name: tls-key
           secret:
-            secretName: ha-certs
+            secretName: mosquitto-ssl
             items:
-            - key: server.crt
-              path: server.crt
-        - name: server-key
-          secret:
-            secretName: ha-certs
-            items:
-            - key: server.key
-              path: server.key
+            - key: tls.key
+              path: tls.key
         - name: mosquitto-config
           secret:
             secretName: mosquitto-config
