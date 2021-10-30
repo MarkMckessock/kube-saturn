@@ -38,7 +38,7 @@ spec:
             mountPath: /mosquitto/config/passwd
             subPath: passwd
       volumes:
-        - name: tls-cert
+        - name: tls-crt
           secret:
             secretName: mosquitto-ssl
             items:
