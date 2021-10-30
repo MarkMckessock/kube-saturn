@@ -69,3 +69,5 @@ spec:
         memory: 1000Mi
       limits:
         memory: 16000Mi
+    nodeSelector:
+      class: compute
