@@ -21,6 +21,8 @@ spec:
       UID: "1000"
       GID: "1000"
       PHOTOPRISM_ADMIN_PASSWORD: ${PHOTOPRISM_ADMIN_PASSWORD}
+    nodeSelector:
+      architecture: amd64
     ingress:
       main:
         enabled: true
