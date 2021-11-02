@@ -9,4 +9,4 @@ spec:
   selector:
     app: mqtt
   ports:
-  - port: 1883
+  - port: 8883

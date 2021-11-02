@@ -21,7 +21,7 @@ spec:
             cpu: "500m"
         ports:
         - name: mqtt
-          containerPort: 1883
+          containerPort: 8883
         - name: http
           containerPort: 9001
         volumeMounts:
