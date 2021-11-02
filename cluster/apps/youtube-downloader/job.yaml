@@ -14,10 +14,7 @@ spec:
         spec:
           containers:
           - name: youtube-dl
-            command:
-              - "/bin/sh"
-              - "-c"
-              - "cp /app/cookies.txt /app/cookies-temp.txt && python youtube-dl.py"
+            command: ["/bin/sh", "-c", "cp /app/cookies.txt /app/cookies-temp.txt && python youtube-dl.py"]
             image: markmckessock/youtube-dl:v1.5
             imagePullPolicy: IfNotPresent
             env:
@@ -70,3 +67,5 @@ spec:
                   - key: cookies.txt
                     path: cookies.txt
           restartPolicy: Never
+          nodeSelector:
+            architecture: amd64
