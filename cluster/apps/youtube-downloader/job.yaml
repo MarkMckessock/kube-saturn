@@ -68,4 +68,4 @@ spec:
                     path: cookies.txt
           restartPolicy: Never
           nodeSelector:
-            architecture: amd64
+            kubernetes.io/arch: amd64
