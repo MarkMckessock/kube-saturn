@@ -60,12 +60,6 @@ spec:
                 items:
                   - key: playlists.yaml
                     path: playlists.yaml
-            - name: cookies
-              secret:
-                secretName: youtube-secret
-                items:
-                  - key: cookies.txt
-                    path: cookies.txt
           restartPolicy: Never
           nodeSelector:
             kubernetes.io/arch: amd64
