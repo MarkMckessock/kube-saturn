@@ -37,9 +37,6 @@ spec:
               - mountPath: /app/playlists.yaml
                 name: playlists
                 subPath: playlists.yaml
-              - mountPath: /app/cookies.txt
-                name: cookies
-                subPath: cookies.txt
           volumes:
             - name: downloads
               nfs:
