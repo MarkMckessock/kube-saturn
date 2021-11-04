@@ -14,16 +14,14 @@ spec:
         spec:
           containers:
           - name: youtube-dl
-            command: ["/bin/sh", "-c", "cp /app/cookies.txt /app/cookies-temp.txt && python youtube-dl.py"]
-            image: markmckessock/youtube-dl:v1.5
+            command: ["/bin/sh", "-c", "python youtube-dl.py"]
+            image: markmckessock/youtube-dl:v1.6
             imagePullPolicy: IfNotPresent
             env:
               - name: DOWNLOAD_FOLDER
                 value: /downloads
               - name: ARCHIVE_FILE_PATH
                 value: /archive/archive.txt
-              - name: COOKIE_FILE_PATH
-                value: /app/cookies-temp.txt
               - name: SKIP_LIVESTREAMS
                 value: "True"
             volumeMounts:
