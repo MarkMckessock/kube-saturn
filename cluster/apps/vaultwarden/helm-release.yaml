@@ -28,7 +28,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx-public
+        ingressClassName: nginx
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
