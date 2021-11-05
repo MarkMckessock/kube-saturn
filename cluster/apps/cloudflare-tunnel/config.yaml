@@ -1,0 +1,31 @@
+# This ConfigMap is just a way to define the cloudflared config.yaml file in k8s.
+# It's useful to define it in k8s, rather than as a stand-alone .yaml file, because
+# this lets you use various k8s templating solutions (e.g. Helm charts) to
+# parameterize your config, instead of just using string literals.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: cloudflared
+    namespace: cloudflare-tunnel
+data:
+    config.yaml: ENC[AES256_GCM,data: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,iv:pTrZEu5SoRC4b6M3RqLXYCx44SMzWBqD7cNac6ZwtJM=,tag:WqjJSuk7nh1Oa+QeeOWLJA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTVkFkWkpkR1JhVUFvUHYr
+            eGI3c0E5a0l6dkpQRU5DZmc3MkJwblZwVDA0CnlPTzRrU1g3bmRaeExxVEN1SGNo
+            ZUZ1SzFOcGtSTEJ0MGc4MllOY2xWNUkKLS0tIGFhQUJYZ1FvTzQ0SnVGdEFRRTA1
+            ZUFrUVZrOUwrZDhwdU0weHVnOHppWHMK1nj7BU7heW/MwbRaas5yaVwSGVOqqyq/
+            016uxB2iy0b8WW4myynfclbeY4O4/wjLQKEGDd294rmqKH2NtarDYw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-11-05T00:33:41Z"
+    mac: ENC[AES256_GCM,data:JUypzEUWpYV5uImnSh9vf07FKSX7QSq4YKySB1hIYOffeQdd9WYN8J/5u2XPgWxbRQSWCRbYuhiQKn/ionHTkQzCWe/nL2XlxU9WNhk9V8m6Zv+dF6TRFEKw7A5OGlX2OrwD6QxxN7CDqHir67aOlbrAqsqFN3u8vc+CwrqQaNk=,iv:UMUSZm7qB1bCb7V8GN9g4ZdFijQYKkk49CTfqUbZv3o=,tag:36GwxSevFM06T5AJYeHBUQ==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.1
