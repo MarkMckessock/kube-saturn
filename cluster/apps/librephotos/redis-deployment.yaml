@@ -19,6 +19,4 @@ spec:
         image: redis:6
         ports:
         - containerPort: 6379
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
       

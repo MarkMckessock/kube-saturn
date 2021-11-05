@@ -19,5 +19,3 @@ spec:
         image: reallibrephotos/librephotos-frontend:dev
         ports:
           - containerPort: 3000
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker

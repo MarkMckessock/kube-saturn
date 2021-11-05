@@ -31,5 +31,3 @@ spec:
         - name: media
           persistentVolumeClaim:
             claimName: librephotos-media
-      nodeSelector:
-        node-role.kubernetes.io/worker: worker
