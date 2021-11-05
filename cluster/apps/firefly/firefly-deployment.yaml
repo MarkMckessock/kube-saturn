@@ -37,7 +37,7 @@ spec:
         - name: AUTHENTICATION_GUARD
           value: remote_user_guard
         - name: AUTHENTICATION_GUARD_HEADER
-          value: Remote-Email
+          value: Cf-Access-Authenticated-User-Email
         envFrom:
           - secretRef:
               name: firefly

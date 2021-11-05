@@ -6,9 +6,7 @@ metadata:
   labels:
     name: firefly-iii
   annotations:
-    nginx.ingress.kubernetes.io/auth-signin: https://auth.${DOMAIN}
-    nginx.ingress.kubernetes.io/auth-url: http://authelia.authelia.svc.cluster.local/api/verify
-    nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User, Remote-Groups, Remote-Name, Remote-Email"
+    nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
 spec:
