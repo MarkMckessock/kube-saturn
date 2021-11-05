@@ -24,7 +24,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx-public
+        ingressClassName: nginx
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
@@ -48,39 +48,6 @@ spec:
       config:
         enabled: true
         existingClaim: home-assistant-config
-      cacert:
-        enabled: true
-        type: custom
-        volumeSpec:
-          secret:
-            secretName: ha-certs
-            items:
-            - key: ca.crt
-              path: ca.crt
-        mountPath: /certs/ca.crt
-        subPath: ca.crt
-      ha-cert:
-        enabled: true
-        type: custom
-        volumeSpec:
-          secret:
-            secretName: ha-certs
-            items:
-            - key: ha.crt
-              path: ha.crt
-        mountPath: /certs/ha.crt
-        subPath: ha.crt
-      ha-key:
-        enabled: true
-        type: custom
-        volumeSpec:
-          secret:
-            secretName: ha-certs
-            items:
-            - key: ha.key
-              path: ha.key
-        mountPath: /certs/ha.key
-        subPath: ha.key
     resources:
       requests:
         cpu: 100m
