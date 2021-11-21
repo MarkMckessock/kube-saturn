@@ -16,6 +16,7 @@ data:
         - https://www.youtube.com/user/Nerdwriter1/videos # Nerdwriter
         - https://www.youtube.com/c/philipbloom/videos # Phillip Bloom
         - https://www.youtube.com/c/Raycevick/videos # Raycevik
+        - https://www.youtube.com/user/XboxAhoy/videos # Ahoy
         - https://www.youtube.com/c/InternetHistorian/videos # Internet Historian
         - https://www.youtube.com/c/InternetHistorianIncognitoMode/videos # Internet Historian - Incognito Mode
         - https://www.youtube.com/c/SummoningSalt/videos # Summoning Salt
@@ -24,6 +25,7 @@ data:
         - https://www.youtube.com/c/yousuckatcooking/videos # You Such at Cooking
         - https://www.youtube.com/c/LetsGameItOut/videos # Let's Game It Out
         - https://www.youtube.com/channel/UCtqxG9IrHFU_ID1khGvx9sA/videos # All Gas No Brakes
+        - https://www.youtube.com/c/Channel5YouTube/videos # Channel 5
         - https://www.youtube.com/channel/UCSZS1EiwrdzVq_9oWc7uHWw/videos # The Ghost of Nubian Fidance
         - https://www.youtube.com/c/TheFutureFiles/videos # The Future Files
         # - https://www.youtube.com/c/DavesGarage/videos # Dave's Garage
@@ -39,10 +41,6 @@ data:
         - https://www.youtube.com/c/Tantacrul/videos # Tantacrul
     playlists.yaml: |-
         - https://www.youtube.com/playlist?list=PLzG0-EPHLnE6vf_KK1quf67yyqdP3-Hk3 # Personal Favorites
-        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hl3KrDBs6Vcc_5XDZbqPABC # Iconic Arms
-        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hk9m-sEG_fouQrtzjOC3-pQ # RetroAhoy
-        - https://www.youtube.com/playlist?list=PLOQZmjD6P2HmB4Ml5wYWdl9_9riQGw_5A # Ahoy Specials
-        - https://www.youtube.com/playlist?list=PLOQZmjD6P2Hm8lLVEEYR3MYMMh8uXwgu0 # Ahoy: A Brief History Of...
         # - https://www.youtube.com/playlist?list=PLbSrsoORyaJqoWzkMvA8RbmXCUrQ2AYu8 # Funhaus Livestreams #1
         # - https://www.youtube.com/playlist?list=PLz4_sLyNGBW_nRutaaYLd6b9w-VlVsAR3 # Funhaus Livestreams #2
         # - https://www.youtube.com/playlist?list=PLp62WBCimTowDMMCATtv36pwUY6XlQp4T # Funhaus Livestreams #3
