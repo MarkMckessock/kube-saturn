@@ -34,6 +34,10 @@ spec:
 
     existingSecret: netbox
 
+    worker:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+
     externalDatabase:
       host: postgres
       existingSecretName: netbox
