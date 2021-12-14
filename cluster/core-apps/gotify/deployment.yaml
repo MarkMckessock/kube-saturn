@@ -13,19 +13,21 @@ spec:
         app: gotify
     spec:
       containers:
-      - name: gotify
-        image: gotify/server:2.1.3
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
-          name: gotify
-        volumeMounts:
-          - mountPath: /app/data
-            name: gotify-config
+        - name: gotify
+          image: gotify/server:2.1.3
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+              name: gotify
+          volumeMounts:
+            - mountPath: /app/data
+              name: gotify-config
       volumes:
         - name: gotify-config
           persistentVolumeClaim:
             claimName: gotify-config
+      nodeSelector:
+        kubernetes.io/arch: amd64
