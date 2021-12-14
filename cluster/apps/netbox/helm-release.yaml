@@ -25,6 +25,9 @@ spec:
       useTLS: true
       from: netbox@${DOMAIN}
 
+    nodeSelector:
+      kubernetes.io/arch: amd64
+
     remoteAuth:
       enabled: true
       header: HTTP_CF_ACCESS_AUTHENTICATED_USER_EMAIL
@@ -41,7 +44,7 @@ spec:
 
     redis:
       enabled: false
-    
+
     tasksRedis:
       database: 0
       host: netbox-redis
@@ -53,11 +56,11 @@ spec:
       host: netbox-redis-cache
       existingSecretName: netbox
       existingSecretKey: redis_cache_password
-    
+
     persistence:
       enabled: true
       existingClaim: netbox-media
-    
+
     ingress:
       enabled: true
       annotations:
@@ -71,4 +74,4 @@ spec:
       tls:
         - secretName: netbox-cert
           hosts:
-            - netbox.${DOMAIN}  
+            - netbox.${DOMAIN}
