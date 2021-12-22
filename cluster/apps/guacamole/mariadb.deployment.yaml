@@ -18,7 +18,8 @@ spec:
       - name: mariadb
         image: mariadb:10.7.1
         ports:
-          - containerPort: 3306
+          - name: mysql
+            containerPort: 3306
         env:
           - name: MYSQL_DATABASE
             valueFrom:
