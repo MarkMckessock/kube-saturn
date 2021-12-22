@@ -4,6 +4,8 @@ metadata:
   name: mariadb
   namespace: guacamole
 spec:
+  strategy: 
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: guacamole
