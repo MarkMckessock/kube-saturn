@@ -46,8 +46,12 @@ spec:
               value: guacd
             - name: GUACD_PORT
               value: "4822"
-            # - name: GUACAMOLE_HOME
-            #   value: /etc/guacamole
+            - name: HEADER_ENABLED	
+              value: "true"
+            - name: HTTP_AUTH_HEADER
+              value: "Cf-Access-Authenticated-User-Email"
+            - name: GUACAMOLE_HOME
+              value: /etc/guacamole
             - name: WEBAPP_CONTEXT
               value: ROOT
           ports:
@@ -63,16 +67,11 @@ spec:
               path: /
               port: http
           volumeMounts:
-            - name: configurations
-              mountPath: /root/.guacamole
             - name: plugins
               mountPath: /etc/guacamole/extensions
       nodeSelector:
         kubernetes.io/arch: amd64
       volumes:
-        - name: configurations
-          configMap: 
-            name: guacamole-config
         - name: plugins
           persistentVolumeClaim:
             claimName: guacamole-plugins

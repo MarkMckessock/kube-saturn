@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: guacamole-config
-  namespace: guacamole
-
-data:
-  guacamole.properties: |-
-    http-auth-header: Cf-Access-Authenticated-User-Email
