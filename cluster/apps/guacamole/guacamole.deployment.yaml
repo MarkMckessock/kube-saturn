@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole
+  namespace: guacamole
+  labels:
+    app.kubernetes.io/name: guacamole
+    app.kubernetes.io/component: guacamole
+  
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: guacamole
+      app.kubernetes.io/component: guacamole
+  template:
+    metadata:
+      app.kubernetes.io/name: guacamole
+      app.kubernetes.io/component: guacamole
+    spec:
+      containers:
+        - name: guacamole
+          image: guacamole/guacamole:1.3.0
+          imagePullPolicy: IfNotPresent
+          env: 
+            - name: MYSQL_HOSTNAME
+              value: "mariadb"
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-config
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-config
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-config
+                  key: password
+            - name: GUACD_HOSTNAME
+              value: guacd
+            - name: GUACD_PORT
+              value: 4822
+            - name: GUACAMOLE_HOME
+              value: /etc/guacamole
+            - name: WEBAPP_CONTEXT
+              value: ROOT
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+            - name: configurations
+              mountPath: /etc/guacamole
+            - name: plugins
+              mountPath: /etc/guacamole/extensions
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      volumes:
+        - name: configurations
+          configMap: guacamole-config
+        - name: plugins
+          persistentVolumeClaim:
+            claimName: guacamole-plugins
