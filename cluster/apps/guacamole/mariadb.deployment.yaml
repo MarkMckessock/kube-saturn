@@ -23,26 +23,23 @@ spec:
           - name: mysql
             containerPort: 3306
         env:
-          - name: MARIADB_DATABASE
+          - name: MYSQL_DATABASE
             valueFrom:
               secretKeyRef:
                 name: mariadb-config
                 key: database
-          - name: MARIADB_USER
+          - name: MYSQL_USER
             valueFrom:
               secretKeyRef:
                 name: mariadb-config
                 key: user
-          - name: MARIADB_PASSWORD
+          - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: mariadb-config
                 key: password
-          - name: MARIADB_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-config
-                key: root_password
+          - name: MYSQL_RANDOM_ROOT_PASSWORD
+            value: "1"
         volumeMounts:
           - mountPath: /var/lib/mysql
             name: mariadb-data
