@@ -38,8 +38,11 @@ spec:
               secretKeyRef:
                 name: mariadb-config
                 key: password
-          - name: MARIADB_RANDOM_ROOT_PASSWORD
-            value: "1"
+          - name: MARIADB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-config
+                key: root_password
         volumeMounts:
           - mountPath: /var/lib/mysql
             name: mariadb-data
