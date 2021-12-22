@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb
+  name: postgres
   namespace: guacamole
 spec:
   strategy: 
@@ -9,41 +9,39 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: guacamole
-      app.kubernetes.io/component: mariadb
+      app.kubernetes.io/component: postgres
   template:
     metadata:
       labels:
         app.kubernetes.io/name: guacamole
-        app.kubernetes.io/component: mariadb
+        app.kubernetes.io/component: postgres
     spec:
       containers:
-      - name: mariadb
-        image: mariadb:10.7.1
+      - name: postgres
+        image: postgres:13
         ports:
-          - name: mysql
-            containerPort: 3306
+          - name: pgsql
+            containerPort: 5432
         env:
-          - name: MYSQL_DATABASE
+          - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                name: mariadb-config
+                name: postgres-config
                 key: database
-          - name: MYSQL_USER
+          - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: mariadb-config
+                name: postgres-config
                 key: user
-          - name: MYSQL_PASSWORD
+          - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mariadb-config
+                name: postgres-config
                 key: password
-          - name: MYSQL_RANDOM_ROOT_PASSWORD
-            value: "1"
         volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: mariadb-data
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-data
       volumes:
-        - name: mariadb-data
+        - name: postgres-data
           persistentVolumeClaim:
-            claimName: mariadb-data
+            claimName: postgres-data
