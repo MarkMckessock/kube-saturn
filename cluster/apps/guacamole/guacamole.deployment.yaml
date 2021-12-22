@@ -46,7 +46,7 @@ spec:
               value: "guacd"
             - name: GUACD_PORT
               value: "4822"
-            - name: HEADER_ENABLED	
+            - name: HEADER_ENABLED
               value: "true"
             - name: HTTP_AUTH_HEADER
               value: "Cf-Access-Authenticated-User-Email"
