@@ -46,8 +46,8 @@ spec:
               value: guacd
             - name: GUACD_PORT
               value: "4822"
-            - name: GUACAMOLE_HOME
-              value: /etc/guacamole
+            # - name: GUACAMOLE_HOME
+            #   value: /etc/guacamole
             - name: WEBAPP_CONTEXT
               value: ROOT
           ports:
@@ -64,7 +64,7 @@ spec:
               port: http
           volumeMounts:
             - name: configurations
-              mountPath: /etc/guacamole
+              mountPath: /root/.guacamole
             - name: plugins
               mountPath: /etc/guacamole/extensions
       nodeSelector:
