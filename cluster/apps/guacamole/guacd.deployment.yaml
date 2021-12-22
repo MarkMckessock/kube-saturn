@@ -14,8 +14,9 @@ spec:
       app.kubernetes.io/component: guacd
   template:
     metadata:
-      app.kubernetes.io/name: guacamole
-      app.kubernetes.io/component: guacd
+      labels:
+        app.kubernetes.io/name: guacamole
+        app.kubernetes.io/component: guacd
     spec:
       containers:
         - name: guacd

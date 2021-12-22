@@ -14,8 +14,9 @@ spec:
       app.kubernetes.io/component: guacamole
   template:
     metadata:
-      app.kubernetes.io/name: guacamole
-      app.kubernetes.io/component: guacamole
+      labels:
+        app.kubernetes.io/name: guacamole
+        app.kubernetes.io/component: guacamole
     spec:
       containers:
         - name: guacamole
