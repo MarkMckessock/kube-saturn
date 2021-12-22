@@ -25,6 +25,8 @@ spec:
           env: 
             - name: POSTGRES_HOSTNAME
               value: postgres
+            - name: POSTGRES_PORT
+              value: "5432"
             - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
