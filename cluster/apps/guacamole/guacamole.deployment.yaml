@@ -68,7 +68,8 @@ spec:
         kubernetes.io/arch: amd64
       volumes:
         - name: configurations
-          configMap: guacamole-config
+          configMap: 
+            name: guacamole-config
         - name: plugins
           persistentVolumeClaim:
             claimName: guacamole-plugins
