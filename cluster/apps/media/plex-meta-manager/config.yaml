@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: plex-meta-config
+    namespace: media
+stringData:
+    config.yml: ENC[AES256_GCM,data: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,iv:02ccXnexoHVAoMeER6UltAagFeubb7aepEFLNV5Hw/4=,tag:zgNMtPMZJfD+t8uWsULnEg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsN205OEkwNzhuNXZxVDRy
+            cXJSU2JIdVFXR29TRXljZEp0STUrMy9YeUJ3ClgvSDJabVpYSFZiSlRuSTZMc05w
+            QVI3c3NKT0ZFV3piK09oZ1hCTHBCdTAKLS0tIHo1VUtBejZRVCtpTDEzaHlzQlJi
+            TWVkR2R1Nk1WZzl1cEhKS3V5VU5sNWMKjmBxg2++swiMRC0JvZrr2weTO61v1awF
+            67MvNxwgxtv6i/C+o0usivkGDSa1iTao/HsFZfdgk+8YtBvGJrwyiA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-12-23T22:43:47Z"
+    mac: ENC[AES256_GCM,data:rd1+3ZMWX+cJDzHBZA3FHSlr1C8fcxGlO6dqr6l/GX/841M3GCA1bn+5POVH1thAhOey4i/51Zhqj9Ri70FzWscBjeF/juj/27ZUkQvpcTzgRy7EvSQfSOyEZOB74n2cIdNinQUZx+PiWLRzS5vakdFAVAyWdoKUuRSfV/kOXQ4=,iv:j6m0gvVd2OLRwVxLu05lfaX0K5lAXuVFKv7MSuF+d2w=,tag:wFKofImgi+Mm9mc2Z3VC7Q==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.1

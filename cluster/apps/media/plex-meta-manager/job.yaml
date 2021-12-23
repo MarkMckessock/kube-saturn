@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: plex-meta-manager
+  namespace: media
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: plex-meta-manager
+        image: meisnate12/plex-meta-manager:v1.13.3
+        args: ["--run"]
+        volumeMounts:
+          - name: collections
+            mountPath: /collections
+          - name: plex-meta-config
+            mountPath: /config/config.yml
+            subPath: config.yml
+          - name: plex-meta-data
+            mountPath: /config
+          - name: collections-movies
+            subPath: movies.yaml
+            mountPath: /collections/movies-movies.yaml
+          - name: collections-movies-charts
+            subPath: charts.yaml
+            mountPath: /collections/movies-charts.yaml
+          - name: collections-movies-holidays
+            subPath: holidays.yaml
+            mountPath: /collections/movies-holidays.yaml
+          - name: collections-shows-charts
+            subPath: charts.yaml
+            mountPath: /collections/shows-carts.yaml
+      volumes:
+        - name: collections
+          emptyDir: {}
+        - name: plex-meta-config
+          configMap:
+            name: plex-meta-config
+        - name: collections-movies
+          configMap:
+            name: collections-movies
+        - name: collections-movies-charts
+          configMap:
+            name: collections-movies-charts
+        - name: collections-movies-holidays
+          configMap:
+            name: collections-movies-holidays
+        - name: collections-shows-charts
+          configMap:
+            name: collections-shows-charts
+        - name: plex-meta-data
+          persistentVolumeClaim:
+            claimName: plex-meta-dataa
+      restartPolicy: Never
