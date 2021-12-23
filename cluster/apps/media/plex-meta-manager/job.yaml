@@ -35,8 +35,8 @@ spec:
         - name: collections
           emptyDir: {}
         - name: plex-meta-config
-          configMap:
-            name: plex-meta-config
+          secret:
+            secretName: plex-meta-config
         - name: collections-movies
           configMap:
             name: collections-movies
