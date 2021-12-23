@@ -51,5 +51,5 @@ spec:
             name: collections-shows-charts
         - name: plex-meta-data
           persistentVolumeClaim:
-            claimName: plex-meta-dataa
+            claimName: plex-meta-data
       restartPolicy: Never
