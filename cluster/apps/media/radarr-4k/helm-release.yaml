@@ -92,3 +92,5 @@ spec:
       enabled: false
       prometheusRule:
         enabled: false
+    nodeSelector:
+      kubernetes.io/hostname: kari.saturn.kube.markmckessock.com
