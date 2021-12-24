@@ -9,8 +9,12 @@ spec:
     spec:
       containers:
       - name: plex-meta-manager
-        image: meisnate12/plex-meta-manager:v1.13.3
-        args: ["--run"]
+        image: meisnate12/plex-meta-manager:develop
+        env:
+          - name: PMM_READ_ONLY_CONFIG
+            value: "true"
+          - name: PMM_RUN
+            value: "true"
         volumeMounts:
           - name: collections
             mountPath: /collections
