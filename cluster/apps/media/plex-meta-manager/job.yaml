@@ -12,6 +12,7 @@ spec:
           containers:
           - name: plex-meta-manager
             image: meisnate12/plex-meta-manager:develop
+            imagePullPolicy: Always
             env:
               - name: PMM_READ_ONLY_CONFIG
                 value: "true"
