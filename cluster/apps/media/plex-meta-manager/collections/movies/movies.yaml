@@ -17,6 +17,7 @@ data:
         tmdb_movie: <<movie>>
         sync_mode: sync
         collection_order: release
+        collection_mode: hide
     collections:
       101 Dalmatians:
         template: {name: Collection, collection: 100693}
