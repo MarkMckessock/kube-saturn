@@ -25,3 +25,5 @@ spec:
         ports:
         - name: vnc
           containerPort: 5900
+      nodeSelector:
+        kubernetes.io/arch: amd64
