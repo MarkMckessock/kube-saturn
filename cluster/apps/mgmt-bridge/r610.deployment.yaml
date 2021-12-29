@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: r610-idrac
+  namespace: mgmt-bridge
+spec:
+  selector:
+    matchLabels:
+      app: r610-idrac
+  template:
+    metadata:
+      labels:
+        app: r610-idrac
+    spec:
+      containers:
+      - name: r610-idrac
+        image: domistyle/idrac6
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        envFrom:
+          - secretRef:
+              name: r610-config
+        ports:
+        - name: vnc
+          containerPort: 5900
