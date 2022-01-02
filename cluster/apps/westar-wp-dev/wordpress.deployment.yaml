@@ -4,6 +4,8 @@ metadata:
   name: wordpress
   namespace: westar-wp-dev
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: wordpress

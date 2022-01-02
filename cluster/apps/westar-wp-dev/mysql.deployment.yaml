@@ -4,6 +4,8 @@ metadata:
   name: mysql
   namespace: westar-wp-dev
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mysql
