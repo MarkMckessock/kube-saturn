@@ -33,6 +33,8 @@ spec:
     persistence:
       enabled: true
       existingClaim: wordpress-data
+    nodeSelector:
+        kubernetes.io/arch: amd64
     mariadb:
       enabled: true
       nodeSelector:
