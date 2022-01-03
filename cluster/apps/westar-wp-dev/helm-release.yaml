@@ -35,6 +35,8 @@ spec:
       existingClaim: wordpress-data
     mariadb:
       enabled: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
       primary:
         persistence:
           existingClaim: mariadb-data
