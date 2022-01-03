@@ -30,7 +30,7 @@ spec:
           containerPort: 80
         volumeMounts:
           - name: wordpress-data
-            mountPath: /var/lib/mysql
+            mountPath: /var/www/html
       volumes:
         - name: wordpress-data
           persistentVolumeClaim:
