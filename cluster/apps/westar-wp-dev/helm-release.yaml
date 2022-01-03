@@ -37,9 +37,9 @@ spec:
         kubernetes.io/arch: amd64
     mariadb:
       enabled: true
-      nodeSelector:
-        kubernetes.io/arch: amd64
       primary:
+        nodeSelector:
+          kubernetes.io/arch: amd64
         persistence:
           existingClaim: mariadb-data
 
