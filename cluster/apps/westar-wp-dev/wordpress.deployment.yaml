@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wordpress
-        image: wordpress:5.8.2-php8.1-fpm
+        image: wordpress:5.8.2-php8.1
         env:
           - name: WORDPRESS_DB_HOST
             value: mysql
@@ -37,7 +37,7 @@ spec:
                 key: MYSQL_DATABASE
         ports:
         - name: web
-          containerPort: 8080
+          containerPort: 80
         volumeMounts:
           - name: wordpress-data
             mountPath: /var/lib/mysql
