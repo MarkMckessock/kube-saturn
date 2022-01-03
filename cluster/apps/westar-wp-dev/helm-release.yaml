@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: wordpress
-      version: 5.8.2
+      version: 12.2.8
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -22,8 +22,11 @@ spec:
     wordpressLastName: Mckessock
     wordpressBlogName: "Westar Farms"
     existingSecret: wordpress
+    updateStrategy:
+      type: Recreate
     ingress:
       enabled: true
+      ingressClassName: nginx
       hostname: westar.markmckessock.com
       annotations:
         kubernetes.io/tls-acme: "true"
