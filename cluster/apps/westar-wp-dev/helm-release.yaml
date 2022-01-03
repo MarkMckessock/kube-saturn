@@ -22,8 +22,6 @@ spec:
     wordpressLastName: Mckessock
     wordpressBlogName: "Westar Farms"
     existingSecret: wordpress
-    updateStrategy:
-      type: Recreate
     ingress:
       enabled: true
       ingressClassName: nginx
