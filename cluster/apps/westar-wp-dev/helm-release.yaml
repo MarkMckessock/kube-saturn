@@ -21,6 +21,7 @@ spec:
     wordpressFirstName: Mark
     wordpressLastName: Mckessock
     wordpressBlogName: "Westar Farms"
+    wordpressScheme: https
     existingSecret: wordpress
     ingress:
       enabled: true
