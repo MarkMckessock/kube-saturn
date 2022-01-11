@@ -56,8 +56,8 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            server: tower.${DOMAIN}
-            path: /mnt/user/Media
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/media
         mountPath: /data
       transcode:
         enabled: true

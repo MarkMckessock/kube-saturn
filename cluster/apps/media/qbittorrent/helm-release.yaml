@@ -78,16 +78,16 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            server: tower.${DOMAIN}
-            path: /mnt/user/Downloads
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/downloads
         mountPath: /complete
       media:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
-            server: tower.${DOMAIN}
-            path: /mnt/user/Media
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/media
         mountPath: /media
     resources:
       requests:

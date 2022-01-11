@@ -13,33 +13,33 @@ spec:
             app: youtube-dl
         spec:
           containers:
-          - name: youtube-dl
-            command: ["/bin/sh", "-c", "python youtube-dl.py"]
-            image: markmckessock/youtube-dl:v1.6
-            imagePullPolicy: IfNotPresent
-            env:
-              - name: DOWNLOAD_FOLDER
-                value: /downloads
-              - name: ARCHIVE_FILE_PATH
-                value: /archive/archive.txt
-              - name: SKIP_LIVESTREAMS
-                value: "True"
-            volumeMounts:
-              - mountPath: /downloads
-                name: downloads
-              - mountPath: /archive
-                name: archive
-              - mountPath: /app/channels.yaml
-                name: channels
-                subPath: channels.yaml
-              - mountPath: /app/playlists.yaml
-                name: playlists
-                subPath: playlists.yaml
+            - name: youtube-dl
+              command: ["/bin/sh", "-c", "python youtube-dl.py"]
+              image: markmckessock/youtube-dl:v1.6
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: DOWNLOAD_FOLDER
+                  value: /downloads
+                - name: ARCHIVE_FILE_PATH
+                  value: /archive/archive.txt
+                - name: SKIP_LIVESTREAMS
+                  value: "True"
+              volumeMounts:
+                - mountPath: /downloads
+                  name: downloads
+                - mountPath: /archive
+                  name: archive
+                - mountPath: /app/channels.yaml
+                  name: channels
+                  subPath: channels.yaml
+                - mountPath: /app/playlists.yaml
+                  name: playlists
+                  subPath: playlists.yaml
           volumes:
             - name: downloads
               nfs:
-                server: tower.${DOMAIN}
-                path: /mnt/user/Media/youtube
+                server: nfs.truenas.${DOMAIN}
+                path: /mnt/tank/media/youtube
             - name: archive
               persistentVolumeClaim:
                 claimName: youtube-dl-archive

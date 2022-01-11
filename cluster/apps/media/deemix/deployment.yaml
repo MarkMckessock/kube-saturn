@@ -13,31 +13,30 @@ spec:
         app: deemix
     spec:
       containers:
-      - name: deemix
-        image: registry.gitlab.com/bockiii/deemix-docker:latest
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        env:
-          - name: PUID
-            value: "1000"
-          - name: PGID
-            value: "1000"
-        ports:
-        - containerPort: 6595
-          name: deemix
-        volumeMounts:
-          - mountPath: /config
-            name: deemix-config
-          - mountPath: /downloads
-            name: media
+        - name: deemix
+          image: registry.gitlab.com/bockiii/deemix-docker:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          ports:
+            - containerPort: 6595
+              name: deemix
+          volumeMounts:
+            - mountPath: /config
+              name: deemix-config
+            - mountPath: /downloads
+              name: media
       volumes:
         - name: deemix-config
           persistentVolumeClaim:
             claimName: deemix-config
         - name: media
           nfs:
-            path: /mnt/user/Media/music
-            server: tower.${DOMAIN}
-
+            path: /mnt/tank/media/music
+            server: nfs.truenas.${DOMAIN}
