@@ -13,60 +13,63 @@ spec:
         app: omada-controller
     spec:
       containers:
-      - name: omada-controller
-        image: mbentley/omada-controller:4.4
-        ports:
-        - name: web-http
-          containerPort: 8088
-        - name: web-https
-          containerPort: 8043
-        - name: 29810-tcp
-          containerPort: 29810
-          protocol: TCP
-        - name: 29810-udp
-          containerPort: 29810
-          protocol: UDP
-        - name: 29811-tcp
-          containerPort: 29811
-          protocol: TCP
-        - name: 29811-udp
-          containerPort: 29811
-          protocol: UDP
-        - name: 29812-tcp
-          containerPort: 29812
-          protocol: TCP
-        - name: 29812-udp
-          containerPort: 29812
-          protocol: UDP
-        - name: 29813-tcp
-          containerPort: 29813
-          protocol: TCP
-        - name: 29813-udp
-          containerPort: 29813
-          protocol: UDP
-        volumeMounts:
-          - mountPath: /opt/tplink/EAPController/data
-            name: data
-        env:
-          - name: TZ
-            value: America/Toronto
-      - name: nginx
-        image: nginx
-        ports:
-          - name: nginx-http
-            containerPort: 80
-          - name: nginx-https
-            containerPort: 443
-        volumeMounts:
-          - mountPath: /etc/nginx/nginx.conf
-            name: nginx-config
-            subPath: nginx.conf
-          - name: omada-cert
-            mountPath: /etc/ssl/certs/tls.crt
-            subPath: tls.crt
-          - name: omada-cert
-            mountPath: /etc/ssl/certs/tls.key
-            subPath: tls.key
+        - name: omada-controller
+          image: mbentley/omada-controller:4.4
+          ports:
+            - name: web-http
+              containerPort: 8088
+            - name: web-https
+              containerPort: 8043
+            - name: 29810-tcp
+              containerPort: 29810
+              protocol: TCP
+            - name: 29810-udp
+              containerPort: 29810
+              protocol: UDP
+            - name: 29811-tcp
+              containerPort: 29811
+              protocol: TCP
+            - name: 29811-udp
+              containerPort: 29811
+              protocol: UDP
+            - name: 29812-tcp
+              containerPort: 29812
+              protocol: TCP
+            - name: 29812-udp
+              containerPort: 29812
+              protocol: UDP
+            - name: 29813-tcp
+              containerPort: 29813
+              protocol: TCP
+            - name: 29813-udp
+              containerPort: 29813
+              protocol: UDP
+            - name: 29814-tcp
+              containerPort: 29814
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/tplink/EAPController/data
+              name: data
+          env:
+            - name: TZ
+              value: America/Toronto
+        - name: nginx
+          image: nginx
+          ports:
+            - name: nginx-http
+              containerPort: 80
+            - name: nginx-https
+              containerPort: 443
+          volumeMounts:
+            - mountPath: /etc/nginx/nginx.conf
+              name: nginx-config
+              subPath: nginx.conf
+            - name: omada-cert
+              mountPath: /etc/ssl/certs/tls.crt
+              subPath: tls.crt
+            - name: omada-cert
+              mountPath: /etc/ssl/certs/tls.key
+              subPath: tls.key
       volumes:
         - name: data
           persistentVolumeClaim:
