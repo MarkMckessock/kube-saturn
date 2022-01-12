@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: guacd
-          image: guacamole/guacd:1.3.0
+          image: guacamole/guacd:1.4.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: guacd
