@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: monica
-      tag: 3.5.0-apache
+      tag: 3.6.1-apache
     env:
       TZ: "America/Toronto"
       DB_HOST: mysql.monica
