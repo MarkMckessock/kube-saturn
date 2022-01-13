@@ -12,3 +12,4 @@ resources:
   - bootc.yaml
   - bitnami.yaml
   - kasten-io.yaml
+  - democratic-csi.yaml
