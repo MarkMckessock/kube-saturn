@@ -5,6 +5,7 @@ metadata:
   namespace: youtube-dl
 spec:
   schedule: "@daily"
+  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
