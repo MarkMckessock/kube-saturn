@@ -45,7 +45,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: prowlarr-config
+        existingClaim: prowlarr
     resources:
       requests:
         memory: 100Mi

@@ -35,7 +35,7 @@ spec:
       volumes:
         - name: deemix-config
           persistentVolumeClaim:
-            claimName: deemix-config
+            claimName: deemix
         - name: media
           nfs:
             path: /mnt/tank/media/music
