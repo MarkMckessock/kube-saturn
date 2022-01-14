@@ -26,11 +26,11 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-        - alertmanager.${DOMAIN}
-        tls:
-        - secretName: alertmanager-cert
-          hosts:
           - alertmanager.${DOMAIN}
+        tls:
+          - secretName: alertmanager-cert
+            hosts:
+              - alertmanager.${DOMAIN}
       alertmanagerSpec:
         externalUrl: https://alertmanager.${DOMAIN}
     grafana:
@@ -41,11 +41,11 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-        - grafana.${DOMAIN}
-        tls:
-        - secretName: grafana-cert
-          hosts:
           - grafana.${DOMAIN}
+        tls:
+          - secretName: grafana-cert
+            hosts:
+              - grafana.${DOMAIN}
     prometheus:
       ingress:
         enabled: true
@@ -54,21 +54,21 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-        - prometheus.${DOMAIN}
-        tls:
-        - secretName: prometheus-cert
-          hosts:
           - prometheus.${DOMAIN}
+        tls:
+          - secretName: prometheus-cert
+            hosts:
+              - prometheus.${DOMAIN}
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
-        retentionSize: 24GB
+        retentionSize: 40GB
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: ${STORAGE_CLASS}
+              storageClassName: truenas-iscsi-csi
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
-                  storage: 25Gi
+                  storage: 50Gi
