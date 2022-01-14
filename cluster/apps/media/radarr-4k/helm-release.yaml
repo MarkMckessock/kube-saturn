@@ -60,7 +60,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: radarr-4k-config
+        existingClaim: radarr-4k
       media:
         enabled: true
         type: custom
