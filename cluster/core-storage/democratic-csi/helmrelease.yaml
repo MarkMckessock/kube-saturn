@@ -20,6 +20,16 @@ spec:
       # should be globally unique for a given cluster
       name: "org.democratic-csi.iscsi"
 
+    controller:
+      driver:
+        image: docker.io/democraticcsi/democratic-csi:v1.4.4
+        imagePullPolicy: IfNotPresent
+
+    node:
+      driver:
+        image: docker.io/democraticcsi/democratic-csi:v1.4.4
+        imagePullPolicy: IfNotPresent
+
     storageClasses:
       - name: truenas-iscsi-csi
         defaultClass: false
