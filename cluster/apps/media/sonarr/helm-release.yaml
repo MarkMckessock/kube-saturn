@@ -52,6 +52,8 @@ spec:
           - hosts:
               - "sonarr.${DOMAIN}"
             secretName: sonarr-cert
+    nodeSelector:
+      kubernetes.io/hostname: kari.saturn.kube.markmckessock.com
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
