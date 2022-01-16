@@ -22,6 +22,9 @@ spec:
     wordpressLastName: Mckessock
     wordpressBlogName: "Westar Farms"
     wordpressScheme: https
+    wordpressExtraConfigContent: |
+      @ini_set( 'post_max_size', '128M');
+      @ini_set( 'memory_limit', '256M' );
     existingSecret: wordpress
     ingress:
       enabled: true
