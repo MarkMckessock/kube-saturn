@@ -28,6 +28,7 @@ spec:
     existingSecret: wordpress
     updateStrategy:
       type: Recreate
+      rollingUpdate: null
     ingress:
       enabled: true
       ingressClassName: nginx
