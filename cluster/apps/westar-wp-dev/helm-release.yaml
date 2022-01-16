@@ -38,6 +38,7 @@ spec:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         nginx.ingress.kubernetes.io/proxy-body-size: 128m
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       tls: true
     persistence:
       enabled: true
