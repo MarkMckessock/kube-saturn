@@ -26,6 +26,8 @@ spec:
       @ini_set( 'post_max_size', '128M');
       @ini_set( 'memory_limit', '256M' );
     existingSecret: wordpress
+    updateStrategy:
+      type: Recreate
     ingress:
       enabled: true
       ingressClassName: nginx
