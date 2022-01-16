@@ -33,9 +33,9 @@ spec:
       tls: true
     persistence:
       enabled: true
-      existingClaim: wordpress-data
+      existingClaim: wordpress
     nodeSelector:
-        kubernetes.io/arch: amd64
+      kubernetes.io/arch: amd64
     mariadb:
       enabled: true
       primary:
@@ -44,5 +44,4 @@ spec:
         auth:
           existingSecret: mariadb
         persistence:
-          existingClaim: mariadb-data
-
+          existingClaim: mariadb
