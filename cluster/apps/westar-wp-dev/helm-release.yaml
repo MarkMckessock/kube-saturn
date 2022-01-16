@@ -38,10 +38,10 @@ spec:
       kubernetes.io/arch: amd64
     mariadb:
       enabled: true
+      auth:
+        existingSecret: mariadb
       primary:
         nodeSelector:
           kubernetes.io/arch: amd64
-        auth:
-          existingSecret: mariadb
         persistence:
           existingClaim: mariadb
