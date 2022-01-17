@@ -25,6 +25,8 @@ spec:
       config:
         enabled: true
         existingClaim: vaultwarden-config
+    nodeSelector:
+      kubernetes.io/hostname: kari.saturn.kube.markmckessock.com
     ingress:
       main:
         enabled: true
@@ -35,18 +37,18 @@ spec:
         hosts:
           - host: vaultwarden.${DOMAIN}
             paths:
-            - path: /
-              pathType: Prefix
-              service:
-                port: 80
-            - path: /notifications/hub/negotiate
-              pathType: Prefix
-              service:
-                port: 80
-            - path: /notifications/hub
-              pathType: Prefix
-              service:
-                port: 3012
+              - path: /
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: 80
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: 3012
         tls:
           - secretName: vaultwarden-cert
             hosts:
