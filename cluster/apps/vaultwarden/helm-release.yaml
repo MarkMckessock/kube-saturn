@@ -24,7 +24,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: vaultwarden-config
+        existingClaim: vaultwarden
     nodeSelector:
       kubernetes.io/hostname: kari.saturn.kube.markmckessock.com
     ingress:
