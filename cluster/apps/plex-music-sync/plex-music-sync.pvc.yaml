@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-media-sync
-  namespace: plex-media-sync
+  name: plex-music-sync
+  namespace: plex-music-sync
 spec:
   accessModes:
     - ReadWriteOnce
