@@ -49,3 +49,5 @@ spec:
               persistentVolumeClaim:
                 claimName: plex-music-sync
           restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/arch: amd64
