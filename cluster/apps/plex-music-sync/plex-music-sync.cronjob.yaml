@@ -39,11 +39,11 @@ spec:
                   name: music
                 - mountPath: /oauth
                   name: oauth-cache
-            volumes:
-              - name: music
-                nfs:
-                  server: nfs.truenas.${DOMAIN}
-                  path: /mnt/tank/media/music
-              - name: oauth-cache
-                persistentVolumeClaim:
-                  claimName: plex-music-sync
+          volumes:
+            - name: music
+              nfs:
+                server: nfs.truenas.${DOMAIN}
+                path: /mnt/tank/media/music
+            - name: oauth-cache
+              persistentVolumeClaim:
+                claimName: plex-music-sync
