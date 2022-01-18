@@ -32,6 +32,8 @@ spec:
                   value: "True"
                 - name: DOWNLOAD_ALBUM
                   value: "True"
+                - name: "DEBUG"
+                  value: "True"
               envFrom:
                 - secretRef:
                     name: plex-music-sync
