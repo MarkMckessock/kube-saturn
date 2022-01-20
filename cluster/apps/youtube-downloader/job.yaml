@@ -43,7 +43,7 @@ spec:
                 path: /mnt/tank/media/youtube
             - name: archive
               persistentVolumeClaim:
-                claimName: youtube-dl-archive
+                claimName: youtube-dl
             - name: channels
               configMap:
                 name: youtube-dl-config
