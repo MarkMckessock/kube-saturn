@@ -28,6 +28,6 @@ spec:
       volumes:
         - name: gotify-config
           persistentVolumeClaim:
-            claimName: gotify-config
+            claimName: gotify
       nodeSelector:
         kubernetes.io/arch: amd64
