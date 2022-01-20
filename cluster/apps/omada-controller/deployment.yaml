@@ -15,6 +15,7 @@ spec:
       containers:
         - name: omada-controller
           image: mbentley/omada-controller:5.0
+          imagePullPolicy: Always
           ports:
             - name: web-http
               containerPort: 8088
