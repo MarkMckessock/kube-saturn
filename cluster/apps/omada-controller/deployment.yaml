@@ -73,7 +73,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: omada-data
+            claimName: omada
         - name: nginx-config
           configMap:
             name: nginx-config
