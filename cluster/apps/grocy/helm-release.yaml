@@ -39,4 +39,4 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: grocy-config
+        existingClaim: grocy
