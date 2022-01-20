@@ -4,7 +4,7 @@ metadata:
   name: postgres
   namespace: guacamole
 spec:
-  strategy: 
+  strategy:
     type: Recreate
   selector:
     matchLabels:
@@ -17,33 +17,33 @@ spec:
         app.kubernetes.io/component: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:13
-        imagePullPolicy: IfNotPresent
-        ports:
-          - name: pgsql
-            containerPort: 5432
-        env:
-          - name: POSTGRES_DB
-            valueFrom:
-              secretKeyRef:
-                name: postgres-config
-                key: database
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: postgres-config
-                key: user
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: postgres-config
-                key: password
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgres-data
-            subPath: guacamole
+        - name: postgres
+          image: postgres:13
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: pgsql
+              containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config
+                  key: database
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config
+                  key: password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+              subPath: guacamole
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: postgres-data
+            claimName: postgres
