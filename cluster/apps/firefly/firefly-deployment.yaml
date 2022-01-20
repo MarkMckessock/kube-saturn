@@ -19,36 +19,36 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: fireflyiii/core
-        name: firefly-iii
-        env:
-        - name: APP_ENV
-          value: "production"
-        - name: DB_HOST
-          value: postgres.firefly-iii
-        - name: DB_CONNECTION
-          value: pgsql
-        - name: DB_DATABASE
-          value: firefly
-        - name: TRUSTED_PROXIES
-          value: "**"
-        - name: TZ
-          value: America/Toronto
-        - name: AUTHENTICATION_GUARD
-          value: remote_user_guard
-        - name: AUTHENTICATION_GUARD_HEADER
-          value: Cf-Access-Authenticated-User-Email
-        envFrom:
-          - secretRef:
-              name: firefly
-        ports:
-        - containerPort: 8080
+        - image: fireflyiii/core
           name: firefly-iii
-        volumeMounts:
-        - mountPath: "/var/www/html/firefly-iii/storage/upload"
-          name: firefly-iii-upload 
-        imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_ENV
+              value: "production"
+            - name: DB_HOST
+              value: postgres.firefly-iii
+            - name: DB_CONNECTION
+              value: pgsql
+            - name: DB_DATABASE
+              value: firefly
+            - name: TRUSTED_PROXIES
+              value: "**"
+            - name: TZ
+              value: America/Toronto
+            - name: AUTHENTICATION_GUARD
+              value: remote_user_guard
+            - name: AUTHENTICATION_GUARD_HEADER
+              value: Cf-Access-Authenticated-User-Email
+          envFrom:
+            - secretRef:
+                name: firefly
+          ports:
+            - containerPort: 8080
+              name: firefly-iii
+          volumeMounts:
+            - mountPath: "/var/www/html/firefly-iii/storage/upload"
+              name: firefly-iii-upload
+          imagePullPolicy: IfNotPresent
       volumes:
         - name: firefly-iii-upload
           persistentVolumeClaim:
-            claimName: firefly-iii-upload
+            claimName: firefly-upload

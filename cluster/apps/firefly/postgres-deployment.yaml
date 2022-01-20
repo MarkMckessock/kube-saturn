@@ -13,29 +13,29 @@ spec:
         app: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:13
-        ports:
-        - containerPort: 5432
-          name: postgres
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgres-data
-            subPath: firefly
-        env:
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: firefly
-                key: DB_USERNAME
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: firefly
-                key: DB_PASSWORD
-          - name: POSTGRES_DB
-            value: firefly
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+              subPath: firefly
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: firefly
+                  key: DB_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: firefly
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              value: firefly
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: postgres-data
+            claimName: postgres
