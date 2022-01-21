@@ -15,19 +15,19 @@ spec:
         app.kubernetes.io/component: proxy
     spec:
       containers:
-      - name: proxy
-        image: reallibrephotos/librephotos-proxy:dev
-        ports:
-        - containerPort: 80
-        volumeMounts:
-          - mountPath: /data
-            name: data
-          - mountPath: /protected_media
-            name: media
+        - name: proxy
+          image: reallibrephotos/librephotos-proxy:dev
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /protected_media
+              name: media
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: librephotos-data
+            claimName: data
         - name: media
           persistentVolumeClaim:
-            claimName: librephotos-media
+            claimName: media

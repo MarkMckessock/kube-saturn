@@ -15,53 +15,52 @@ spec:
         app.kubernetes.io/component: backend
     spec:
       containers:
-      - name: backend
-        image: reallibrephotos/librephotos:dev
-        volumeMounts:
-          - mountPath: /data
-            name: data
-          - mountPath: /protected_media
-            name: media
-        env:
-          - name: BACKEND_HOST
-            value: backend
-          - name: DB_BACKEND
-            value: postgresql
-          - name: DB_HOST
-            value: postgres
-          - name: DB_PORT
-            value: "5432"
-          - name: REDIS_HOST
-            value: redis
-          - name: REDIS_PORT
-            value: "6379"
-          - name: TIME_ZONE
-            value: America/Toronto
-          - name: WEB_CONCURRENCY
-            value: "2"
-          - name: HEAVYWEIGHT_PROCESS
-            value: "1"
-        envFrom:
-          - secretRef:
-              name: librephotos
-        ports:
-          - name: backend
-            containerPort: 8001
-        readinessProbe:
-          tcpSocket:
-            port: backend
-          initialDelaySeconds: 15
-        livenessProbe:
-          tcpSocket:
-            port: backend
-          initialDelaySeconds: 15
+        - name: backend
+          image: reallibrephotos/librephotos:dev
+          volumeMounts:
+            - mountPath: /data
+              name: data
+            - mountPath: /protected_media
+              name: media
+          env:
+            - name: BACKEND_HOST
+              value: backend
+            - name: DB_BACKEND
+              value: postgresql
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: TIME_ZONE
+              value: America/Toronto
+            - name: WEB_CONCURRENCY
+              value: "2"
+            - name: HEAVYWEIGHT_PROCESS
+              value: "1"
+          envFrom:
+            - secretRef:
+                name: librephotos
+          ports:
+            - name: backend
+              containerPort: 8001
+          readinessProbe:
+            tcpSocket:
+              port: backend
+            initialDelaySeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: backend
+            initialDelaySeconds: 15
       nodeSelector:
         kubernetes.io/arch: amd64
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: librephotos-data
+            claimName: data
         - name: media
           persistentVolumeClaim:
-            claimName: librephotos-media
-  
+            claimName: media
