@@ -18,8 +18,8 @@ spec:
   values:
     env:
       TZ: "America/Toronto"
-      UID: "1000"
-      GID: "1000"
+      PHOTOPRISM_UID: "1000"
+      PHOTOPRISM_GID: "1000"
       PHOTOPRISM_ADMIN_PASSWORD: ${PHOTOPRISM_ADMIN_PASSWORD}
     nodeSelector:
       kubernetes.io/arch: amd64
