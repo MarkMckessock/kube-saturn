@@ -42,7 +42,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: photoprism-config
+        existingClaim: photoprism
       originals:
         enabled: true
-        existingClaim: photoprism-data
+        existingClaim: data
