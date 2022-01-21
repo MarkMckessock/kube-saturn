@@ -31,7 +31,7 @@ spec:
         imagePullPolicy: IfNotPresent
 
     storageClasses:
-      - name: freenas-nfs-csi
+      - name: truenas-nfs-csi
         defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
