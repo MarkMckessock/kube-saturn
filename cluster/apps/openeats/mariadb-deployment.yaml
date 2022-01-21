@@ -15,19 +15,19 @@ spec:
         app.kubernetes.io/component: mariadb
     spec:
       containers:
-      - name: mariadb
-        image: mariadb:10.7.1
-        ports:
-          - containerPort: 3306
-        envFrom:
-          - configMapRef:
-              name: openeats
-          - secretRef:
-              name: openeats
-        volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: mariadb-data
+        - name: mariadb
+          image: mariadb:10.7.1
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - configMapRef:
+                name: openeats
+            - secretRef:
+                name: openeats
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mariadb-data
       volumes:
         - name: mariadb-data
           persistentVolumeClaim:
-            claimName: mariadb-data
+            claimName: mariadb

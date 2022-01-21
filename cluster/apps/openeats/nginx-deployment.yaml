@@ -15,33 +15,33 @@ spec:
         app.kubernetes.io/component: nginx
     spec:
       containers:
-      - name: nginx
-        image: openeats/openeats-nginx
-        envFrom:
-          - configMapRef:
-              name: openeats
-          - secretRef:
-              name: openeats
-        args:
-          - "./start.sh"
-        volumeMounts:
-          - mountPath: /var/www/html/openeats-static/static-files
-            name: static-files
-          - mountPath: /var/www/html/openeats-static/site-media
-            name: site-media
-          - mountPath: /var/www/html/openeats-static/public-ui
-            name: public-ui
-        ports:
-          - containerPort: 80
+        - name: nginx
+          image: openeats/openeats-nginx
+          envFrom:
+            - configMapRef:
+                name: openeats
+            - secretRef:
+                name: openeats
+          args:
+            - "./start.sh"
+          volumeMounts:
+            - mountPath: /var/www/html/openeats-static/static-files
+              name: static-files
+            - mountPath: /var/www/html/openeats-static/site-media
+              name: site-media
+            - mountPath: /var/www/html/openeats-static/public-ui
+              name: public-ui
+          ports:
+            - containerPort: 80
       nodeSelector:
         kubernetes.io/arch: amd64
       volumes:
         - name: static-files
           persistentVolumeClaim:
-            claimName: openeats-static-files
+            claimName: static-files
         - name: site-media
           persistentVolumeClaim:
-            claimName: openeats-site-media
+            claimName: site-media
         - name: public-ui
           persistentVolumeClaim:
-            claimName: openeats-public-ui
+            claimName: public-ui

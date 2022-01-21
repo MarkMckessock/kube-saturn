@@ -11,21 +11,21 @@ spec:
         app.kubernetes.io/component: web
     spec:
       containers:
-      - name: web
-        image: openeats/openeats-web
-        args:
-          - yarn
-          - start
-        envFrom:
-          - configMapRef:
-              name: openeats
-          - secretRef:
-              name: openeats
-        volumeMounts:
-          - mountPath: /code/build
-            name: public-ui
+        - name: web
+          image: openeats/openeats-web
+          args:
+            - yarn
+            - start
+          envFrom:
+            - configMapRef:
+                name: openeats
+            - secretRef:
+                name: openeats
+          volumeMounts:
+            - mountPath: /code/build
+              name: public-ui
       volumes:
         - name: public-ui
           persistentVolumeClaim:
-            claimName: openeats-public-ui
+            claimName: public-ui
       restartPolicy: OnFailure

@@ -15,26 +15,26 @@ spec:
         app.kubernetes.io/component: api
     spec:
       containers:
-      - name: api
-        image: openeats/openeats-api
-        args:
-          - "/startup/prod-entrypoint.sh"
-        envFrom:
-          - configMapRef:
-              name: openeats
-          - secretRef:
-              name: openeats
-        volumeMounts:
-          - mountPath: /code/static-files
-            name: static-files
-          - mountPath: /code/site-media
-            name: site-media
-        ports:
-          - containerPort: 8000
+        - name: api
+          image: openeats/openeats-api
+          args:
+            - "/startup/prod-entrypoint.sh"
+          envFrom:
+            - configMapRef:
+                name: openeats
+            - secretRef:
+                name: openeats
+          volumeMounts:
+            - mountPath: /code/static-files
+              name: static-files
+            - mountPath: /code/site-media
+              name: site-media
+          ports:
+            - containerPort: 8000
       volumes:
         - name: static-files
           persistentVolumeClaim:
-            claimName: openeats-static-files
+            claimName: static-files
         - name: site-media
           persistentVolumeClaim:
-            claimName: openeats-site-media
+            claimName: site-media
