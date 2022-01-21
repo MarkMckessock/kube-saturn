@@ -63,7 +63,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: monica-config
+        existingClaim: monica
     resources:
       requests:
         memory: 250Mi

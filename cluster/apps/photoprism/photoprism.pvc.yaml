@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres-data
-  namespace: librephotos
+  name: photoprism
+  namespace: photoprism
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-  storageClassName: ${STORAGE_CLASS}
+  storageClassName: truenas-iscsi-csi

@@ -13,30 +13,30 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:8.0
-        ports:
-        - containerPort: 3306
-          name: mysql
-        volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: mysql-data
-        env:
-          - name: MYSQL_RANDOM_ROOT_PASSWORD
-            value: "true"
-          - name: MYSQL_DATABASE
-            value: monica
-          - name: MYSQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: monica
-                key: DB_USERNAME
-          - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: monica
-                key: DB_PASSWORD
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-data
+          env:
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: "true"
+            - name: MYSQL_DATABASE
+              value: monica
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: monica
+                  key: DB_USERNAME
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: monica
+                  key: DB_PASSWORD
       volumes:
         - name: mysql-data
           persistentVolumeClaim:
-            claimName: mysql-data
+            claimName: mysql

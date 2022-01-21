@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: librephotos-data
-  namespace: librephotos
+  name: site-media
+  namespace: openeats
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
-  storageClassName: ${STORAGE_CLASS}
+  storageClassName: truenas-nfs-csi
