@@ -63,7 +63,7 @@ spec:
 
     persistence:
       enabled: true
-      existingClaim: netbox-media
+      existingClaim: netbox
 
     ingress:
       enabled: true

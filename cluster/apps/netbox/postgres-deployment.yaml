@@ -13,26 +13,26 @@ spec:
         app: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:13
-        ports:
-        - containerPort: 5432
-          name: postgres
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgres-data
-            subPath: netbox
-        env:
-          - name: POSTGRES_USER
-            value: netbox
-          - name: POSTGRES_DB
-            value: netbox
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: netbox
-                key: db_password
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+              subPath: netbox
+          env:
+            - name: POSTGRES_USER
+              value: netbox
+            - name: POSTGRES_DB
+              value: netbox
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: netbox
+                  key: db_password
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: postgres-data
+            claimName: postgres
