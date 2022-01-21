@@ -13,19 +13,19 @@ spec:
         app: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:13
-        ports:
-        - containerPort: 5432
-          name: postgres
-        volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgres-data
-            subPath: wikijs
-        envFrom:
-          - secretRef:
-              name: wikijs
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+              subPath: wikijs
+          envFrom:
+            - secretRef:
+                name: wikijs
       volumes:
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: postgres-data
+            claimName: postgres
