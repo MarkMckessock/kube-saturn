@@ -38,3 +38,5 @@ spec:
         - name: site-media
           persistentVolumeClaim:
             claimName: site-media
+      nodeSelector:
+        kubernetes.io/arch: amd64
