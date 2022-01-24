@@ -70,4 +70,4 @@ spec:
       limits:
         memory: 16000Mi
     nodeSelector:
-      class: compute
+      kubernetes.io/hostname: kari.saturn.kube.markmckessock.com
