@@ -17,7 +17,7 @@ spec:
       interval: 5m
   values:
     ingress:
-      enabled: "true"
+      enabled: true
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
