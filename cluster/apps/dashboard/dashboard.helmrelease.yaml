@@ -16,13 +16,15 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    protocolHttp: true
     ingress:
       enabled: true
+      className: nginx
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
       hosts:
-        - host: "dashboard.${DOMAIN}"
+        - "dashboard.${DOMAIN}"
       tls:
         - hosts:
             - "dashboard.${DOMAIN}"
