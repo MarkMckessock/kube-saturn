@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: gns3-controller
   namespace: gns3
-stringData:
+data:
   gns3_controller.conf: |
     {
       "computes": [],

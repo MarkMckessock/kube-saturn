@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: gns3
   namespace: gns3
-stringData:
+data:
   GNS3.conf: |
     [Server]
     host = 0.0.0.0
