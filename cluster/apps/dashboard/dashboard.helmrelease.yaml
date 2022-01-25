@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    extraArgs:
+      - --enable-skip-login
     ingress:
       enabled: true
       className: nginx
