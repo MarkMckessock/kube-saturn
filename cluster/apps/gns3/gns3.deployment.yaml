@@ -33,6 +33,7 @@ spec:
       containers:
         - name: gns3
           image: markmckessock/gns3server:v2.2.29
+          imagePullPolicy: Always
           ports:
             - name: web-ui
               containerPort: 3080
