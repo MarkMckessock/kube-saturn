@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
             - name: plex-meta-manager
-              image: meisnate12/plex-meta-manager:v1.15.0
+              image: meisnate12/plex-meta-manager:v1.15.1
               env:
                 - name: PMM_READ_ONLY_CONFIG
                   value: "true"
