@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - name: plex-music-sync
-              image: markmckessock/plex-music-sync:v1.3
+              image: markmckessock/plex-music-sync:v1.4
               resources:
                 limits:
                   memory: "128Mi"
