@@ -44,6 +44,8 @@ spec:
               name: projects
             - mountPath: /etc/xdg
               name: config-dir
+          securityContext:
+            privileged: true
       volumes:
         - name: images
           nfs:
