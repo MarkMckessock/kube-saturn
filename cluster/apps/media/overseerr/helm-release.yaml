@@ -17,7 +17,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/sct/overseerr
+      repository: sctx/overseerr
       tag: 1.28.0
     env:
       TZ: "America/Toronto"
