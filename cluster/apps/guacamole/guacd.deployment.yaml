@@ -22,10 +22,10 @@ spec:
         - name: guacd
           image: guacamole/guacd:1.4.0
           imagePullPolicy: IfNotPresent
+          args: ["-L", "debug"]
           ports:
             - name: guacd
               containerPort: 4822
               protocol: TCP
       nodeSelector:
         kubernetes.io/arch: amd64
-            
