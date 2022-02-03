@@ -22,7 +22,9 @@ spec:
         - name: guacd
           image: guacamole/guacd:1.4.0
           imagePullPolicy: IfNotPresent
-          args: ["-L", "debug"]
+          env:
+            - name: GUACD_LOG_LEVEL
+              value: debug
           ports:
             - name: guacd
               containerPort: 4822
