@@ -38,6 +38,8 @@ spec:
             - mountPath: "/config"
               name: ubooquity
               subPath: "config"
+            - mountPath: /books
+              name: books
           imagePullPolicy: IfNotPresent
       volumes:
         - name: ubooquity
