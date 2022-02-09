@@ -15,13 +15,6 @@ spec:
       http:
         paths:
           - pathType: Exact
-            path: "/ubooquity"
-            backend:
-              service:
-                name: ubooquity
-                port:
-                  name: library
-          - pathType: Exact
             path: "/ubooquity/admin"
             backend:
               service:
@@ -42,6 +35,13 @@ spec:
                 name: ubooquity
                 port:
                   name: admin
+          - pathType: Prefix
+            path: "/ubooquity"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: library
   tls:
     - hosts:
         - ubooquity.${DOMAIN}
