@@ -35,6 +35,13 @@ spec:
                 name: ubooquity
                 port:
                   name: admin
+          - pathType: Prefix
+            path: "/ubooquity/admin-api"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: admin
   tls:
     - hosts:
         - ubooquity.${DOMAIN}
