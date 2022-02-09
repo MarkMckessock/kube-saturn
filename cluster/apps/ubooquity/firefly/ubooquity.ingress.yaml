@@ -7,6 +7,7 @@ metadata:
     # nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+    nginx.ingress.kubernetes.io/app-root: /ubooquity
 spec:
   ingressClassName: nginx
   rules:
