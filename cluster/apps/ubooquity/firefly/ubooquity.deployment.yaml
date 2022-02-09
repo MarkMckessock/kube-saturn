@@ -43,3 +43,7 @@ spec:
         - name: ubooquity
           persistentVolumeClaim:
             claimName: ubooquity
+        - name: books
+          nfs:
+            path: /mnt/tank/media/books
+            server: nfs.truenas.${DOMAIN}
