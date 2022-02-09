@@ -22,7 +22,7 @@ spec:
                 port:
                   name: library
           - pathType: Prefix
-            path: "/admin"
+            path: "/ubooquity/admin"
             backend:
               service:
                 name: ubooquity
