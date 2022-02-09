@@ -21,6 +21,13 @@ spec:
                 name: ubooquity
                 port:
                   name: library
+          - pathType: Prefix
+            path: "/admin"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: admin
   tls:
     - hosts:
         - ubooquity.${DOMAIN}
