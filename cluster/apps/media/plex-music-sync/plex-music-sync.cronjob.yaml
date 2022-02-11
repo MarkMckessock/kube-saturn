@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: plex-music-sync
-  namespace: plex-music-sync
+  namespace: media
 spec:
   schedule: "@daily"
   successfulJobsHistoryLimit: 1

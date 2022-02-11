@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ubooquity
+  namespace: ubooquity
+  annotations:
+    # nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+    nginx.ingress.kubernetes.io/app-root: /ubooquity
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ubooquity.${DOMAIN}
+      http:
+        paths:
+          - pathType: Exact
+            path: "/ubooquity/admin"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: admin
+          - pathType: Prefix
+            path: "/ubooquity/admin-res"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: admin
+          - pathType: Prefix
+            path: "/ubooquity/admin-api"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: admin
+          - pathType: Prefix
+            path: "/ubooquity"
+            backend:
+              service:
+                name: ubooquity
+                port:
+                  name: library
+  tls:
+    - hosts:
+        - ubooquity.${DOMAIN}
+      secretName: ubooquity-tls

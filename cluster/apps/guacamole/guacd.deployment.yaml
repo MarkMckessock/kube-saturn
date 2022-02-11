@@ -28,4 +28,3 @@ spec:
               protocol: TCP
       nodeSelector:
         kubernetes.io/arch: amd64
-            
