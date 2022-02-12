@@ -57,6 +57,8 @@ data:
         template: {name: Chart, num: 4 }
         imdb_list: https://www.imdb.com/search/title/?groups=oscar_best_picture_nominees&year=2021
         summary: 2022 Best Picture Nominees
+        filters:
+          title.not: "Judas and the Black Messiah"
       Best of 2014:
         template: { name: Best of, year: 2014 }
       Best of 2015:
