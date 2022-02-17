@@ -25,7 +25,7 @@ data:
     allocate_aux_console_ports = False
     mmap_support = True
     ; Path of the dynamips path
-    dynamips_path = /usr/local/bin/dynamips
+    dynamips_path = /usr/bin/dynamips
     sparse_memory_support = True
     ghost_ios_support = True
 
