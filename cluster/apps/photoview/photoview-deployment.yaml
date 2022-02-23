@@ -19,7 +19,7 @@ spec:
             - name: photoview
               containerPort: 80
           volumeMounts:
-            - name: photoview-photos
+            - name: photos
               mountPath: /photos
             - name: photoview-cache
               mountPath: /app/cache
@@ -41,9 +41,10 @@ spec:
             - name: PHOTOVIEW_MEDIA_CACHE
               value: "/app/cache"
       volumes:
-        - name: photoview-photos
-          persistentVolumeClaim:
-            claimName: photos
+        - name: photos
+          nfs:
+            path: /mnt/tank/users/mmckessock/Pictures
+            server: nfs.truenas.${DOMAIN}
         - name: photoview-cache
           persistentVolumeClaim:
             claimName: cache
