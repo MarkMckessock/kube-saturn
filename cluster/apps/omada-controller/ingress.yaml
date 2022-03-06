@@ -9,6 +9,8 @@ metadata:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: https://$http_host:8043/([^/]+)/login
+    nginx.ingress.kubernetes.io/proxy-redirect-to: https://$http_host/$1/login
 spec:
   ingressClassName: nginx
   rules:
@@ -21,7 +23,7 @@ spec:
           service:
             name: omada-ui
             port: 
-              number: 443
+              name: web-https
   tls:
     - hosts:
       - omada.${DOMAIN}
