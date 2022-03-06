@@ -70,7 +70,7 @@ spec:
         enabled: true
         ports:
           http:
-            port: 443
+            port: 8043
 
       controller-tcp:
         enabled: true
