@@ -48,22 +48,22 @@ spec:
     #         mountPath: /etc/ssl/certs/tls.crt
     #         subPath: tls.crt
 
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
-        hosts:
-          - host: "omada.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "omada.${DOMAIN}"
-            secretName: omada-tls
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     annotations:
+    #       nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    #       kubernetes.io/tls-acme: "true"
+    #       cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+    #     hosts:
+    #       - host: "omada.${DOMAIN}"
+    #         paths:
+    #           - path: /
+    #             pathType: Prefix
+    #     tls:
+    #       - hosts:
+    #           - "omada.${DOMAIN}"
+    #         secretName: omada-tls
 
     service:
       main:
@@ -149,27 +149,27 @@ spec:
         enabled: true
         mountPath: /opt/tplink/EAPController/data
         existingClaim: omada
-      nginx-config:
-        enabled: true
-        type: configMap
-        mountPath: '-'
-        name: nginx-config
-      tls-crt:
-        enabled: true
-        type: secret
-        name: omada-tls
-        mountPath: '-'
-        items:
-        - key: tls.crt
-          path: tls.crt
-      tls-key:
-        enabled: true
-        type: secret
-        name: omada-tls
-        mountPath: '-'
-        items:
-        - key: tls.key
-          path: tls.key
+      # nginx-config:
+      #   enabled: true
+      #   type: configMap
+      #   mountPath: '-'
+      #   name: nginx-config
+      # tls-crt:
+      #   enabled: true
+      #   type: secret
+      #   name: omada-tls
+      #   mountPath: '-'
+      #   items:
+      #   - key: tls.crt
+      #     path: tls.crt
+      # tls-key:
+      #   enabled: true
+      #   type: secret
+      #   name: omada-tls
+      #   mountPath: '-'
+      #   items:
+      #   - key: tls.key
+      #     path: tls.key
   
 
     resources:
