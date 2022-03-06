@@ -22,17 +22,12 @@ spec:
 
     env:
       TZ: America/Toronto
-      MANAGE_HTTP_PORT: 80
-      MANAGE_HTTPS_PORT: 443
+      MANAGE_HTTP_PORT: 8088
+      MANAGE_HTTPS_PORT: 8043
       PORTAL_HTTP_PORT: 8088
       PORTAL_HTTPS_PORT: 8843
       SHOW_SERVER_LOGS: true
       SHOW_MONGODB_LOGS: true
-    
-    podSecurityContext:
-      sysctls:
-        - name: net.ipv4.ip_unprivileged_port_start
-          value: "0"
 
     ingress:
       main:
@@ -41,7 +36,7 @@ spec:
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
           nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
           nginx.ingress.kubernetes.io/app-root: /login
-          # nginx.ingress.kubernetes.io/upstream-vhost: "$host:8043"
+          nginx.ingress.kubernetes.io/upstream-vhost: "$host:8043"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
@@ -57,9 +52,6 @@ spec:
     service:
       main:
         enabled: true
-        ports:
-          http:
-            port: 443
       controller-tcp:
         enabled: true
         type: LoadBalancer
