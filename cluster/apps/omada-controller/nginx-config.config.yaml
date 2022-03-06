@@ -1,51 +1,38 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: nginx-config
-    namespace: omada-controller
+  name: nginx-config
+  namespace: omada-controller
 data:
-    nginx.conf: |
-        events { }
+  nginx.conf: |
+    events { }
 
-        http {
-            server {
-                listen 80 default_server;
-                listen [::]:80 default_server;
-                server_name _;
-                return 301 https://$host$request_uri;
-            }
+    http {
+        server {
+            listen 443 ssl;
+            server_name omada.${DOMAIN};
 
-            server {
-                listen 443 ssl;
-                server_name omada.${DOMAIN};
+            ssl_certificate     /etc/ssl/certs/tls.crt;
+            ssl_certificate_key /etc/ssl/certs/tls.key;
 
-                ssl_certificate     /etc/ssl/certs/tls.crt;
-                ssl_certificate_key /etc/ssl/certs/tls.key;
+            set $backend https://127.0.0.1:8043;
 
-                set $backend https://127.0.0.1:8043;
+            location / {
+                expires                 off;
+                proxy_http_version      1.1;
+                proxy_set_header        Host $http_host:8043;
+                proxy_pass             $backend;
 
-                location / {
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header Referer $http_referer;
-                  proxy_set_header X-Forwarded-For $remote_addr;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-                  proxy_pass $backend;
-                }
+                proxy_redirect ~https://(.+):8043/(.+)/login$ https://$http_host/$2/login;
+                proxy_buffering off;
 
-                location /login {
-                  rewrite /login/$1 /tp/login(.*);
-                  proxy_pass $backend/login;
-                  proxy_redirect https://$proxy_host/login $scheme://$host:$server_port/login;
-                  sub_filter 'href="/login' 'href="/tp/login';
-                }
+                proxy_set_header        X-Real-IP                 $remote_addr;
+                proxy_set_header        X-Forwarded-For           $proxy_add_x_forwarded_for;
+                proxy_set_header        Cookie                    $http_cookie;
+                proxy_set_header           X-Forwarded-Proto         $scheme;
 
-                location /js {
-                  proxy_pass $backend/js;
-                }
-
-                location /api {
-                  proxy_pass $backend/api;
-                }
+                proxy_set_header        Upgrade                   $http_upgrade;
+                proxy_set_header        Connection                "upgrade";
             }
         }
+    }

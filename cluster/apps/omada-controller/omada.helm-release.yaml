@@ -29,24 +29,24 @@ spec:
       SHOW_SERVER_LOGS: true
       SHOW_MONGODB_LOGS: true
 
-    additionalContainers:
-      nginx:
-        image: nginx
-        ports:
-          - name: nginx-http
-            containerPort: 80
-          - name: nginx-https
-            containerPort: 443
-        volumeMounts:
-          - mountPath: /etc/nginx/nginx.conf
-            name: nginx-config
-            subPath: nginx.conf
-          - name: tls-key
-            mountPath: /etc/ssl/certs/tls.key
-            subPath: tls.key
-          - name: tls-crt
-            mountPath: /etc/ssl/certs/tls.crt
-            subPath: tls.crt
+    # additionalContainers:
+    #   nginx:
+    #     image: nginx
+    #     ports:
+    #       - name: nginx-http
+    #         containerPort: 80
+    #       - name: nginx-https
+    #         containerPort: 443
+    #     volumeMounts:
+    #       - mountPath: /etc/nginx/nginx.conf
+    #         name: nginx-config
+    #         subPath: nginx.conf
+    #       - name: tls-key
+    #         mountPath: /etc/ssl/certs/tls.key
+    #         subPath: tls.key
+    #       - name: tls-crt
+    #         mountPath: /etc/ssl/certs/tls.crt
+    #         subPath: tls.crt
 
     ingress:
       main:
