@@ -1,0 +1,136 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: omada-controller
+  namespace: omada-controller
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: omada-controller
+      version: 4.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: mbentley/omada-controller
+      tag: "5.0"
+
+    env:
+      TZ: America/Toronto
+      MANAGE_HTTP_PORT: 8088
+      MANAGE_HTTPS_PORT: 8043
+      PORTAL_HTTP_PORT: 8088
+      PORTAL_HTTPS_PORT: 8843
+      SHOW_SERVER_LOGS: true
+      SHOW_MONGODB_LOGS: true
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+          nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
+          nginx.ingress.kubernetes.io/app-root: /login
+          nginx.ingress.kubernetes.io/upstream-vhost: "$host:8043"
+        hosts:
+          - host: "omada.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "omada.${DOMAIN}"
+            secretName: omada-tls
+
+    service:
+      main:
+        enabled: true
+      controller-tcp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${OMADA_CONTROLLER_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: OMADA
+        externalTrafficPolicy: Local
+        ports:        
+          mgmt-8088-tcp:
+            enabled: true
+            port: 8088
+            protocol: TCP
+            targetPort: 8088
+          mgmt-8043-tcp:
+            enabled: true
+            port: 8043
+            protocol: TCP
+            targetPort: 8043
+          portal-8843-tcp:
+            enabled: true
+            port: 8843
+            protocol: TCP
+            targetPort: 8843
+          eap-29810-tcp:
+            enabled: true
+            port: 29810
+            protocol: TCP
+            targetPort: 29810     
+          eap-29811-tcp:
+            enabled: true
+            port: 29811
+            protocol: TCP
+            targetPort: 29811
+          eap-29812-tcp:
+            enabled: true
+            port: 29812
+            protocol: TCP
+            targetPort: 29812
+          eap-29813-tcp:
+            enabled: true
+            port: 29813
+            protocol: TCP
+            targetPort: 29813
+      controller-udp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${OMADA_CONTROLLER_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: OMADA
+        externalTrafficPolicy: Local
+        ports:
+          eap-29810-udp:
+            enabled: true
+            port: 29810
+            protocol: UDP
+            targetPort: 29810
+          eap-29811-udp:
+            enabled: true
+            port: 29811
+            protocol: UDP
+            targetPort: 29811
+          eap-29812-udp:
+            enabled: true
+            port: 29812
+            protocol: UDP
+            targetPort: 29812
+          eap-29813-udp:
+            enabled: true
+            port: 29813
+            protocol: UDP
+            targetPort: 29813
+
+    persistence:
+      data:
+        enabled: true
+        mountPath: /opt/tplink/EAPController/data
+        existingClaim: omada
+
+    resources:
+      requests:
+        memory: 1200M
+        # cpu: 1200m
+      limits:
+        memory: 1500M
