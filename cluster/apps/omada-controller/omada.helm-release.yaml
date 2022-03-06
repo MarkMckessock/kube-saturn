@@ -29,14 +29,30 @@ spec:
       SHOW_SERVER_LOGS: true
       SHOW_MONGODB_LOGS: true
 
+    additionalContainers:
+      nginx:
+        image: nginx
+        ports:
+          - name: nginx-http
+            containerPort: 80
+          - name: nginx-https
+            containerPort: 443
+        volumeMounts:
+          - mountPath: /etc/nginx/nginx.conf
+            name: nginx-config
+            subPath: nginx.conf
+          - name: tls-key
+            mountPath: /etc/ssl/certs/tls.key
+            subPath: tls.key
+          - name: tls-crt
+            mountPath: /etc/ssl/certs/tls.crt
+            subPath: tls.crt
+
     ingress:
       main:
         enabled: true
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-          nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
-          nginx.ingress.kubernetes.io/app-root: /login
-          nginx.ingress.kubernetes.io/upstream-vhost: "$host:8043"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
@@ -52,6 +68,10 @@ spec:
     service:
       main:
         enabled: true
+        ports:
+          http:
+            port: 443
+
       controller-tcp:
         enabled: true
         type: LoadBalancer
@@ -129,6 +149,28 @@ spec:
         enabled: true
         mountPath: /opt/tplink/EAPController/data
         existingClaim: omada
+      nginx-config:
+        enabled: true
+        type: configMap
+        mountPath: '-'
+        name: nginx-config
+      tls-crt:
+        enabled: true
+        type: secret
+        name: omada-tls
+        mountPath: '-'
+        items:
+        - key: tls.crt
+          path: tls.crt
+      tls-key:
+        enabled: true
+        type: secret
+        name: omada-tls
+        mountPath: '-'
+        items:
+        - key: tls.key
+          path: tls.key
+  
 
     resources:
       requests:
