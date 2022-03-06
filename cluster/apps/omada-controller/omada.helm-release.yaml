@@ -47,6 +47,7 @@ spec:
         tls:
           - hosts:
               - "omada.${DOMAIN}"
+            secretName: omada-tls
 
     service:
       main:
