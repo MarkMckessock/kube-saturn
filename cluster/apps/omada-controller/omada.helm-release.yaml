@@ -52,6 +52,11 @@ spec:
     service:
       main:
         enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${OMADA_CONTROLLER_IP}
+        annotations:
+          metallb.universe.tf/allow-shared-ip: OMADA
+        externalTrafficPolicy: Local
       controller-tcp:
         enabled: true
         type: LoadBalancer
