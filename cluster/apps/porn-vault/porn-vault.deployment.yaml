@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: porn-vault
+  namespace: porn-vault
+spec:
+  selector:
+    matchLabels:
+      app: porn-vault
+  template:
+    metadata:
+      labels:
+        app: porn-vault
+    spec:
+      containers:
+        - name: porn-vault
+          image: boi12321/porn-vault:edge
+          ports:
+            - name: web
+              containerPort: 3000
+          volumeMounts:
+            - name: videos
+              mountPath: /videos
+            - name: images
+              mountPath: /images
+            - name: config
+              mountPath: /config
+          env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+          resources:
+            limits:
+              memory: "4096m"
+              cpu: "4.0"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: porn-vault
+        - name: videos
+          nfs:
+            path: /mnt/tank/media/porn/videos
+            server: nfs.truenas.${DOMAIN}
+        - name: images
+          nfs:
+            path: /mnt/tank/media/porn/images
+            server: nfs.truenas.${DOMAIN}
