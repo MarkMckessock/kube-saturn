@@ -18,7 +18,7 @@ spec:
           service:
             name: porn-vault
             port: 
-              number: 300
+              number: 3000
   tls:
     - hosts:
       - pornvault.${DOMAIN}
