@@ -25,5 +25,5 @@ spec:
               value: single-node
           resources:
             limits:
-              memory: "4096m"
+              memory: "4Gi"
               cpu: "4.0"

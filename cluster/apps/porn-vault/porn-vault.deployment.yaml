@@ -32,7 +32,7 @@ spec:
               value: "1000"
           resources:
             limits:
-              memory: "4096m"
+              memory: "4Gi"
               cpu: "4.0"
       volumes:
         - name: config
