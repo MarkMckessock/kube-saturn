@@ -19,17 +19,19 @@ spec:
   values:
     configInline:
       address-pools:
-      - name: default
-        protocol: layer2
-        addresses:
-        - "${METALLB_DEFAULT_POOL}"
-      - name: static
-        protocol: layer2
-        addresses:
-        - ${METALLB_STATIC_POOL}
-        auto-assign: false
+        - name: default
+          protocol: layer2
+          addresses:
+            - "${METALLB_DEFAULT_POOL}"
+        - name: static
+          protocol: layer2
+          addresses:
+            - ${METALLB_STATIC_POOL}
+          auto-assign: false
 
     prometheus:
+      namespace: monitoring
+      serviceAccount: kube-prometheus-stack-prometheus
       podMonitor:
         enabled: true
 
@@ -38,7 +40,7 @@ spec:
 
     speaker:
       tolerations:
-      - effect: "NoExecute"
-        operator: "Exists"
-      - effect: "NoSchedule"
-        operator: "Exists"
+        - effect: "NoExecute"
+          operator: "Exists"
+        - effect: "NoSchedule"
+          operator: "Exists"
