@@ -21,6 +21,8 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
+    env:
+      TZ: America/Toronto
     ingress:
       main:
         enabled: true
@@ -42,6 +44,10 @@ spec:
         enabled: true
         mountPath: /opt/adguardhome/conf
         existingClaim: adguard
+      data:
+        enabled: true
+        mountPath: /opt/adguardhome/work
+        existingClaim: adguard-data
     config: |
       bind_host: 0.0.0.0
       bind_port: 3000
