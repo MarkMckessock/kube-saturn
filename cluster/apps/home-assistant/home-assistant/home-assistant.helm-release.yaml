@@ -53,6 +53,7 @@ spec:
       postgresqlDatabase: homeassistant
       existingSecret: ha-postgres
       persistence:
+        enabled: true
         existingClaim: ha-postgres
       primary:
         nodeSelector:
