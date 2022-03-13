@@ -49,16 +49,12 @@ spec:
         memory: 4000Mi
     postgresql:
       enabled: true
-      image:
-        repository: bitnami/postgresql
-        tag: 14.1.0
-      auth:
-        username: homeassistant
-        database: homeassistant
-        existingSecret: ha-postgres
+      postgresqlUsername: homeassistant
+      postgresqlDatabase: homeassistant
+      existingSecret: ha-postgres
+      persistence:
+        existingClaim: ha-postgres
       primary:
-        persistence:
-          existingClaim: ha-postgres
         nodeSelector:
           kubernetes.io/arch: amd64
     influxdb:
