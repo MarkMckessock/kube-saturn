@@ -59,10 +59,15 @@ spec:
       primary:
         persistence:
           existingClaim: ha-postgres
+        nodeSelector:
+          kubernetes.io/arch: amd64
     influxdb:
       enabled: true
       architecture: standalone
       database: homeassistant
+      influxdb:
+        nodeSelector:
+          kubernetes.io/arch: amd64
       auth:
         admin:
           username: homeassistant
