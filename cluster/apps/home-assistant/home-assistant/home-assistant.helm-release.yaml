@@ -65,10 +65,9 @@ spec:
       influxdb:
         nodeSelector:
           kubernetes.io/arch: amd64
-      auth:
-        admin:
-          username: homeassistant
-        existingSecret: ha-influxdb
+      adminUser:
+        name: homeassistant
+      existingSecret: ha-influxdb
       persistence:
         enabled: true
         existingClaim: ha-influxdb
