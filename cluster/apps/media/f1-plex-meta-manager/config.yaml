@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: plex-meta-config
+    namespace: media
+stringData:
+    config.yml: ENC[AES256_GCM,data:0e0+gts/BLiDd+NdHi4PUWSEc+Ny/m0JvODRFkBN+2MsEVKzOe55049AVUrMMmQDnT5MK+VP5PiJevzph0wJjWl2aqCKFQhdYKMLfV3xD1NmyaZXcChab2cBBFEGD+rwWWPoyS2adZY/aMHKi8CwyAN8z+OGQTOw/1ZctL6RGEEwlhn8l4/QkbUt1C/13vHS57a/vgvaTGzt5Qf8+paxmARdRq67xR8MG7oxMMnj5uQf1ybvv7sfaToo7L2IBzfcMJtkYe6G1z2jDLA8CzNcIoPZEAPOywQCrobf9la4ykR6P9VyZN2shE1Nss1ro4ywHcb+QL+uxjRQH6W14pAYS7sZU37nFdW3Ycg6GKvZGtW7DTfBL9UP5o+DnTWoXdRnLHlV3yzDuCepayYQ/BUbQ8rJyePByobamrJ6XMxhiTpMtDLzY0OzEjikq4VcoYTezKKZBAmzho8gfQPg0RVFO/6JUsQEpHaIJ83MhgXwtFmqfZqyOSfMFgRPratjbvlXsZ+GUAzeIPj4LjYnW83if+NxJkBziV5EsVI+JoINoMuKxefwQZzIsD/xeOCTQX+w+i08vzNUiz0VGdIJR7KQIAT2wHqavCvF2U8otT8w1Obtwt9ycA6FBjeYTKFPJR1iZmqzlP5RH0kdrpAtV53caJEc4mBBtyJzrkXrNfii5cIVMa0zoLldOWuZQinpLS+/Zbwzchgv1K9aKB6iNzUdy1DO85UiaV4G2EmT3casndGf6HaNy62MWWt6/q/9kqfWuXR3899ZlByPd31tJ9pgQSIk4hWgMmjDrFGUsGRaW0oPXoEVcX2VyonoBPA1LrmK5/NR4TIRPafYFvSgFWcBPP9Q9DAI5TljQcsfTjIyHVuVNRJYkoxF0zgWIVNbPAjj,iv:GPAuAbgB2OK8iUHW01t8/zeRqSUcwyBI99yuHzCgKpk=,tag:uZneusc2mUHZpO7wXQz6kQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB0SGRWNVNMK240b3VTcHlq
+            T3RRcUNoeTRFamFpSnFqNVpsRzZaMzQ3YkY4CmpDNXFHbEpTZXpkRGt0Y2RQWkth
+            UG16aDJHRElzamtPV201cVZmandDdFkKLS0tIGJKcVBhci82QjFKei8rbkI0VXI5
+            YjZxMHRuUnhSYVMvdW4xalZQRWxpYmMKmSbrNVIiLDJ7eI6PVpJLqhoRfA2u5N2f
+            kZP7k/s5QZwK77keceMkOaMGlmhAv9cnuGR6zWtV1v/4y33AnYe4kw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-03-14T23:08:45Z"
+    mac: ENC[AES256_GCM,data:FCdkiY8zYOkJ5YtUH57YVtCAydioJxLrvraPCwzkxZcjIVEl7AgaL7bewB+4E5anKAYW1ostP4NHe3/7rqcFT6XN1EYNW/+K954q0VGd/sVwKNZsTRVJIA3Q1Fl2mPKBnjlAGJx482KIGmWzO/CWKmcGo1uF6CNAatWFJ29n11A=,iv:8EaO1lnmm076LM+77jouhbg+oFmNC2X/+bHSOFROJDk=,tag:9Eklxp7dloqpfRVInzBRNg==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.1

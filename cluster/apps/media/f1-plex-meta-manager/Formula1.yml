@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: formula-1-collections
+data:
+  Formula1.yml: |
+    metadata:
+      "2019":
+        f1_auto_titles: true
+      "2020":
+        f1_auto_titles: true
+      "2021":
+        f1_auto_titles: true
