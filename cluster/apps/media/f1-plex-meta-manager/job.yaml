@@ -34,7 +34,7 @@ spec:
               emptyDir: {}
             - name: plex-meta-config
               secret:
-                secretName: plex-meta-config
+                secretName: f1-plex-meta-config
             - name: formula-1-collections
               configMap:
                 name: formula-1-collections
