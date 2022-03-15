@@ -4,7 +4,7 @@ metadata:
     name: f1-plex-meta-config
     namespace: media
 stringData:
-    config.yml: ENC[AES256_GCM,data:auJHXGe2hAqofCu88H8R1qOSYkhijwgt76vTytk0a47QUN4KfQNlyp3g/GH+m80zeQZkW04GQcBVxyL+1vpDMQmtxYqNKkwRTeVtuF7uSrsWQMAb7c12szpu5P3FOjoLUwgqbYp16pK5GM9gGdmQd5W9LMHUPtlfTgcVJXrYgf1JHCmkAWjJEKiVChxCT/IOvaq/tTcJYS8dbzBmBx7uOTvJ7ooZAT+iUAONUB3NAaJ803S+BWn/D62sb3aTwRiL8A9MDRDqrGXdC1s9EP71NQLrbhu/Mzl/cgJMQ1c7ZtKK0EuAFcnIpALB+UBi0xV38Agdj6E3KzZ7eC7dLaBB7vg4XYyZEeffzS39X8KrKYjWNcffhL5G8xVokBTraCufLq9C+E2EozCOVgFaVhU/0nO1hJH5S+MNVtaWqkgWM5r/R+v1baXKvbON5a6j6IjGxdCfaAD2sJAmQvC/89t3BLyP9kDYeKw1riVfsk+TNu4QFJ9dYQIIQ+FzrMX6stvMQYwkd7m1SqVy+FvjJ/WoHyxJvCtweYyUoZvPOH8pgw9OvIea8FbtjYSbj2aFlEk2KMwKyC1XvICTcxxCtH8Rk/A2/SKmVBxoY/JlxawSL4j+/RBj9rjnLn0VUg47JwGZCgxitB6XiNT0pVRWCWps389gs3AbgJ8CZMX+wNlmDAGwXyvmbMUVcdcJIqiVwqFEJ4vAcQQqqni5SezcqgJyC152nnlJ3bTcy7ZxIsIPXkpGOwlPtmsxQUpJwD1ETx7M1p0EMcWhb6/dlOVG3KWsJq5UOFFWNwpLS5b37j51d1dTTMK7RAvg/ZVMwAJl70Y07eWofWGcGk2R9sn4RoZ94Szwf8kO82JSr+u5rWjzFfgODRWwGT2/yOrBcOVP/ha4,iv:R7TyFOR7yAMLhGtOKjA0k91yS1+6xsGj54tD2T2G4s8=,tag:jvGtZkGiOBMOjGJ5ng1tYA==,type:str]
+    config.yml: ENC[AES256_GCM,data:I0gX91JjuW06ThTSWjyhWP1++ZDDAJE8rmPHvyEgo02a4PsVrhPmG+FVE3OgdyUR2TkZUKFRdRCj0gKltHGgAdkxbpo2rZrnSyo+SNTGSpC6CHLncgTBR8azlGWXHlcro2nOOhOfGC60dkrO4RFo+asJJPIRct8Zm+UHsVxjAxE61ATbKX6DCmfXXljT5A4hdXgyx+icRcytw0GhJISLa/l1D4s6CyTU5JAGD4AkmK6INGewkHcRnB5DG96OAX6LmoUY5sDb0lPf4AMBaJnOLVj0+m6r9dToPbtAQ9krzgiRZPs7jfdKLrJBs6lHJYVkZIV/XUwEaa92YUp5WOi6XxXwNBU5JvalFqNzLDkRNX34s1IUimH5sL7o9Jp30QUltvfMZnodoj+7LPo8y2GSYpvOkIOA8Y+y1mE9GjZv3OaAjDOLhBJmxQZ1rBQsh5dCChDQf28ZYwKU7AMCrPA8W0d5nLz7O8wulCykOPaS7YYx1Neq7U8XSEndBUj1+1Fji3cYCRW+oRLgJGh0j+mKZwSAyHikjByncAc98dtGrsM7Vm8UdEaQSGq2ZzfUxNQqP4Lv+95N6t5VBQ+rWnsi7nJ9jR4Yp2S86saKmOXCe0dMkiEzfqF4XQ1sfWJvrYAXMnoeh8igfmU5yfh1+yAJ2g+fC4jqAeaZWTXdEaBaR4GoNqEz6yRjNg8i5kskY91Mm3FhOXoDB1znAihbOmZzH1fSsC7xqB1MH1qyX5V6QFq99TqXyKT2B3w8G0JXpKouf2ijFkCvXpB1VUBN0EZSIw5+eY+sB29wmknAgS5AUYyrtbcZhJoPYbQjqwOI/NycCjiTxTOpsvp/orjsGZYdXl0yL7CAD2vyOJtKh40f4DbQz/DDIyt+Yev1al149FSLuDRNVEYPpUN55BIRRr4hPfsOmxIChSwwhRyDWrMBX14YoFD9UvyZl6y+rZl3V3b96csuwop6oTX+gj7WqgXJhQ==,iv:d1Z/xasePMXuicY3cb4HWwMM808ZmpPjzhXVCp7dTC8=,tag:W3CFSGdEMSbsF6RIiTuZnA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -14,14 +14,14 @@ sops:
         - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1enQ5SzgxaEFURG4rS1ho
-            cGdaUEFmbXU2RHgvSnA1ZzZPZzY4QUhhSjA4CmRKQW9uTGE2RHZ6MGFtOS9HSk1D
-            dzZRVC9XNW5iakE5Nm5ia2lyTXg5TW8KLS0tIFJPQmxQYm5NSGR6OVZxcWFXanMy
-            S1BaeHdaUnVUZ2IrYUdnakJWbC9rKzAKHnweityjoQNyoDVcvztLHfl/oHB4P42g
-            IbupQKDIYEh/2T8Jb1T2uWWoAv9VMLPZL+VlUFIW5qZJkf+hwhAorQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLY3B1QlZPSGlvRk1yTk1Y
+            aWRhMHo2UkRSQU9SZGhWY2JFRWNsaW5tUzBBCi9zT1VWVGo4dFFtRjBwQlJ5WHpj
+            WW8wK2Z5aTdIcWU0ZmRrRVpIenloVlUKLS0tIFVxN2ovc1BWdGwweW8zUmE1aEJY
+            V1pzME9iTi9ZZzhkeU1ERjkzR2cyRE0Kfi2UkXsfuoKk0RrNSG0pXJQTwwBCnZFO
+            rIAmNtCohO0IQjViLVNTXrJAr9Nl3NC2AOEsu1eSuKp6NLyrXieakg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-03-14T23:58:23Z"
-    mac: ENC[AES256_GCM,data:aIkk+L4RoB4WiF+Je+gAiF0TY5B7gZfQF67nz6SuhexMh6NGjmKUMNS22yZj4386B0kjX38b74Hg3A+wH0CLfaMcTkhSynusznK8GDX7NiTp7S7PY8H1Y6dj8LRceeh4+X9FRLU/tLgSrzc+lrtUtxKmAeewxXIW3tWH3ywEfXY=,iv:iZVPL95s0ibcP56kBRYekQOmEf8gEI50lKHdZE80LTA=,tag:ceVplukyl34HzuoxoWSQ9A==,type:str]
+    lastmodified: "2022-03-15T00:13:41Z"
+    mac: ENC[AES256_GCM,data:3vcxgLskLHHdfm3FYzkc7y/x8C4Rl1QNj79CuI1qnWcgDgaRQdPtQoifFcEg1M6EgX+Hbp1WvVAFl1lyfmmOESH3NTWXCoAgsskLOSG7MBe/l5RhquvBggrj1fDMRoVa9utEWBBZxakuyogp5Ae/sg5yE3AyGeW6xVKYAO/f4yI=,iv:Md+DjnBBUfwimwmiR+iZrKH1iv6CPa4rgO+GJKvJg9M=,tag:V8Hoc7zctsWu7T0LSb8uJg==,type:str]
     pgp: []
     encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
     version: 3.7.1
