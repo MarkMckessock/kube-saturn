@@ -20,8 +20,7 @@ spec:
         enabled: true
         default: true
       service:
-        externalIPs:
-          - ${INGRESS_NGINX_IP}
+        loadBalancerIP: ${INGRESS_NGINX_IP}
       metrics:
         enabled: true
         service:
