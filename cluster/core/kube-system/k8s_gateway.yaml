@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    domain: ${DOMAIN}
+    domain: markmckessock.local
     service:
       loadBalancerIP: ${COREDNS_IP}
     watchedResources:
