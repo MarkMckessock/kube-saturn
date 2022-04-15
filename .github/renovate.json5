@@ -87,6 +87,13 @@
         "postgres",
       ]
     },
+    {
+      "matchDatasources": ["docker"],
+      "allowedVersions": "<=7",
+      "matchPackageNames": [
+        "elasticsearch",
+      ]
+    },
     // version strategies
     {
       "matchDatasources": ["docker"],
