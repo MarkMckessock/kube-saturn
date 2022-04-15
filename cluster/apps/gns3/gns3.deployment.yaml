@@ -46,8 +46,6 @@ spec:
               name: projects
             - mountPath: /etc/xdg
               name: config-dir
-          securityContext:
-            privileged: true
       volumes:
         - name: images
           nfs:
@@ -66,3 +64,8 @@ spec:
             name: gns3-controller
       nodeSelector:
         kubernetes.io/arch: amd64
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        privileged: true
