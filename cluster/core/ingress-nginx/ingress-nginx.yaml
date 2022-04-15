@@ -19,6 +19,8 @@ spec:
       ingressClassResource:
         enabled: true
         default: true
+      service:
+        loadBalancerIP: ${INGRESS_NGINX_IP}
       metrics:
         enabled: true
         service:
