@@ -48,13 +48,14 @@ spec:
       limits:
         memory: 4000Mi
     postgresql:
-      enabled: true
-      postgresqlUsername: homeassistant
-      postgresqlDatabase: homeassistant
-      existingSecret: ha-postgres
-      persistence:
-        enabled: true
-        existingClaim: ha-postgres
+      enabled: true   
+      auth:
+        username: homeassistant
+        database: homeassistant
+        existingSecret: ha-postgres
       primary:
         nodeSelector:
           kubernetes.io/arch: amd64
+        persistence:
+          enabled: true
+          existingClaim: ha-postgres
