@@ -43,19 +43,17 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            path: /mnt/tank/media/recordings
+            path: /mnt/tank/media/recordings/recordings
             server: nfs.truenas.${DOMAIN}
         mountPath: /media/frigate/recordings
-        subPath: recordings
       clips:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
-            path: /mnt/tank/media/recordings
+            path: /mnt/tank/media/recordings/clips
             server: nfs.truenas.${DOMAIN}
         mountPath: /media/frigate/clips
-        subPath: clips
     configmap:
       config:
         data:
