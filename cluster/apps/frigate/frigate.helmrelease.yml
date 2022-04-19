@@ -40,10 +40,18 @@ spec:
         existingClaim: frigate-media
       recordings:
         enabled: true
+        custom:
+          nfs:
+            path: /mnt/tank/media/recordings
+            server: nfs.truenas.${DOMAIN}
         mountPath: /media/frigate/recordings
         subPath: recordings
       clips:
         enabled: true
+        custom:
+          nfs:
+            path: /mnt/tank/media/recordings
+            server: nfs.truenas.${DOMAIN}
         mountPath: /media/frigate/clips
         subPath: clips
     configmap:
