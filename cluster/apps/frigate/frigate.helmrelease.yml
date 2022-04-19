@@ -38,3 +38,22 @@ spec:
       data:
         enabled: true
         existingClaim: frigate-data
+    configmap:
+      config:
+        data:
+          config.yml: |
+            mqtt:
+              host: mosquitto.markmckessock.com
+              username: frigate
+              password: suL6fH2L6o55Z2VKgsQKjX
+            cameras:
+              back:
+                ffmpeg:
+                  inputs:
+                    - path: rtsp://wyze:wyze@10.0.60.30/live
+                      roles:
+                        - detect
+                        - rtmp
+                detect:
+                  width: 1920
+                  height: 1080
