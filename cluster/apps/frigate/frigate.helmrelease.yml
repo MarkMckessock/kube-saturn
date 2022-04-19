@@ -55,8 +55,6 @@ spec:
             server: nfs.truenas.${DOMAIN}
         mountPath: /media/frigate/clips
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
     configmap:
