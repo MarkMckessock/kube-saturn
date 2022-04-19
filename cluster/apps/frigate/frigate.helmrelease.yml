@@ -38,13 +38,16 @@ spec:
       data:
         enabled: true
         existingClaim: frigate-data
+      media:
+        enabled: true
+        existingClaim: frigate-media
     configmap:
       config:
         data:
           config.yml: |
             mqtt:
               host: mosquitto.markmckessock.com
-              username: frigate
+              user: frigate
               password: suL6fH2L6o55Z2VKgsQKjX
             cameras:
               back:
