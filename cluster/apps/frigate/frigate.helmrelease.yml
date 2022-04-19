@@ -62,10 +62,11 @@ spec:
         data:
           config.yml: |
             mqtt:
-              host: mqtt.home-assistant.svc
+              host: mosquitto.markmckessock.com
               port: 8883
               user: frigate
               password: suL6fH2L6o55Z2VKgsQKjX
+              tls_ca_certs: /etc/ssl/certs/ca-certificates.crt
             cameras:
               bedroom:
                 ffmpeg:
