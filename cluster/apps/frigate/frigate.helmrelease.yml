@@ -46,17 +46,17 @@ spec:
         data:
           config.yml: |
             mqtt:
-              host: mosquitto.markmckessock.com
+              host: mqtt.home-assistant.svc
               user: frigate
               password: suL6fH2L6o55Z2VKgsQKjX
             cameras:
-              back:
+              bedroom:
                 ffmpeg:
                   inputs:
                     - path: rtsp://wyze:wyze@10.0.60.30/live
                       roles:
                         - detect
                         - rtmp
-                detect:
-                  width: 1920
-                  height: 1080
+            rtmp:
+              enabled: False
+

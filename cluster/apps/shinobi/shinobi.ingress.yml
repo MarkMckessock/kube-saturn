@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shinobi
+  namespace: shinobi
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: shinobi.${DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: shinobi
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - shinobi.${DOMAIN}
+      secretName: shinobi-tls

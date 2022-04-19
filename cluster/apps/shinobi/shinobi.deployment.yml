@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shinobi
+  namespace: shinobi
+spec:
+  selector:
+    matchLabels:
+      app: shinobi
+  template:
+    metadata:
+      labels:
+        app: shinobi
+    spec:
+      containers:
+        - name: shinobi
+          image: shinobisystems/shinobi:dev
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - mountPath: /etc/localtime
+              name: localtime
+              readOnly: true
+            - name: config
+              mountPath: /config
+            - name: mysql
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        - name: config
+          persistentVolumeClaim:
+            claimName: shinobi-config
+        - name: mysql
+          persistentVolumeClaim:
+            claimName: shinobi-mysql
