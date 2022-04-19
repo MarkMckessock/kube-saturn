@@ -35,12 +35,17 @@ spec:
               - "frigate.${DOMAIN}"
             secretName: frigate-tls
     persistence:
-      data:
-        enabled: true
-        existingClaim: frigate-data
       media:
         enabled: true
         existingClaim: frigate-media
+      recordings:
+        enabled: true
+        mountPath: /media/frigate/recordings
+        subPath: recordings
+      clips:
+        enabled: true
+        mountPath: /media/frigate/clips
+        subPath: clips
     configmap:
       config:
         data:
@@ -58,6 +63,13 @@ spec:
                       roles:
                         - detect
                         - rtmp
+                        - record
             rtmp:
-              enabled: False
+              enabled: True
+            record:
+              enabled: True
+              retain:
+                days: 0
+              events:
+
 
