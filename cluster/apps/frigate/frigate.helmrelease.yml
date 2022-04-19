@@ -40,7 +40,8 @@ spec:
         existingClaim: frigate-media
       recordings:
         enabled: true
-        custom:
+        type: custom
+        volumeSpec:
           nfs:
             path: /mnt/tank/media/recordings
             server: nfs.truenas.${DOMAIN}
@@ -48,7 +49,8 @@ spec:
         subPath: recordings
       clips:
         enabled: true
-        custom:
+        type: custom
+        volumeSpec:
           nfs:
             path: /mnt/tank/media/recordings
             server: nfs.truenas.${DOMAIN}
