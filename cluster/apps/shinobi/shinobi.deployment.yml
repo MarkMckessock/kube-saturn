@@ -36,3 +36,7 @@ spec:
         - name: mysql
           persistentVolumeClaim:
             claimName: shinobi-mysql
+        - name: recordings
+          nfs:
+            path: /mnt/tank/media/recordings
+            server: nfs.truenas.${DOMAIN}

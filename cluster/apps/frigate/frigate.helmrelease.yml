@@ -47,13 +47,14 @@ spec:
           config.yml: |
             mqtt:
               host: mqtt.home-assistant.svc
+              port: 8883
               user: frigate
               password: suL6fH2L6o55Z2VKgsQKjX
             cameras:
               bedroom:
                 ffmpeg:
                   inputs:
-                    - path: rtsp://wyze:wyze@10.0.60.30/live
+                    - path: rtsp://wyze:password@10.0.60.30:554/live
                       roles:
                         - detect
                         - rtmp
