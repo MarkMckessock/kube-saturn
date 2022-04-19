@@ -69,15 +69,19 @@ spec:
                   inputs:
                     - path: rtsp://wyze:password@10.0.60.30:554/live
                       roles:
-                        - detect
                         - rtmp
                         - record
+            birdseye:
+              enabled: True
+              mode: motion
+            detect:
+              enabled: False
             rtmp:
               enabled: True
             record:
               enabled: True
               retain:
-                days: 0
-              events:
+                days: 30
+                mode: motion
 
 
