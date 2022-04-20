@@ -75,6 +75,8 @@ spec:
                       roles:
                         - rtmp
                         - record
+            objects:
+              track: []
             birdseye:
               enabled: True
               mode: motion
@@ -87,5 +89,7 @@ spec:
               retain:
                 days: 30
                 mode: motion
+    nodeSelector:
+      kubernetes.io/arch: amd64
 
 
