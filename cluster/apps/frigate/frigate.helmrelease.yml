@@ -76,7 +76,7 @@ spec:
               bedroom:
                 ffmpeg:
                   inputs:
-                    - path: rtsp://wyze:password@10.0.60.30:554/live
+                    - path: rtsp://admin:H2CTtmYytW8sDP5o@10.0.60.30//h264Preview_01_main
                       roles:
                         - rtmp
                         - record
@@ -96,5 +96,3 @@ spec:
                 mode: motion
     nodeSelector:
       kubernetes.io/arch: amd64
-
-
