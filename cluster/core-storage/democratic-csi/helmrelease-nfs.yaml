@@ -85,12 +85,14 @@ spec:
           datasetPermissionsMode: "0777"
           datasetPermissionsUser: 0
           datasetPermissionsGroup: 0
+          datasetProperties:
+            "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
           #datasetPermissionsAcls:
           #- "-m everyone@:full_set:allow"
           #- "-m u:kube:full_set:allow"
 
         nfs:
-          #shareCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+          shareCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
           shareHost: nfs.truenas.markmckessock.com
           shareAlldirs: false
           shareAllowedHosts: []
