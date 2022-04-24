@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cache
+  name: mariadb-temp
   namespace: photoview
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
-  storageClassName: truenas-nfs-csi
+      storage: 1Gi
+  storageClassName: truenas-iscsi-csi
