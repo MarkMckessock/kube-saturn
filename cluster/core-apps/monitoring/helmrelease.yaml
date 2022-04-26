@@ -67,7 +67,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: truenas-nfs-csi
+              storageClassName: truenas-iscsi-csi
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
