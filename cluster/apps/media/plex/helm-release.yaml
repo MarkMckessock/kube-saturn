@@ -50,7 +50,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: plex-data
+        existingClaim: plex
       media:
         enabled: true
         type: custom
