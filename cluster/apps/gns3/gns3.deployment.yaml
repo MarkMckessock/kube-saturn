@@ -50,9 +50,8 @@ spec:
             privileged: true
       volumes:
         - name: images
-          nfs:
-            path: /mnt/tank/users/mmckessock/Documents/GNS3/images/
-            server: nfs.truenas.${DOMAIN}
+          persistentVolumeClaim:
+            claimName: images
         - name: projects
           persistentVolumeClaim:
             claimName: projects
