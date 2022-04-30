@@ -39,9 +39,6 @@ spec:
           - hosts:
               - "readarr.${DOMAIN}"
             secretName: readarr-tls
-    service:
-      webserver:
-        enabled: true
     persistence:
       config:
         enabled: true

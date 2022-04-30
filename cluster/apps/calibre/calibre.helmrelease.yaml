@@ -20,6 +20,9 @@ spec:
       TZ: "America/Toronto"
       PUID: 1000
       PGID: 1000
+    service:
+      webserver:
+        enabled: true
     persistence:
       config:
         enabled: true
