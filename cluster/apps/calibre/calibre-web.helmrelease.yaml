@@ -28,6 +28,9 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
           nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
         hosts:
           - host: "calibre.${DOMAIN}"
             paths:
