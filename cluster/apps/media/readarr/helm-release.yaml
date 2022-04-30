@@ -16,6 +16,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: linuxserver/readarr
+      tag: develop
     env:
       TZ: "America/Toronto"
     ingress:
