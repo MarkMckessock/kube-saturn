@@ -27,6 +27,7 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+          nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
         hosts:
           - host: "calibre.${DOMAIN}"
             paths:
