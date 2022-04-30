@@ -21,6 +21,8 @@ spec:
       tag: develop
     env:
       TZ: "America/Toronto"
+      PUID: 1000
+      PGID: 1000
     ingress:
       main:
         enabled: true
