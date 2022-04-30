@@ -26,8 +26,12 @@ spec:
     persistence:
       config:
         enabled: true
+        existingClaim: calibre-config
+      books:
+        enabled: true
         type: custom
         volumeSpec:
           nfs:
             path: /mnt/tank/media/books
             server: nfs.truenas.${DOMAIN}
+        mountPath: /books
