@@ -49,3 +49,11 @@ spec:
             server: nfs.truenas.${DOMAIN}
             path: /mnt/tank/downloads
         mountPath: /complete
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/media
+        mountPath: /media
