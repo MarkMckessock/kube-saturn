@@ -1,0 +1,18 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+    - ${METALLB_DEFAULT_POOL}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: static
+  namespace: metallb-system
+spec:
+  addresses:
+    - ${METALLB_STATIC_POOL}
+  auto-assign: false
