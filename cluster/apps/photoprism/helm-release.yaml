@@ -15,6 +15,7 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
+  timeout: 15m
   values:
     podSecurityContext:
       runAsUser: 1000
