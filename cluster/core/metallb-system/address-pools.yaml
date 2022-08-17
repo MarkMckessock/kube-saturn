@@ -15,4 +15,4 @@ metadata:
 spec:
   addresses:
     - ${METALLB_STATIC_POOL}
-  auto-assign: false
+  autoAssign: false
