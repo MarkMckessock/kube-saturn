@@ -24,6 +24,11 @@ spec:
                 name: openeats
             - secretRef:
                 name: openeats
+          env:
+            - name: MARIADB_AUTO_UPGRADE
+              value: "1"
+            - name: MARIADB_INITDB_SKIP_TZINFO
+              value: "1"
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mariadb-data
