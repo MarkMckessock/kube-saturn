@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: vaultwarden
-      version: 4.1.0
+      version: 5.3.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: vaultwarden/server
-      tag: 1.24.0
+      tag: 1.25.2
     env:
       TZ: "America/Toronto"
     persistence:

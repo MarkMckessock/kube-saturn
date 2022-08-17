@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gotify
-          image: gotify/server:2.1.4
+          image: gotify/server:2.1.5
           resources:
             limits:
               memory: "128Mi"

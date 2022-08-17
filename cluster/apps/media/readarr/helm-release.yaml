@@ -1,15 +1,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prowlarr
+  name: readarr
   namespace: media
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: prowlarr
-      version: 4.5.2
+      chart: readarr
+      version: 6.4.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -17,10 +17,12 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/prowlarr-nightly
-      tag: v0.4.5.1948
+      repository: linuxserver/readarr
+      tag: develop
     env:
       TZ: "America/Toronto"
+      PUID: 1000
+      PGID: 1000
     ingress:
       main:
         enabled: true
@@ -29,26 +31,31 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-          - host: "prowlarr.${DOMAIN}"
+          - host: "readarr.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "prowlarr.${DOMAIN}"
-            secretName: prowlarr-cert
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
+              - "readarr.${DOMAIN}"
+            secretName: readarr-tls
     persistence:
       config:
         enabled: true
-        existingClaim: prowlarr
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-      limits:
-        memory: 500Mi
+        existingClaim: readarr
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/downloads
+        mountPath: /complete
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/media
+        mountPath: /media
