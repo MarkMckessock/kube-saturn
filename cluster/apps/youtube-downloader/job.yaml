@@ -5,7 +5,6 @@ metadata:
   namespace: youtube-dl
 spec:
   schedule: "@daily"
-  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
@@ -56,6 +55,6 @@ spec:
                 items:
                   - key: playlists.yaml
                     path: playlists.yaml
-          restartPolicy: Never
+          restartPolicy: OnFailure
           nodeSelector:
             kubernetes.io/arch: amd64
