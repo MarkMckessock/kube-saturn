@@ -4,6 +4,7 @@ metadata:
   name: plex-music-sync
   namespace: media
 spec:
+  suspend: true
   schedule: "@daily"
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
