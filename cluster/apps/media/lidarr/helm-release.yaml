@@ -1,0 +1,89 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lidarr
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: lidarr
+      version: 14.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/lidarr
+      tag: v1.0.0.2255
+    env:
+      TZ: "America/Toronto"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: "lidarr.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "lidarr.${DOMAIN}"
+            secretName: lidarr-tls
+      api:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: "lidarr.${DOMAIN}"
+            paths:
+              - path: /api
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "lidarr.${DOMAIN}"
+            secretName: lidarr-tls
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: lidarr
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/media
+        mountPath: /media
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: nfs.truenas.${DOMAIN}
+            path: /mnt/tank/downloads
+        mountPath: /complete
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 1500Mi
+    metrics:
+      enabled: false
+      prometheusRule:
+        enabled: false
