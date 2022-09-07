@@ -37,7 +37,7 @@ spec:
           image: markmckessock/gns3server:v2.2.29
           imagePullPolicy: Always
           ports:
-            - name: web-ui
+            - name: http
               containerPort: 3080
           volumeMounts:
             - mountPath: /images
