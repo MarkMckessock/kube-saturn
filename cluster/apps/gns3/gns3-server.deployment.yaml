@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gns3-server
-          image: jsimonetti/gns3-server:latest
+          image: markmckessock/gns3-server:2.2.34
           imagePullPolicy: Always
           ports:
             - name: http
