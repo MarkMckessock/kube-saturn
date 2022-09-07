@@ -4,11 +4,8 @@ metadata:
   name: gns3
   namespace: gns3
 spec:
-  type: LoadBalancer
-  loadBalancerIP: ${GNS_IP}
   selector:
     app: gns3
   ports:
-    - port: 3080
-      targetPort: http
-
+    - port: 80
+      targetPort: web-ui

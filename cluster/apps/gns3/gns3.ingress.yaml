@@ -20,7 +20,7 @@ spec:
               service:
                 name: gns3
                 port:
-                  number: 3080
+                  number: 80
   tls:
     - hosts:
         - gns3.${DOMAIN}
