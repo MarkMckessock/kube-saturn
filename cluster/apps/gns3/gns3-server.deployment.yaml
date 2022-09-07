@@ -21,6 +21,206 @@ spec:
           ports:
             - name: http
               containerPort: 3080
+            - name: console-2001
+              containerPort: 2001
+            - name: console-2002
+              containerPort: 2002
+            - name: console-2003
+              containerPort: 2003
+            - name: console-2004
+              containerPort: 2004
+            - name: console-2005
+              containerPort: 2005
+            - name: console-2006
+              containerPort: 2006
+            - name: console-2007
+              containerPort: 2007
+            - name: console-2008
+              containerPort: 2008
+            - name: console-2009
+              containerPort: 2009
+            - name: console-2010
+              containerPort: 2010
+            - name: console-2011
+              containerPort: 2011
+            - name: console-2012
+              containerPort: 2012
+            - name: console-2013
+              containerPort: 2013
+            - name: console-2014
+              containerPort: 2014
+            - name: console-2015
+              containerPort: 2015
+            - name: console-2016
+              containerPort: 2016
+            - name: console-2017
+              containerPort: 2017
+            - name: console-2018
+              containerPort: 2018
+            - name: console-2019
+              containerPort: 2019
+            - name: console-2020
+              containerPort: 2020
+            - name: console-2021
+              containerPort: 2021
+            - name: console-2022
+              containerPort: 2022
+            - name: console-2023
+              containerPort: 2023
+            - name: console-2024
+              containerPort: 2024
+            - name: console-2025
+              containerPort: 2025
+            - name: console-2026
+              containerPort: 2026
+            - name: console-2027
+              containerPort: 2027
+            - name: console-2028
+              containerPort: 2028
+            - name: console-2029
+              containerPort: 2029
+            - name: console-2030
+              containerPort: 2030
+            - name: console-2031
+              containerPort: 2031
+            - name: console-2032
+              containerPort: 2032
+            - name: console-2033
+              containerPort: 2033
+            - name: console-2034
+              containerPort: 2034
+            - name: console-2035
+              containerPort: 2035
+            - name: console-2036
+              containerPort: 2036
+            - name: console-2037
+              containerPort: 2037
+            - name: console-2038
+              containerPort: 2038
+            - name: console-2039
+              containerPort: 2039
+            - name: console-2040
+              containerPort: 2040
+            - name: console-2041
+              containerPort: 2041
+            - name: console-2042
+              containerPort: 2042
+            - name: console-2043
+              containerPort: 2043
+            - name: console-2044
+              containerPort: 2044
+            - name: console-2045
+              containerPort: 2045
+            - name: console-2046
+              containerPort: 2046
+            - name: console-2047
+              containerPort: 2047
+            - name: console-2048
+              containerPort: 2048
+            - name: console-2049
+              containerPort: 2049
+            - name: console-2050
+              containerPort: 2050
+            - name: console-2051
+              containerPort: 2051
+            - name: console-2052
+              containerPort: 2052
+            - name: console-2053
+              containerPort: 2053
+            - name: console-2054
+              containerPort: 2054
+            - name: console-2055
+              containerPort: 2055
+            - name: console-2056
+              containerPort: 2056
+            - name: console-2057
+              containerPort: 2057
+            - name: console-2058
+              containerPort: 2058
+            - name: console-2059
+              containerPort: 2059
+            - name: console-2060
+              containerPort: 2060
+            - name: console-2061
+              containerPort: 2061
+            - name: console-2062
+              containerPort: 2062
+            - name: console-2063
+              containerPort: 2063
+            - name: console-2064
+              containerPort: 2064
+            - name: console-2065
+              containerPort: 2065
+            - name: console-2066
+              containerPort: 2066
+            - name: console-2067
+              containerPort: 2067
+            - name: console-2068
+              containerPort: 2068
+            - name: console-2069
+              containerPort: 2069
+            - name: console-2070
+              containerPort: 2070
+            - name: console-2071
+              containerPort: 2071
+            - name: console-2072
+              containerPort: 2072
+            - name: console-2073
+              containerPort: 2073
+            - name: console-2074
+              containerPort: 2074
+            - name: console-2075
+              containerPort: 2075
+            - name: console-2076
+              containerPort: 2076
+            - name: console-2077
+              containerPort: 2077
+            - name: console-2078
+              containerPort: 2078
+            - name: console-2079
+              containerPort: 2079
+            - name: console-2080
+              containerPort: 2080
+            - name: console-2081
+              containerPort: 2081
+            - name: console-2082
+              containerPort: 2082
+            - name: console-2083
+              containerPort: 2083
+            - name: console-2084
+              containerPort: 2084
+            - name: console-2085
+              containerPort: 2085
+            - name: console-2086
+              containerPort: 2086
+            - name: console-2087
+              containerPort: 2087
+            - name: console-2088
+              containerPort: 2088
+            - name: console-2089
+              containerPort: 2089
+            - name: console-2090
+              containerPort: 2090
+            - name: console-2091
+              containerPort: 2091
+            - name: console-2092
+              containerPort: 2092
+            - name: console-2093
+              containerPort: 2093
+            - name: console-2094
+              containerPort: 2094
+            - name: console-2095
+              containerPort: 2095
+            - name: console-2096
+              containerPort: 2096
+            - name: console-2097
+              containerPort: 2097
+            - name: console-2098
+              containerPort: 2098
+            - name: console-2099
+              containerPort: 2099
+            - name: console-2100
+              containerPort: 2100
           volumeMounts:
             - mountPath: /data
               name: data
