@@ -9,205 +9,306 @@ spec:
   selector:
     app: gns3-server
   ports:
-    - port: 3080
+    - name: http
+      port: 3080
       targetPort: http
-    - port: 2001
+    - name: console-2001
+      port: 2001
       targetPort: 2001
-    - port: 2002
+    - name: console-2002
+      port: 2002
       targetPort: 2002
-    - port: 2003
+    - name: console-2003
+      port: 2003
       targetPort: 2003
-    - port: 2004
+    - name: console-2004
+      port: 2004
       targetPort: 2004
-    - port: 2005
+    - name: console-2005
+      port: 2005
       targetPort: 2005
-    - port: 2006
+    - name: console-2006
+      port: 2006
       targetPort: 2006
-    - port: 2007
+    - name: console-2007
+      port: 2007
       targetPort: 2007
-    - port: 2008
+    - name: console-2008
+      port: 2008
       targetPort: 2008
-    - port: 2009
+    - name: console-2009
+      port: 2009
       targetPort: 2009
-    - port: 2010
+    - name: console-2010
+      port: 2010
       targetPort: 2010
-    - port: 2011
+    - name: console-2011
+      port: 2011
       targetPort: 2011
-    - port: 2012
+    - name: console-2012
+      port: 2012
       targetPort: 2012
-    - port: 2013
+    - name: console-2013
+      port: 2013
       targetPort: 2013
-    - port: 2014
+    - name: console-2014
+      port: 2014
       targetPort: 2014
-    - port: 2015
+    - name: console-2015
+      port: 2015
       targetPort: 2015
-    - port: 2016
+    - name: console-2016
+      port: 2016
       targetPort: 2016
-    - port: 2017
+    - name: console-2017
+      port: 2017
       targetPort: 2017
-    - port: 2018
+    - name: console-2018
+      port: 2018
       targetPort: 2018
-    - port: 2019
+    - name: console-2019
+      port: 2019
       targetPort: 2019
-    - port: 2020
+    - name: console-2020
+      port: 2020
       targetPort: 2020
-    - port: 2021
+    - name: console-2021
+      port: 2021
       targetPort: 2021
-    - port: 2022
+    - name: console-2022
+      port: 2022
       targetPort: 2022
-    - port: 2023
+    - name: console-2023
+      port: 2023
       targetPort: 2023
-    - port: 2024
+    - name: console-2024
+      port: 2024
       targetPort: 2024
-    - port: 2025
+    - name: console-2025
+      port: 2025
       targetPort: 2025
-    - port: 2026
+    - name: console-2026
+      port: 2026
       targetPort: 2026
-    - port: 2027
+    - name: console-2027
+      port: 2027
       targetPort: 2027
-    - port: 2028
+    - name: console-2028
+      port: 2028
       targetPort: 2028
-    - port: 2029
+    - name: console-2029
+      port: 2029
       targetPort: 2029
-    - port: 2030
+    - name: console-2030
+      port: 2030
       targetPort: 2030
-    - port: 2031
+    - name: console-2031
+      port: 2031
       targetPort: 2031
-    - port: 2032
+    - name: console-2032
+      port: 2032
       targetPort: 2032
-    - port: 2033
+    - name: console-2033
+      port: 2033
       targetPort: 2033
-    - port: 2034
+    - name: console-2034
+      port: 2034
       targetPort: 2034
-    - port: 2035
+    - name: console-2035
+      port: 2035
       targetPort: 2035
-    - port: 2036
+    - name: console-2036
+      port: 2036
       targetPort: 2036
-    - port: 2037
+    - name: console-2037
+      port: 2037
       targetPort: 2037
-    - port: 2038
+    - name: console-2038
+      port: 2038
       targetPort: 2038
-    - port: 2039
+    - name: console-2039
+      port: 2039
       targetPort: 2039
-    - port: 2040
+    - name: console-2040
+      port: 2040
       targetPort: 2040
-    - port: 2041
+    - name: console-2041
+      port: 2041
       targetPort: 2041
-    - port: 2042
+    - name: console-2042
+      port: 2042
       targetPort: 2042
-    - port: 2043
+    - name: console-2043
+      port: 2043
       targetPort: 2043
-    - port: 2044
+    - name: console-2044
+      port: 2044
       targetPort: 2044
-    - port: 2045
+    - name: console-2045
+      port: 2045
       targetPort: 2045
-    - port: 2046
+    - name: console-2046
+      port: 2046
       targetPort: 2046
-    - port: 2047
+    - name: console-2047
+      port: 2047
       targetPort: 2047
-    - port: 2048
+    - name: console-2048
+      port: 2048
       targetPort: 2048
-    - port: 2049
+    - name: console-2049
+      port: 2049
       targetPort: 2049
-    - port: 2050
+    - name: console-2050
+      port: 2050
       targetPort: 2050
-    - port: 2051
+    - name: console-2051
+      port: 2051
       targetPort: 2051
-    - port: 2052
+    - name: console-2052
+      port: 2052
       targetPort: 2052
-    - port: 2053
+    - name: console-2053
+      port: 2053
       targetPort: 2053
-    - port: 2054
+    - name: console-2054
+      port: 2054
       targetPort: 2054
-    - port: 2055
+    - name: console-2055
+      port: 2055
       targetPort: 2055
-    - port: 2056
+    - name: console-2056
+      port: 2056
       targetPort: 2056
-    - port: 2057
+    - name: console-2057
+      port: 2057
       targetPort: 2057
-    - port: 2058
+    - name: console-2058
+      port: 2058
       targetPort: 2058
-    - port: 2059
+    - name: console-2059
+      port: 2059
       targetPort: 2059
-    - port: 2060
+    - name: console-2060
+      port: 2060
       targetPort: 2060
-    - port: 2061
+    - name: console-2061
+      port: 2061
       targetPort: 2061
-    - port: 2062
+    - name: console-2062
+      port: 2062
       targetPort: 2062
-    - port: 2063
+    - name: console-2063
+      port: 2063
       targetPort: 2063
-    - port: 2064
+    - name: console-2064
+      port: 2064
       targetPort: 2064
-    - port: 2065
+    - name: console-2065
+      port: 2065
       targetPort: 2065
-    - port: 2066
+    - name: console-2066
+      port: 2066
       targetPort: 2066
-    - port: 2067
+    - name: console-2067
+      port: 2067
       targetPort: 2067
-    - port: 2068
+    - name: console-2068
+      port: 2068
       targetPort: 2068
-    - port: 2069
+    - name: console-2069
+      port: 2069
       targetPort: 2069
-    - port: 2070
+    - name: console-2070
+      port: 2070
       targetPort: 2070
-    - port: 2071
+    - name: console-2071
+      port: 2071
       targetPort: 2071
-    - port: 2072
+    - name: console-2072
+      port: 2072
       targetPort: 2072
-    - port: 2073
+    - name: console-2073
+      port: 2073
       targetPort: 2073
-    - port: 2074
+    - name: console-2074
+      port: 2074
       targetPort: 2074
-    - port: 2075
+    - name: console-2075
+      port: 2075
       targetPort: 2075
-    - port: 2076
+    - name: console-2076
+      port: 2076
       targetPort: 2076
-    - port: 2077
+    - name: console-2077
+      port: 2077
       targetPort: 2077
-    - port: 2078
+    - name: console-2078
+      port: 2078
       targetPort: 2078
-    - port: 2079
+    - name: console-2079
+      port: 2079
       targetPort: 2079
-    - port: 2080
+    - name: console-2080
+      port: 2080
       targetPort: 2080
-    - port: 2081
+    - name: console-2081
+      port: 2081
       targetPort: 2081
-    - port: 2082
+    - name: console-2082
+      port: 2082
       targetPort: 2082
-    - port: 2083
+    - name: console-2083
+      port: 2083
       targetPort: 2083
-    - port: 2084
+    - name: console-2084
+      port: 2084
       targetPort: 2084
-    - port: 2085
+    - name: console-2085
+      port: 2085
       targetPort: 2085
-    - port: 2086
+    - name: console-2086
+      port: 2086
       targetPort: 2086
-    - port: 2087
+    - name: console-2087
+      port: 2087
       targetPort: 2087
-    - port: 2088
+    - name: console-2088
+      port: 2088
       targetPort: 2088
-    - port: 2089
+    - name: console-2089
+      port: 2089
       targetPort: 2089
-    - port: 2090
+    - name: console-2090
+      port: 2090
       targetPort: 2090
-    - port: 2091
+    - name: console-2091
+      port: 2091
       targetPort: 2091
-    - port: 2092
+    - name: console-2092
+      port: 2092
       targetPort: 2092
-    - port: 2093
+    - name: console-2093
+      port: 2093
       targetPort: 2093
-    - port: 2094
+    - name: console-2094
+      port: 2094
       targetPort: 2094
-    - port: 2095
+    - name: console-2095
+      port: 2095
       targetPort: 2095
-    - port: 2096
+    - name: console-2096
+      port: 2096
       targetPort: 2096
-    - port: 2097
+    - name: console-2097
+      port: 2097
       targetPort: 2097
-    - port: 2098
+    - name: console-2098
+      port: 2098
       targetPort: 2098
-    - port: 2099
+    - name: console-2099
+      port: 2099
       targetPort: 2099
-    - port: 2100
+    - name: console-2100
+      port: 2100
       targetPort: 2100
