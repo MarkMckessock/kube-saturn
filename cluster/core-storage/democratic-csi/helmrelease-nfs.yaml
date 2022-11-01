@@ -22,12 +22,12 @@ spec:
 
     controller:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.7.6
+        image: docker.io/democraticcsi/democratic-csi:v1.7.7
         imagePullPolicy: IfNotPresent
 
     node:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.7.6
+        image: docker.io/democraticcsi/democratic-csi:v1.7.7
         imagePullPolicy: IfNotPresent
 
     storageClasses:
