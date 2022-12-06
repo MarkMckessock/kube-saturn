@@ -91,6 +91,5 @@ spec:
               enabled: True
             record:
               enabled: True
-              retain_days: 3
     nodeSelector:
       kubernetes.io/arch: amd64
