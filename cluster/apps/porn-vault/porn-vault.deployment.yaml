@@ -40,9 +40,9 @@ spec:
             claimName: porn-vault
         - name: videos
           nfs:
-            path: /mnt/tank/media/porn/videos
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Media/porn/videos
+            server: granite.${DOMAIN}
         - name: images
           nfs:
-            path: /mnt/tank/media/porn/images
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Media/porn/images
+            server: granite.${DOMAIN}

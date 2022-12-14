@@ -66,16 +66,16 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            server: nfs.truenas.${DOMAIN}
-            path: /mnt/tank/media
+            server: granite.${DOMAIN}
+            path: /volume1/Media
         mountPath: /media
       downloads:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
-            server: nfs.truenas.${DOMAIN}
-            path: /mnt/tank/downloads
+            server: granite.${DOMAIN}
+            path: /volume1/Downloads
         mountPath: /complete
     resources:
       requests:

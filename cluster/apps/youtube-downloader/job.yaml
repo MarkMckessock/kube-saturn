@@ -38,8 +38,8 @@ spec:
           volumes:
             - name: downloads
               nfs:
-                server: nfs.truenas.${DOMAIN}
-                path: /mnt/tank/media/youtube
+                server: granite.${DOMAIN}
+                path: /volume1/Media/youtube
             - name: archive
               persistentVolumeClaim:
                 claimName: youtube-dl

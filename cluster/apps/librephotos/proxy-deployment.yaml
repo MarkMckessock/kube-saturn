@@ -27,8 +27,8 @@ spec:
       volumes:
         - name: photos
           nfs:
-            path: /mnt/tank/users/mmckessock/Pictures
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Users/mmckessock/Pictures
+            server: granite.${DOMAIN}
         - name: media
           persistentVolumeClaim:
             claimName: media

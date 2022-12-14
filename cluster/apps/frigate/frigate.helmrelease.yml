@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: frigate
-      version: 8.0.0
+      version: 8.2.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -48,16 +48,16 @@ spec:
         type: custom
         volumeSpec:
           nfs:
-            path: /mnt/tank/media/recordings/recordings
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Media/recordings/recordings
+            server: granite.${DOMAIN}
         mountPath: /media/frigate/recordings
       clips:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
-            path: /mnt/tank/media/recordings/clips
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Media/recordings/clips
+            server: granite.${DOMAIN}
         mountPath: /media/frigate/clips
     podSecurityContext:
       fsGroup: 1000

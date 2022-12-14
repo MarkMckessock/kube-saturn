@@ -38,5 +38,5 @@ spec:
             claimName: deemix
         - name: media
           nfs:
-            path: /mnt/tank/media/music
-            server: nfs.truenas.${DOMAIN}
+            path: /volume1/Media/music
+            server: granite.${DOMAIN}
