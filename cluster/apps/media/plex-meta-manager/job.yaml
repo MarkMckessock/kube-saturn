@@ -58,5 +58,6 @@ spec:
             - name: plex-meta-data
               persistentVolumeClaim:
                 claimName: plex-meta-manager
+          restartPolicy: OnFailure
           nodeSelector:
             kubernetes.io/arch: amd64
