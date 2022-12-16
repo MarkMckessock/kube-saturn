@@ -5,14 +5,13 @@ metadata:
   namespace: media
 spec:
   schedule: "0 */6 * * *"
-  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
         spec:
           containers:
             - name: plex-meta-manager
-              image: meisnate12/plex-meta-manager:v1.17.3
+              image: meisnate12/plex-meta-manager:v1.18.0
               env:
                 - name: PMM_READ_ONLY_CONFIG
                   value: "true"
@@ -59,6 +58,5 @@ spec:
             - name: plex-meta-data
               persistentVolumeClaim:
                 claimName: plex-meta-manager
-          restartPolicy: Never
           nodeSelector:
             kubernetes.io/arch: amd64
