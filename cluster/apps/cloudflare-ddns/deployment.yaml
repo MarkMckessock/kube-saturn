@@ -13,12 +13,12 @@ spec:
         app: cloudflare-ddns
     spec:
       containers:
-      - name: cloudflare-ddns
-        image: oznu/cloudflare-ddns
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        envFrom:
-          - secretRef:
-              name: cloudflare-ddns-creds
+        - name: cloudflare-ddns
+          image: oznu/cloudflare-ddns
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          envFrom:
+            - secretRef:
+                name: cloudflare-ddns-creds

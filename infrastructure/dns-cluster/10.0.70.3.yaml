@@ -1,0 +1,62 @@
+#cloud-config
+
+# This is the user-data configuration file for cloud-init. By default this sets
+# up an initial user called "ubuntu" with password "ubuntu", which must be
+# changed at first login. However, many additional actions can be initiated on
+# first boot from this file. The cloud-init documentation has more details:
+#
+# https://cloudinit.readthedocs.io/
+#
+# Some additional examples are provided in comments below the default
+# configuration.
+
+# On first boot, set the (default) ubuntu user's password to "ubuntu" and
+# expire user passwords
+chpasswd:
+  expire: true
+  list:
+    - ubuntu:ubuntu
+
+# Enable password authentication with the SSH daemon
+ssh_pwauth: false
+
+## On first boot, use ssh-import-id to give the specific users SSH access to
+## the default user
+ssh_import_id:
+  - gh:MarkMckessock
+
+fqdn: ns2.markmckessock.com
+
+users:
+  - default
+  - name: ansible
+    gecos: Ansible User
+    groups: users,admin,wheel
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCC/MeuKlktv6rrtV9O4lTU3TXKimYghYI29wqmBNemFxx5dzldoZLD/8w2WUW0tPe7vBXjw0OSEsSVt8K094VnIe320furEddLLTY3rg7BqlPLV5GYUz1dE14L7FAbVLM0UkqTLdZduv7k/anEROnftjFMbC0nU0c32tGx9a16QjjqzoAtDsNJZbef2PbpQmLP0axJux16f+wfCe5W27lp8RnSdD2enK3npVPu/7J58UQggc3EpxAJ1dq8noJzOwdP+4fPBLG1FX12xNbhUqADmLHyVysLURxOta00FrK0b+xherFMtnYW6OnA+CFIkRGuTxZoU2xvDfOl8GrSSXEJHCkDxFXuSINkYhOLJ/gRC5F5F8FbzsaUpJhqz3qmCAVEBqQcnFANEhOFRpfWscL0LfnqO0Y9/5kFZU1KSAEg89qvFQ/NeLvip248Q2gWjP2ASRqDSj2tDKdmK8mZ3gPosgOgtlch9GnkZdbA52hlz3Ge+OjDhp391n8HaFcnaE="
+
+write_files:
+  - path: /etc/cloud/cloud.cfg.d/99-custom-networking.cfg
+    permissions: "0644"
+    content: |
+      network: {config: disabled}
+  - path: /etc/netplan/my-new-config.yaml
+    permissions: "0644"
+    content: |
+      network:
+          version: 2
+          ethernets:
+              eth0:
+                  dhcp4: no
+                  addresses: [10.0.70.3/24]
+                  gateway4: 10.0.70.1
+                  nameservers:
+                    addresses: [8.8.8.8,8.8.4.4,1.1.1.1]
+
+runcmd:
+  - rm /etc/netplan/50-cloud-init.yaml
+  - netplan generate
+  - netplan apply

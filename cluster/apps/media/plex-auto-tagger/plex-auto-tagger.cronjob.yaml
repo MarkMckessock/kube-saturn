@@ -20,7 +20,7 @@ spec:
               resources:
                 limits:
                   memory: "128Mi"
-                  cpu: "500m"
+                  cpu: "100m"
               env:
                 - name: PLEX_URL
                   value: http://plex:32400
