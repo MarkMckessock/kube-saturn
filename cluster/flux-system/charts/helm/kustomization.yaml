@@ -16,3 +16,4 @@ resources:
   - coredns.yaml
   - kube-vip.yaml
   - kubernetes-dashboard.yaml
+  - harbor.yaml
