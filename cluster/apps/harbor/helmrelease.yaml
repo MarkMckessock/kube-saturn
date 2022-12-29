@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    externalURL: https://core.harbor.markmckessock.com
+    externalURL: https://harbor.markmckessock.com
     expose:
       tls:
         certSource: secret
@@ -24,7 +24,7 @@ spec:
           notarySecretName: notary-tls
       ingress:
         hosts:
-          core: core.harbor.markmckessock.com
+          core: harbor.markmckessock.com
           notary: notary.harbor.markmckessock.com
         annotations:
           kubernetes.io/ingress.class: nginx
