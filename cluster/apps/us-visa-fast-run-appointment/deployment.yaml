@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: us-fast-visa
+  namespace: us-visa-fast-run-appointment
+spec:
+  selector:
+    matchLabels:
+      app: us-fast-visa
+  template:
+    metadata:
+      labels:
+        app: us-fast-visa
+    spec:
+      containers:
+        - name: us-fast-visa
+          image: my-containers/us-visa-fast-run-appointment
+      imagePullSecrets:
+        - name: regcred
