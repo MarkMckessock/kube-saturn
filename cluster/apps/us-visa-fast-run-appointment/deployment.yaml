@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: us-fast-visa
-          image: my-containers/us-visa-fast-run-appointment
+          image: harbor.markmckessock.com/my-containers/us-visa-fast-run-appointment
       imagePullSecrets:
         - name: regcred
