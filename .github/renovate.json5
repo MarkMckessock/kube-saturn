@@ -1,118 +1,59 @@
 {
-  "enabled": true,
-  "semanticCommits": "enabled",
-  "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranch",
+    "github>markmckessock/kube-saturn//.github/renovate/labels.json5",
+    "github>markmckessock/kube-saturn//.github/renovate/autoMerge.json5",
+    "github>markmckessock/kube-saturn//.github/renovate/semanticCommits.json5"
+  ],
+  "platform": "github",
+  "username": "markmckessock-bot[bot]",
+  "gitAuthor": "markmckessock-bot <121698375+markmckessock-bot[bot]@users.noreply.github.com>",
+  "repositories": ["markmckessock/kube-saturn"],
+  "flux": {
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  },
   "helm-values": {
-    "fileMatch": [
-      "cluster/.+/helm-release\\.yaml$"
-    ]
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
   "kubernetes": {
-    "fileMatch": [
-      "cluster/.+\\.yaml$"
-    ],
-    "ignorePaths": [
-      "cluster/base/"
-    ],
+    "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
   "regexManagers": [
-    // regexManager to read and process HelmReleases and CRDs
     {
-      "fileMatch": [
-        "cluster/.+\\.yaml$"
-      ],
+      "description": ["Process CRD dependencies - Chart and Github Release are the same version"],
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
       "matchStrings": [
-        // helm releases
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n",
-        // cert-manager crd
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
+        "# renovate: registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
       ],
       "datasourceTemplate": "helm"
     },
+    {
+      "description": ["Raw GitHub URL Regex manager"],
+      "fileMatch": [
+        "infrastructure/.+\\.ya?ml$",
+        "cluster/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
   ],
   "packageRules": [
-    // setup datasources
-    {
-      "matchDatasources": ["helm"],
-      "separateMinorPatch": true,
-      "ignoreDeprecated": true
-    },
-    // global docker datasource settings
+    // Version strategies
     {
       "matchDatasources": ["docker"],
-      "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"],
-    },
-    // add labels according to package and update types
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/image", "dep/major"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/image", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/image", "dep/patch"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/helm", "dep/major"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/helm", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/helm", "dep/patch"]
-    },
-    // Pinned versions
-    {
-      "matchDatasources": ["docker"],
-      "allowedVersions": "<=13",
-      "matchPackageNames": [
-        "postgres",
-      ]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "allowedVersions": "<=7",
-      "matchPackageNames": [
-        "elasticsearch",
-      ]
-    },
-    // version strategies
-    {
-      "matchDatasources": ["docker"],
-      "versioning": "loose",
-      "matchPackageNames": [
-        "ghcr.io/k8s-at-home/plex",
-        "ghcr.io/k8s-at-home/qbittorrent"
-      ]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "automerge": true,
-      "automergeType": "branch",
-      "requiredStatusChecks": null,
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchPackageNames": [
-        "ghcr.io/k8s-at-home/jackett",
-        "ghcr.io/k8s-at-home/prowlarr-nightly"
-     ]
+      "matchPackageNames": ["ghcr.io/onedr0p/plex", "ghcr.io/onedr0p/qbittorrent"],
+      "versioning": "loose"
     }
   ]
 }
