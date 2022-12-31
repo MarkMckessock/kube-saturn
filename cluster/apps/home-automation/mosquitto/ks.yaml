@@ -13,16 +13,12 @@ spec:
     kind: GitRepository
     name: flux-system
   wait: true
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: mosquitto-passwords
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: cluster-apps-mosquitto
-  namespace: flux-system
+  namespace: home-automation
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
@@ -35,3 +31,7 @@ spec:
   wait: true
   dependsOn:
     - name: cluster-apps-mosquitto-passwords
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: mosquitto-passwords
