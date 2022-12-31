@@ -14,3 +14,4 @@ data:
   GNS_IP: 10.0.70.133
   CLUSTER_ISSUER: letsencrypt-production
   STORAGE_CLASS: longhorn
+  NFS_SERVER: granite.markmckessock.com

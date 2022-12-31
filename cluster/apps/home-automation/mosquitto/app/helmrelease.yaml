@@ -1,0 +1,95 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mosquitto
+  namespace: home-automation
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: mosquitto-config
+      secret.reloader.stakater.com/reload: mosquitto-passwordfile
+
+    image:
+      repository: eclipse-mosquitto
+      tag: 2.0.15
+
+    initContainers:
+      copy-config:
+        image: eclipse-mosquitto:2.0.15@sha256:29c92f9144d4e65f7e647694d4b6aa7f0ac6a995bd102251ea05f7edf258ad20
+        command:
+          - "/bin/sh"
+          - -c
+        args:
+          - cp /data/mosquitto_pwd /data/external_config/ && mosquitto_passwd -U /data/external_config/mosquitto_pwd
+        volumeMounts:
+          - name: mosquitto-passwordfile
+            mountPath: /data/mosquitto_pwd
+            subPath: mosquitto_pwd
+          - name: external-config
+            mountPath: /data/external_config
+
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${MQTT_IP}
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            enabled: false
+          mqtt:
+            enabled: true
+            port: 8883
+
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+        retain: true
+      tls-cert:
+        enabled: true
+        type: custom
+        volumeSpec:
+          secret:
+            secretName: mosquitto-ssl
+        subPath:
+        - path: tls.crt
+          mountPath: /certs/tls.crt
+        - path: tls.key
+          mountPath: /certs/tls.key
+          readOnly: true
+      mosquitto-config:
+        enabled: true
+        type: configMap
+        name: mosquitto-config
+        mountPath: /mosquitto/config/mosquitto.conf
+        subPath: mosquitto.conf
+      mosquitto-passwordfile:
+        enabled: true
+        type: secret
+        name: mosquitto-passwordfile
+        mountPath: "-"
+        items:
+          - key: mosquitto_pwd
+            path: mosquitto_pwd
+      external-config:
+        enabled: true
+        type: emptyDir
+        mountPath: /mosquitto/external_config
+    resources:
+      requests:
+        cpu: 15m
+        memory: 64M
+      limits:
+        memory: 124M

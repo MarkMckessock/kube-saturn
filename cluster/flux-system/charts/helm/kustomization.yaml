@@ -17,3 +17,4 @@ resources:
   - kube-vip.yaml
   - kubernetes-dashboard.yaml
   - harbor.yaml
+  - bjw-s.yaml
