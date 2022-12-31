@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: tautulli-config
   namespace: media
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce

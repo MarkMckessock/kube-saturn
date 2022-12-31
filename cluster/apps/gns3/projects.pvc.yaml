@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: projects
   namespace: gns3
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce

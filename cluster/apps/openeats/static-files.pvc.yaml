@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: static-files
   namespace: openeats
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteMany

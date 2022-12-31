@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: cache
   namespace: photoview
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce

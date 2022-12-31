@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: omada
   namespace: omada-controller
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce

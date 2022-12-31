@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: youtube-dl
   namespace: youtube-dl
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   accessModes:
     - ReadWriteOnce
