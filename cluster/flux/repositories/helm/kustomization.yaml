@@ -18,3 +18,4 @@ resources:
   - kubernetes-dashboard.yaml
   - harbor.yaml
   - bjw-s.yaml
+  - external-secrets.yaml
