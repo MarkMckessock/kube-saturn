@@ -16,7 +16,7 @@ spec:
   values:
     podAnnotations:
       configmap.reloader.stakater.com/reload: mosquitto-config
-      secret.reloader.stakater.com/reload: mosquitto-passwordfile
+      secret.reloader.stakater.com/reload: "mosquitto-passwordfile,mosquitto-ssl"
 
     image:
       repository: eclipse-mosquitto
