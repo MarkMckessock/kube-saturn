@@ -56,6 +56,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
+        mountPath: /mosquitto/data
         retain: true
       tls-cert:
         enabled: true
