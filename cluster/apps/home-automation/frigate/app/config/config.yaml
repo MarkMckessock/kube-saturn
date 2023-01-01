@@ -2,7 +2,7 @@ mqtt:
   host: mqtt.home-automation.svc
   port: 8883
   user: frigate
-  password: {FRIGATE_MQTT_PASSWORD}
+  password: "{FRIGATE_MQTT_PASSWORD}"
   tls_ca_certs: /etc/ssl/certs/ca-certificates.crt
 cameras:
   bedroom:
