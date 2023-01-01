@@ -8,7 +8,7 @@ cameras:
   bedroom:
     ffmpeg:
       inputs:
-        - path: rtsp://admin:{BEDROOM_CAMERA_PASSWORD}@10.0.60.30//h264Preview_01_main
+        - path: rtsp://admin:{FRIGATE_BEDROOM_CAMERA_PASSWORD}@10.0.60.30//h264Preview_01_main
           roles:
             - rtmp
             - record
