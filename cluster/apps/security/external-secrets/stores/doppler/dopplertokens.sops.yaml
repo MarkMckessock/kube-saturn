@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: doppler-tokens
+    namespace: security
+type: Opaque
+stringData:
+    mosquitto: ENC[AES256_GCM,data:z9Z68XSGGneaiEHUgyxRTwnnGefd66Zvq+hnV4kb0OUUahNx94x0UZgWRzrUpfRKxrBG+sxOSFu/qxg=,iv:0wOU89cZDp9nh4LQT2PmzE1o3Bdfz9/CR2e3yv/X+4Y=,tag:aI3ds6QvvfxG2uN/unuQ+A==,type:str]
+    home-assistant: ENC[AES256_GCM,data:EMaHmnRFlqsCSjTLjeITdJZR2B631Gby7c1JDpzWAEKXVTOkJAu3PTq3BoIQmkK8m9UQFUTs5G8KMnApznkXnA==,iv:61dDDOJiR7xXOAK0Wq7+7yHFRtESE7umXWIom7Gmdqg=,tag:QSwAMKWML+nJikeFTM4cZw==,type:str]
+    frigate: ENC[AES256_GCM,data:4qOwUBFE43UYZW6qfjnSQw6Q3wRQlAEaTquN1SRwmCY+rmxR8OI5LSHuzT6QBV81GtRTUBGsltmH,iv:Vc0KANOPSGQ9vf2buFmA8BgyYXUHVAKG0GFqAB/PIRg=,tag:NALsU8Xacfa0sVXCqy0jUg==,type:str]
+    zigbee2mqtt: ENC[AES256_GCM,data:f/WKZkXKJbqvKAQIjjGBtS9yi3zhtr2uhS0FmjkSMLn/++AX0euUlfsRS2fK+EGZH8OYMAU4GqjyBhQ4Rw==,iv:FniPPEdoJssG3x+MKM+VE4ejNmGm+5U+PLZWsTHcFn4=,tag:MFJvaWVVfc61iw4UmlbMTg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1meaufpccuvk3nd8mp0vt6wz0e7ncla8lvfteekhpenytar03cg7s2ks6lc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqR1plTFd6Kzlpb2N0STIy
+            TmYvc0txZ1RCcG1wZWc2bkM2YzYrRkhRWWlRCkxvNjNLR0tsZkNvVDMvR3FnYWhp
+            Qmw5Zk1SSHlMLzdCVFVreUdhTVJNRG8KLS0tIFZIQktvMGJjc2l2bDZEY21MRlpQ
+            dFI1SWx2aVc1cDlPMTZ0TWlCZ3RCcDAKo4/w28yFmzazs3+70YQ91ar6YMefoHsZ
+            EIqwuvEPWXMshvlsw7b9r8SBqe76v1K1e+4H40J+1XKwKt9jwuoEJg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-01-01T06:35:24Z"
+    mac: ENC[AES256_GCM,data:Qgo4D740a6UJbYf6isZh3txxhEN0uoBmrxg/wTSmEyPSKn1Rlh/KQohIb5jSqjoia/ycSz1fD24P2wQufMCA986IOcU4iZzroM0zrP3z03jYzFtKT4e9mPi/7RqfQ33yLlb8cm/rnCgMRujW4bi43gghwYu3IGcxv7oiTeQLCsw=,iv:qZMyxSPP4GyjUKrLB+VkcZwnstJECLQu2ixlbLyoKCo=,tag:NDa7g6cVOzriPYBheNJmfQ==,type:str]
+    pgp: []
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData))
+    version: 3.7.3
