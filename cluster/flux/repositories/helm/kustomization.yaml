@@ -14,7 +14,6 @@ resources:
   - kasten-io.yaml
   - democratic-csi.yaml
   - coredns.yaml
-  - kube-vip.yaml
   - kubernetes-dashboard.yaml
   - harbor.yaml
   - bjw-s.yaml
