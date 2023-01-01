@@ -14,32 +14,18 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
     image:
-      # TODO Change to GHCR
-      # https://github.com/blakeblackshear/frigate/pkgs/container/frigate/versions?filters%5Bversion_type%5D=tagged
       repository: docker.io/blakeblackshear/frigate
       tag: 0.11.1
+
     env:
       TZ: America/New_York
+
     envFrom:
       - secretRef:
-          name: frigate-secret
+          name: frigate-secrets
+
     service:
       main:
         ports:
@@ -50,6 +36,7 @@ spec:
             port: 1935
             protocol: TCP
             targetPort: 1935
+
     probes:
       liveness: &probes
         enabled: true
@@ -64,13 +51,20 @@ spec:
           failureThreshold: 3
       readiness: *probes
       startup:
-        enabled: false
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /api/version
+            port: *port
+          failureThreshold: 30
+          periodSeconds: 10
+
     ingress:
       main:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/icon: mdi:cctv
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
@@ -81,13 +75,19 @@ spec:
         tls:
           - hosts:
               - *host
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "frigate-config"
+      secret.reloader.stakater.com/reload: "frigate-secrets"
+
     securityContext:
-      privileged: false
+      privileged: true
+
     persistence:
       config-file:
         enabled: true
         type: configMap
-        name: frigate-configmap
+        name: frigate-config
         subPath: config.yaml
         mountPath: /config/config.yml
         readOnly: true

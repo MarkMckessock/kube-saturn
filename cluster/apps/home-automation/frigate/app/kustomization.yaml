@@ -5,7 +5,7 @@ resources:
   - ./frigate-secret.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: frigate-configmap
+  - name: frigate-config
     files:
       - config/config.yaml
 generatorOptions:
