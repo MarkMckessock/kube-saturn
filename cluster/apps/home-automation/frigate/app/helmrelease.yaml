@@ -1,0 +1,138 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: frigate
+  namespace: frigate
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      # TODO Change to GHCR
+      # https://github.com/blakeblackshear/frigate/pkgs/container/frigate/versions?filters%5Bversion_type%5D=tagged
+      repository: docker.io/blakeblackshear/frigate
+      tag: 0.11.1
+    env:
+      TZ: America/New_York
+    envFrom:
+      - secretRef:
+          name: frigate-secret
+    service:
+      main:
+        ports:
+          http:
+            port: &port 5000
+          rtmp:
+            enabled: true
+            port: 1935
+            protocol: TCP
+            targetPort: 1935
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /api/version
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:cctv
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    securityContext:
+      privileged: false
+    persistence:
+      config-file:
+        enabled: true
+        type: configMap
+        name: frigate-configmap
+        subPath: config.yaml
+        mountPath: /config/config.yml
+        readOnly: true
+      recordings:
+        enabled: true
+        type: nfs
+        path: /volume1/Media/recordings/recordings
+        server: ${NFS_SERVER}
+        mountPath: /media/frigate/recordings
+      clips:
+        enabled: true
+        type: nfs
+        path: /volume1/Media/recordings/clips
+        server: ${NFS_SERVER}
+        mountPath: /media/frigate/clips
+      cache:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 4Gi
+        mountPath: /dev/shm
+      usb:
+        enabled: false
+        type: hostPath
+        hostPath: /dev/bus/usb
+        hostPathType: Directory
+        mountPath: /dev/bus/usb
+    # nodeSelector:
+    #   node-role.kubernetes.io/worker: "true"
+    #   google.feature.node.kubernetes.io/coral: "true"
+    #   intel.feature.node.kubernetes.io/gpu: "true"
+    # affinity:
+    #   podAntiAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       - labelSelector:
+    #           matchExpressions:
+    #             - key: app.kubernetes.io/name
+    #               operator: In
+    #               values: ["plex"]
+    #         topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 10m
+        memory: 1000Mi
+        # gpu.intel.com/i915: "1"
+      limits:
+        memory: 6000Mi
+        # gpu.intel.com/i915: "1"

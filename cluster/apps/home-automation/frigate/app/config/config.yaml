@@ -1,0 +1,25 @@
+mqtt:
+  host: mqtt.home-automation.svc
+  port: 8883
+  user: {MQTT_USERNAME}
+  password: {MQTT_PASSWORD}
+  tls_ca_certs: /etc/ssl/certs/ca-certificates.crt
+cameras:
+  bedroom:
+    ffmpeg:
+      inputs:
+        - path: rtsp://admin:{BEDROOM_CAMERA_PASSWORD}@10.0.60.30//h264Preview_01_main
+          roles:
+            - rtmp
+            - record
+objects:
+  track: []
+birdseye:
+  enabled: True
+  mode: motion
+detect:
+  enabled: False
+rtmp:
+  enabled: True
+record:
+  enabled: True
