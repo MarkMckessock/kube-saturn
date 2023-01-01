@@ -1,5 +1,5 @@
 mqtt:
-  host: mqtt.home-automation.svc
+  host: mosquitto.home-automation
   port: 8883
   user: frigate
   password: "{FRIGATE_MQTT_PASSWORD}"
