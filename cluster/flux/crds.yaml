@@ -4,8 +4,6 @@ metadata:
   name: cluster-crds
   namespace: flux-system
 spec:
-  dependsOn:
-  - name: flux-system-helm-repositories
   interval: 10m0s
   path: ./cluster/crds
   prune: true
