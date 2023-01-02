@@ -12,6 +12,7 @@ data:
   MQTT_IP: 10.0.70.131
   INGRESS_NGINX_IP: 10.0.70.132
   GNS_IP: 10.0.70.133
+  SVC_POSTGRES_ADDR: 10.0.70.134
   CLUSTER_ISSUER: letsencrypt-production
   STORAGE_CLASS: longhorn
   NFS_SERVER: granite.markmckessock.com
