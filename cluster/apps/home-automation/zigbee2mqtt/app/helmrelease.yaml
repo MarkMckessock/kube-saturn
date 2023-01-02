@@ -143,6 +143,8 @@ spec:
             value: "True"
           - name: MQTT_ADDRESS
             value: mosquitto.home-automation.svc
+          - name: MQTT_PORT
+            value: 8883
           - name: MQTT_TOPIC
             value: "zigbee2mqtt/#"
           - name: MQTT_V5_PROTOCOL
