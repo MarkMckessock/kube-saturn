@@ -1,0 +1,91 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-automation
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2022.12.6
+
+    podAnnotations:
+      secret.reloader.stakater.com/reload: home-assistant-secrets
+
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        envFrom:
+          - secretRef:
+              name: home-assistant-secrets
+
+    env:
+      TZ: America/Toronto
+    envFrom:
+      - secretRef:
+          name: home-assistant-secrets
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8123
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: longhorn
+        retain: true
+
+      # deploy-key:
+      #   enabled: true
+      #   type: secret
+      #   name: home-assistant-deploykey
+      #   defaultMode: 256
+      #   subPath:
+      #     - path: id_rsa
+      #       mountPath: /root/.ssh/id_rsa
+
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+
+    resources:
+      requests:
+        cpu: 126m
+        memory: 411M
+      limits:
+        memory: 4417M
