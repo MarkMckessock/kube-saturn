@@ -1,5 +1,5 @@
 mqtt:
-  server: mqtts://mosquito.markmckessock.com:8883
+  server: mqtts://mosquitto.markmckessock.com:8883
   base_topic: zigbee2mqtt
   version: 5
   keepalive: 60
