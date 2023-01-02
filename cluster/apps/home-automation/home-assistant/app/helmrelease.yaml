@@ -50,7 +50,7 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+          - host: &host "hass.${DOMAIN}"
             paths:
               - path: /
         tls:
