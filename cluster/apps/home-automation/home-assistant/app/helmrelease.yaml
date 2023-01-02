@@ -81,6 +81,12 @@ spec:
           - path: scenes.yaml
             mountPath: /config/scenes.yaml
             readOnly: true
+      google-service-account:
+        enabled: true
+        type: secret
+        name: home-assistant-google-service-account
+        mountPath: /config/service_account.json
+        subPath: service_account.json
 
       # deploy-key:
       #   enabled: true
