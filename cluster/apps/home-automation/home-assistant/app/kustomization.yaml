@@ -4,6 +4,14 @@ namespace: home-automation
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: home-assistant-config
+    files:
+      - config/configuration.yaml
+      - config/automations.yaml
+      - config/scenes.yaml
+generatorOptions:
+  disableNameSuffixHash: true
 commonLabels:
   app.kubernetes.io/name: home-assistant
   app.kubernetes.io/instance: home-assistant

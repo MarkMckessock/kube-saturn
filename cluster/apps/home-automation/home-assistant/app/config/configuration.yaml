@@ -1,0 +1,86 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+recorder:
+  db_url: !env_var HASS_RECORDER_DB_URL
+
+homeassistant:
+  customize:
+    light.desk_lamp:
+      friendly_name: "Desk Lamp"
+    light.closet_light:
+      friendly_name: "Closet Light"
+    light.bedside_lamp_right:
+      friendly_name: "Right Bedside Lamp"
+    light.bedside_lamp_left:
+      friendly_name: "Left Bedside Lamp"
+    light.ceiling_light_1:
+      friendly_name: "Ceiling Light 1"
+    light.ceiling_light_2:
+      friendly_name: "Ceiling Light 2"
+    binary_sensor.closet_motion:
+      friendly_name: "Closet Motion Sensor"
+    sensor.closet_temperature:
+      friendly_name: "Closet Temperature Sensor"
+    sensor.closet_light:
+      friendly_name: "Closet Light Sensor"
+    sensor.closet_motion_battery:
+      friendly_name: "Closet Motion Sensor Battery"
+    sensor.desk_button_action:
+      friendly_name: "Desk Button Action"
+    sensor.desk_button_battery:
+      friendly_name: "Desk Button Battery"
+    sensor.desk_button_click:
+      friendly_name: "Desk Button Click"
+
+google_assistant:
+  project_id: !env_var HASS_GOOGLE_PROJECT_ID
+  service_account: !env_var HASS_GOOGLE_SERVICE_ACCOUNT
+  report_state: true
+  exposed_domains:
+    - switch
+    - light
+  entity_config:
+    light.ceiling_light_1:
+      expose: false
+    light.ceiling_light_2:
+      expose: false
+
+light:
+  - platform: group
+    name: Ceiling Light
+    entities:
+      - light.ceiling_light_1
+      - light.ceiling_light_2
+  - platform: group
+    name: Bedside Lamps
+    entities:
+      - light.bedside_lamp_right
+      - light.bedside_lamp_left
+
+mqtt:
+  broker: mosquitto.home-automation.svc
+  certificate: /etc/ssl/certs/ca-certificates.crt
+  tls_insecure: true
+  username: !env_var MQTT_USERNAME
+  password: !env_var MQTT_PASSWORD
+  port: 8883
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 10.42.0.0/16
+
+# lovelace:
+#   resources:
+#     - url: /config/www/community/frigate-hass-card/frigate-hass-card.js
+#       type: module
