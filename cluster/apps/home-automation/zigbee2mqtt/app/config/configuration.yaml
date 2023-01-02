@@ -1,5 +1,5 @@
 mqtt:
-  server: mqtt://mosquitto.home-automation.svc
+  server: mqtts://mosquito.markmckessock.com:8883
   base_topic: zigbee2mqtt
   version: 5
   keepalive: 60
@@ -26,7 +26,6 @@ advanced:
 
 device_options:
   retain: true
-  
 
 availability:
   active:
