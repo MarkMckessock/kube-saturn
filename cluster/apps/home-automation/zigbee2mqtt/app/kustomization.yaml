@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: home-automation
+resources:
+  - ./helmrelease.yaml
+  - ./prometheusrule.yaml
+  - ./externalsecret.yaml
+configMapGenerator:
+  - name: zigbee2mqtt-external-converters
+    files:
+      - external-converters/E21-N1EA.js
+  - name: zigbee2mqtt-config
+    files:
+      - config/devices.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+commonLabels:
+  app.kubernetes.io/name: zigbee2mqtt
+  app.kubernetes.io/instance: zigbee2mqtt

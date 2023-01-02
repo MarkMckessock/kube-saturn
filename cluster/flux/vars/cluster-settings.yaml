@@ -16,3 +16,4 @@ data:
   CLUSTER_ISSUER: letsencrypt-production
   STORAGE_CLASS: longhorn
   NFS_SERVER: granite.markmckessock.com
+  ZIGBEE2MQTT_ADAPTER_IP: 10.0.60.20
