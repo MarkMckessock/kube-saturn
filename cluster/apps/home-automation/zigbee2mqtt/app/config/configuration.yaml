@@ -1,0 +1,45 @@
+mqtt:
+  server: mqtt://mosquitto.home-automation.svc
+  base_topic: zigbee2mqtt
+  version: 5
+  keepalive: 60
+  reject_unauthorized: true
+  include_device_information: true
+
+permit_join: true
+
+serial:
+  port: tcp://${ZIGBEE2MQTT_ADAPTER_IP}:20108
+
+devices: devices.yaml
+
+external_converters:
+  - E21-N1EA.js
+
+advanced:
+  log_level: debug
+  log_output:
+    - console
+  last_seen: ISO_8601
+  legacy_api: false
+  legacy_availability_payload: false
+
+device_options:
+  retain: true
+  
+
+availability:
+  active:
+    timeout: 60
+  passive:
+    timeout: 2000
+
+frontend:
+  port: 8080
+  url: https://zigbee2mqtt.${DOMAIN}
+
+homeassistant:
+  discovery_topic: homeassistant
+  status_topic: homeassistant/status
+  legacy_entity_attributes: false
+  legacy_triggers: false

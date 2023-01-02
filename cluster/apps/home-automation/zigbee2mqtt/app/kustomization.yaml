@@ -12,6 +12,7 @@ configMapGenerator:
   - name: zigbee2mqtt-config
     files:
       - config/devices.yaml
+      - config/configuration.yaml
 generatorOptions:
   disableNameSuffixHash: true
 commonLabels:
