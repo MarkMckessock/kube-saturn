@@ -114,6 +114,7 @@ spec:
         tls:
           - hosts:
               - *api-host
+            secretName: minio-s3-tls
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
