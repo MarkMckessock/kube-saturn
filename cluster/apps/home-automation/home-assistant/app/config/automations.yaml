@@ -1,137 +1,137 @@
-- id: '1621266018195'
+- id: "1621266018195"
   alias: Button Double-Click (On)
   description: Turn bedroom lights on when off
   trigger:
-  - platform: state
-    entity_id: sensor.desk_button_action
-    to: double
+    - platform: state
+      entity_id: sensor.desk_button_action
+      to: double
   condition:
-  - condition: and
-    conditions:
-    - condition: device
-      type: is_off
-      device_id: 1ee862aa3772d8cfe65b8c2787849734
-      entity_id: light.ceiling_light_1
-      domain: light
-    - condition: device
-      type: is_off
-      device_id: 919813923166dae04b6f5d902896570f
-      entity_id: light.ceiling_light_2
-      domain: light
-    - condition: device
-      type: is_off
-      device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
-      entity_id: light.left_bedside_lamp
-      domain: light
-    - condition: device
-      type: is_off
-      device_id: 275680813fa93fc9a6779a1f140b5f57
-      entity_id: light.right_bedside_lamp
-      domain: light
-    - condition: device
-      type: is_off
-      device_id: 5a3819e9432bc837d07418475610484f
-      entity_id: light.closet_light
-      domain: light
+    - condition: and
+      conditions:
+        - condition: device
+          type: is_off
+          device_id: 1ee862aa3772d8cfe65b8c2787849734
+          entity_id: light.ceiling_light_1
+          domain: light
+        - condition: device
+          type: is_off
+          device_id: 919813923166dae04b6f5d902896570f
+          entity_id: light.ceiling_light_2
+          domain: light
+        - condition: device
+          type: is_off
+          device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
+          entity_id: light.left_bedside_lamp
+          domain: light
+        - condition: device
+          type: is_off
+          device_id: 275680813fa93fc9a6779a1f140b5f57
+          entity_id: light.right_bedside_lamp
+          domain: light
+        - condition: device
+          type: is_off
+          device_id: 5a3819e9432bc837d07418475610484f
+          entity_id: light.closet_light
+          domain: light
   action:
-  - scene: scene.bedroom_lights_on
+    - scene: scene.bedroom_lights_on
   mode: single
-- id: '1621271072214'
+- id: "1621271072214"
   alias: Button Double-Click (Off)
   description: Turn bedroom lights off when on
   trigger:
-  - platform: state
-    entity_id: sensor.desk_button_action
-    to: double
+    - platform: state
+      entity_id: sensor.desk_button_action
+      to: double
   condition:
-  - condition: or
-    conditions:
-    - condition: device
-      type: is_on
-      device_id: 1ee862aa3772d8cfe65b8c2787849734
-      entity_id: light.ceiling_light_1
+    - condition: or
+      conditions:
+        - condition: device
+          type: is_on
+          device_id: 1ee862aa3772d8cfe65b8c2787849734
+          entity_id: light.ceiling_light_1
+          domain: light
+        - condition: device
+          type: is_on
+          device_id: 919813923166dae04b6f5d902896570f
+          entity_id: light.ceiling_light_2
+          domain: light
+        - condition: device
+          type: is_on
+          device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
+          entity_id: light.left_bedside_lamp
+          domain: light
+        - condition: device
+          type: is_on
+          device_id: 275680813fa93fc9a6779a1f140b5f57
+          entity_id: light.right_bedside_lamp
+          domain: light
+        - condition: device
+          type: is_on
+          device_id: 5a3819e9432bc837d07418475610484f
+          entity_id: light.closet_light
+          domain: light
+  action:
+    - scene: scene.bedroom_lights_off
+  mode: single
+- id: "1621293231685"
+  alias: Toggle Desk Lamp
+  description: ""
+  trigger:
+    - platform: device
+      domain: mqtt
+      device_id: 4e9112ea49a02da6ee7f82b2dd579c56
+      type: action
+      subtype: single
+      discovery_id: 0x00158d0005724b98 action_single
+  condition: []
+  action:
+    - type: toggle
+      device_id: f92be9c3fb30958e4ed4c4b2257b60a2
+      entity_id: light.desk_lamp
       domain: light
-    - condition: device
-      type: is_on
-      device_id: 919813923166dae04b6f5d902896570f
-      entity_id: light.ceiling_light_2
-      domain: light
-    - condition: device
-      type: is_on
-      device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
-      entity_id: light.left_bedside_lamp
-      domain: light
-    - condition: device
-      type: is_on
-      device_id: 275680813fa93fc9a6779a1f140b5f57
-      entity_id: light.right_bedside_lamp
-      domain: light
-    - condition: device
-      type: is_on
-      device_id: 5a3819e9432bc837d07418475610484f
+  mode: single
+- id: "1638172212703"
+  alias: Closet Light Motion
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.closet_motion_sensor_occupancy
+      from: "off"
+      to: "on"
+  condition:
+    - condition: time
+      after: 07:00:00
+      before: "23:00:00"
+  action:
+    - type: turn_on
+      device_id: 713b818f8865e47846ddfcb4a9bd3164
       entity_id: light.closet_light
       domain: light
-  action:
-  - scene: scene.bedroom_lights_off
+    - wait_for_trigger:
+        - platform: state
+          entity_id: binary_sensor.closet_motion_sensor_occupancy
+          from: "on"
+          to: "off"
+    - type: turn_off
+      device_id: 713b818f8865e47846ddfcb4a9bd3164
+      entity_id: light.closet_light
+      domain: light
   mode: single
-- id: '1621293231685'
-  alias: Toggle Desk Lamp
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: 4e9112ea49a02da6ee7f82b2dd579c56
-    type: action
-    subtype: single
-    discovery_id: 0x00158d0005724b98 action_single
-  condition: []
-  action:
-  - type: toggle
-    device_id: f92be9c3fb30958e4ed4c4b2257b60a2
-    entity_id: light.desk_lamp
-    domain: light
-  mode: single
-- id: '1638172212703'
-  alias: Closet Light Motion
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.closet_motion
-    from: 'off'
-    to: 'on'
-  condition:
-  - condition: time
-    after: 07:00:00
-    before: '23:00:00'
-  action:
-  - type: turn_on
-    device_id: 713b818f8865e47846ddfcb4a9bd3164
-    entity_id: light.closet_light
-    domain: light
-  - wait_for_trigger:
-    - platform: state
-      entity_id: binary_sensor.closet_motion
-      from: 'on'
-      to: 'off'
-  - type: turn_off
-    device_id: 713b818f8865e47846ddfcb4a9bd3164
-    entity_id: light.closet_light
-    domain: light
-  mode: single
-- id: '1649029640888'
+- id: "1649029640888"
   alias: Toggle Right Bedside Lamp
-  description: ''
+  description: ""
   trigger:
-  - platform: device
-    domain: mqtt
-    device_id: a215796b2ae2795768252203d10db431
-    type: action
-    subtype: single
-    discovery_id: 0x00158d00052b9a1e action_single
+    - platform: device
+      domain: mqtt
+      device_id: a215796b2ae2795768252203d10db431
+      type: action
+      subtype: single
+      discovery_id: 0x00158d00052b9a1e action_single
   condition: []
   action:
-  - type: toggle
-    device_id: 0ad35c952a90c39da98f4f1bdd4dd1f3
-    entity_id: light.right_bedside_lamp
-    domain: light
+    - type: toggle
+      device_id: 0ad35c952a90c39da98f4f1bdd4dd1f3
+      entity_id: light.right_bedside_lamp
+      domain: light
   mode: single
