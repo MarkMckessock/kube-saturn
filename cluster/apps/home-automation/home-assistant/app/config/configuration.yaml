@@ -18,9 +18,9 @@ homeassistant:
       friendly_name: "Desk Lamp"
     light.closet_light:
       friendly_name: "Closet Light"
-    light.bedside_lamp_right:
+    light.right_bedside_lamp:
       friendly_name: "Right Bedside Lamp"
-    light.bedside_lamp_left:
+    light.left_bedside_lamp:
       friendly_name: "Left Bedside Lamp"
     light.ceiling_light_1:
       friendly_name: "Ceiling Light 1"
@@ -63,8 +63,8 @@ light:
   - platform: group
     name: Bedside Lamps
     entities:
-      - light.bedside_lamp_right
-      - light.bedside_lamp_left
+      - light.right_bedside_lamp
+      - light.left_bedside_lamp
 
 http:
   use_x_forwarded_for: true

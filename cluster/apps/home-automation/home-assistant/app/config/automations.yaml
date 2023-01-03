@@ -21,12 +21,12 @@
     - condition: device
       type: is_off
       device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
-      entity_id: light.bedside_lamp_left
+      entity_id: light.left_bedside_lamp
       domain: light
     - condition: device
       type: is_off
       device_id: 275680813fa93fc9a6779a1f140b5f57
-      entity_id: light.bedside_lamp_right
+      entity_id: light.right_bedside_lamp
       domain: light
     - condition: device
       type: is_off
@@ -59,12 +59,12 @@
     - condition: device
       type: is_on
       device_id: e4f599ce3ca37aae2f29f8bd00e47c2e
-      entity_id: light.bedside_lamp_left
+      entity_id: light.left_bedside_lamp
       domain: light
     - condition: device
       type: is_on
       device_id: 275680813fa93fc9a6779a1f140b5f57
-      entity_id: light.bedside_lamp_right
+      entity_id: light.right_bedside_lamp
       domain: light
     - condition: device
       type: is_on
@@ -132,6 +132,6 @@
   action:
   - type: toggle
     device_id: 0ad35c952a90c39da98f4f1bdd4dd1f3
-    entity_id: light.bedside_lamp_right
+    entity_id: light.right_bedside_lamp
     domain: light
   mode: single
