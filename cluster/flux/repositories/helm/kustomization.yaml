@@ -19,3 +19,7 @@ resources:
   - bjw-s.yaml
   - external-secrets.yaml
   - cloudnative-pg.yaml
+  - stakater.yaml
+  - fairwinds.yaml
+  - minio.yaml
+  - kubernetes-sigs-descheduler.yaml
