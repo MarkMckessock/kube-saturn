@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-job-PVC_NAME
+  namespace: NS_NAME
+spec:
+  template:
+    spec:
+      containers:
+        - name: backup
+          image: ubuntu
+          command: 
+            - /bin/bash
+          args: ["-c", "tar -cvzf /dst/PVC_NAME.tar.gz /src"]
+          volumeMounts:
+            - mountPath: /src
+              name: pvc
+            - mountPath: /dst
+              name: backup-dest
+      volumes:
+        - name: pvc
+          persistentVolumeClaim:
+            claimName: PVC_NAME
+        - name: backup-dest
+          nfs:
+            server: "granite.markmckessock.com"
+            path: "/volume1/Backups/Homelab Backups/03-01-2023-pvc-backup"
+      restartPolicy: OnFailure
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
