@@ -52,7 +52,7 @@ spec:
         storageClass: longhorn
         mountPath: /config
         retain: true
-      config: 
+      config:
         enabled: true
         type: secret
         name: plex-meta-manager-config
@@ -60,7 +60,7 @@ spec:
         mountPath: /config/config.yml
       collections-dir:
         enabled: true
-        type: emptydir
+        type: emptyDir
         mountPath: /collections
       collections:
         enabled: true
