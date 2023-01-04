@@ -73,6 +73,7 @@ spec:
         enabled: true
         type: pvc
         size: 10Gi
+        accessMode: ReadWriteOnce
         mountPath: /config
         storageClass: longhorn
         retain: true

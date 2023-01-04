@@ -75,6 +75,7 @@ spec:
         enabled: true
         type: pvc
         size: 1Gi
+        accessMode: ReadWriteOnce
         mountPath: /var/www/html/firefly-iii/storage/upload
         storageClass: longhorn
         retain: true

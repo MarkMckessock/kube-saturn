@@ -48,6 +48,7 @@ spec:
         enabled: true
         type: pvc
         size: 1Gi
+        accessMode: ReadWriteOnce
         storageClass: longhorn
         mountPath: /config
         retain: true
