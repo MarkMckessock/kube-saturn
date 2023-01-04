@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: firefly
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: fireflyiii/core
+      tag: version-5.7.15
+
+    env:
+    - name: APP_ENV
+      value: "production"
+    - name: DB_CONNECTION
+      value: pgsql
+    - name: TRUSTED_PROXIES
+      value: "**"
+    - name: TZ
+      value: America/Toronto
+    - name: AUTHENTICATION_GUARD
+      value: remote_user_guard
+    - name: AUTHENTICATION_GUARD_HEADER
+      value: Cf-Access-Authenticated-User-Email
+    envFrom:
+      - secretRef:
+          name: firefly-secret
+
+    service:
+      main:
+        ports:
+          http:
+            port: &port 8080
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+          nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        envFrom:
+          - secretRef:
+              name: firefly-secret
+
+    persistence:
+      firefly-upload:
+        enabled: true
+        type: pvc
+        size: 1Gi
+        mountPath: /var/www/html/firefly-iii/storage/upload
+        storageClass: longhorn
+        retain: true
+      
+    resources:
+      requests:
+        cpu: 10m
+        memory: 1000Mi
+        # gpu.intel.com/i915: "1"
+      limits:
+        memory: 6000Mi
+        # gpu.intel.com/i915: "1"

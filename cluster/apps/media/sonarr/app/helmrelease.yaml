@@ -1,0 +1,95 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/onedr0p/sonarr-develop
+      tag: 4.0.0.328@sha256:8c0ff01a11ccf1149252cdf26fca1a50b2e6debdd9515adfdef36e3c052f89ec
+    env:
+      TZ: America/Toronto
+      SONARR__INSTANCE_NAME: Sonarr
+      SONARR__LOG_LEVEL: info
+    envFrom:
+      - secretRef:
+          name: sonarr-secret
+    service:
+      main:
+        ports:
+          http:
+            port: 8989
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.devbu.io/css/base/sonarr/nord.css"></head>';
+            sub_filter_once on;
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+        hosts:
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    persistence:
+      config:
+        enabled: true
+        type: pvc
+        size: 10Gi
+        mountPath: /config
+        storageClass: longhorn
+        retain: true
+      media:
+        enabled: true
+        type: nfs
+        server: ${NFS_SERVER}
+        path: /volume1/Media
+        mountPath: /media
+      downloads:
+        enabled: true
+        type: nfs
+        server: ${NFS_SERVER}
+        path: /volume1/Downloads
+        mountPath: /complete
+    resources:
+      requests:
+        cpu: 10m
+        memory: 250Mi
+      limits:
+        memory: 2000Mi

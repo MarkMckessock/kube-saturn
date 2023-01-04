@@ -1,0 +1,28 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: firefly-secret
+  namespace: default
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: doppler-firefly
+  target:
+    name: firefly-secret
+    creationPolicy: Owner
+    template:
+      engineVersion: v2
+      data:
+        POSTGRES_DB: firefly
+        DB_DATABASE: firefly
+        POSTGRES_HOST: postgres-rw.database.svc
+        DB_HOST: postgres-rw.database.svc
+        POSTGRES_SUPER_USER: "{{ .SUPERUSER_USER }}"
+        POSTGRES_SUPER_PASS: "{{ .SUPERUSER_PASS }}"
+        POSTGRES_USER: "{{ .DB_USER }}"
+        POSTGRES_PASS: "{{ .DB_PASSWORD }}"
+        APP_KEY: "{{ .APP_KEY }}"
+  dataFrom:
+    - find:
+        name:
+          regexp: .*
