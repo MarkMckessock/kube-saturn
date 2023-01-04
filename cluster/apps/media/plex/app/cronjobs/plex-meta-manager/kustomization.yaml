@@ -7,10 +7,10 @@ resources:
 configMapGenerator:
   - name: plex-meta-manager-collections
     files:
-      - movies/charts.yaml
-      - movies/holidays.yaml
-      - movies/movies.yaml
-      - movies/studios.yaml
-      - tv/tv-charts.yaml
+      - collections/movies/charts.yaml
+      - collections/movies/holidays.yaml
+      - collections/movies/movies.yaml
+      - collections/movies/studios.yaml
+      - collections/tv/tv-charts.yaml
 generatorOptions:
   disableNameSuffixHash: true
