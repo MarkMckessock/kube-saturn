@@ -31,12 +31,11 @@ spec:
     env:
       TZ: America/Toronto
       LOG_LEVEL: "info"
-      PORT: &port 80
     service:
       main:
         ports:
           http:
-            port: *port
+            port: 5055
     ingress:
       main:
         enabled: true
