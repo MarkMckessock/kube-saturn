@@ -35,7 +35,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: meisnate12/plex-meta-manager
-      tag: v1.18.0
+      tag: v1.18.2
     env:
       PMM_READ_ONLY_CONFIG: "true"
       PMM_RUN: "true"
