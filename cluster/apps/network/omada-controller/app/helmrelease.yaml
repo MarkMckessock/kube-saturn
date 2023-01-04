@@ -171,6 +171,7 @@ spec:
         size: 5Gi
         storageClass: longhorn
         mountPath: /opt/tplink/EAPController/data
+        accessMode: ReadWriteOnce
         retain: true
   
 
