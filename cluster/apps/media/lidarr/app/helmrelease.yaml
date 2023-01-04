@@ -34,7 +34,6 @@ spec:
     env:
       TZ: America/Toronto
       LIDARR__INSTANCE_NAME: Lidarr
-      LIDARR__PORT: &port 80
       LIDARR__LOG_LEVEL: info
     envFrom:
       - secretRef:
@@ -43,7 +42,7 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: 8686
     ingress:
       main:
         enabled: true
