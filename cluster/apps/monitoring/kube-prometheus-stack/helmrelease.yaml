@@ -68,7 +68,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: truenas-iscsi-csi
+              storageClassName: longhorn
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:

@@ -18,7 +18,6 @@ spec:
     query:
       enabled: true
       replicaCount: 3
-      podAntiAffinityPreset: hard
       replicaLabel:
         - __replica__
       dnsDiscovery:
