@@ -32,7 +32,7 @@ spec:
       repository: druggeri/alertmanager_gotify_bridge
       tag: "2.0"
     env:
-      GOTIFY_ENDPOINT: gotify.monitoring.svc
+      GOTIFY_ENDPOINT: http://gotify.monitoring.svc:80/message
     envFrom:
       - secretRef:
           name: alertmanager-gotify-bridge
