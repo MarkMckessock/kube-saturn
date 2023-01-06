@@ -26,10 +26,10 @@ spec:
           resolve_timeout: 5m
         receivers:
           - name: "null"
-          - name: 'gotify'
+          - name: "gotify"
             webhook_configs:
-            - send_resolved: true
-              url: "http://alertmanager-gotify-bridge:8080/gotify_webhook"
+              - send_resolved: true
+                url: "http://alertmanager-gotify-bridge:8080/gotify_webhook"
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
@@ -131,7 +131,7 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         retention: 14d
-        retentionSize: 45Gi
+        retentionSize: 45G
         enableAdminAPI: true
         walCompression: true
         storageSpec:
