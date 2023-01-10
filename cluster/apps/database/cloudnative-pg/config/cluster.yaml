@@ -21,7 +21,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg-backup/
-      endpointURL: s3.us-west-004.backblazeb2.com
+      endpointURL: https://s3.us-west-004.backblazeb2.com
       serverName: postgres-v1
       s3Credentials:
         accessKeyId:
