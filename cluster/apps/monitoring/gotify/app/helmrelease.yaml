@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: gotify/server
-      tag: 2.2.0
+      tag: 2.2.4
 
     service:
       main:
