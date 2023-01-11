@@ -24,18 +24,18 @@ spec:
       tag: version-5.7.15
 
     env:
-    - name: APP_ENV
-      value: "production"
-    - name: DB_CONNECTION
-      value: pgsql
-    - name: TRUSTED_PROXIES
-      value: "**"
-    - name: TZ
-      value: America/Toronto
-    - name: AUTHENTICATION_GUARD
-      value: remote_user_guard
-    - name: AUTHENTICATION_GUARD_HEADER
-      value: Cf-Access-Authenticated-User-Email
+      - name: APP_ENV
+        value: "production"
+      - name: DB_CONNECTION
+        value: pgsql
+      - name: TRUSTED_PROXIES
+        value: "**"
+      - name: TZ
+        value: America/Toronto
+      - name: AUTHENTICATION_GUARD
+        value: remote_user_guard
+      - name: AUTHENTICATION_GUARD_HEADER
+        value: Cf-Access-Authenticated-User-Email
     envFrom:
       - secretRef:
           name: firefly-secret
@@ -79,7 +79,7 @@ spec:
         mountPath: /var/www/html/firefly-iii/storage/upload
         storageClass: longhorn
         retain: true
-      
+
     resources:
       requests:
         cpu: 10m

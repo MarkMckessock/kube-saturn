@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -28,7 +29,7 @@ spec:
     controller:
       annotations:
         reloader.stakater.com/auto: "true"
-  
+
     image:
       repository: mbentley/omada-controller
       tag: "5.0"
@@ -91,7 +92,7 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: OMADA
         externalTrafficPolicy: Local
-        ports:        
+        ports:
           mgmt-8088-tcp:
             enabled: true
             port: 8088
@@ -111,7 +112,7 @@ spec:
             enabled: true
             port: 29810
             protocol: TCP
-            targetPort: 29810     
+            targetPort: 29810
           eap-29811-tcp:
             enabled: true
             port: 29811
@@ -155,15 +156,15 @@ spec:
             port: 29813
             protocol: UDP
             targetPort: 29813
-    
+
     probes:
-      liveness: 
+      liveness:
         enabled: false
       readiness:
         enabled: false
       startup:
         enabled: false
-    
+
     persistence:
       data:
         enabled: true
@@ -173,7 +174,6 @@ spec:
         mountPath: /opt/tplink/EAPController/data
         accessMode: ReadWriteOnce
         retain: true
-  
 
     resources:
       requests:

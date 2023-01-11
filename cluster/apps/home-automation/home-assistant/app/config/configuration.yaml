@@ -1,3 +1,4 @@
+---
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -70,7 +71,6 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 10.42.0.0/16
-
 # lovelace:
 #   resources:
 #     - url: /config/www/community/frigate-hass-card/frigate-hass-card.js

@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -11,17 +12,17 @@ metadata:
     cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
 spec:
   rules:
-  - host: librephotos.${DOMAIN}
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: proxy
-            port: 
-              number: 80
+    - host: librephotos.${DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: proxy
+                port:
+                  number: 80
   tls:
     - hosts:
-      - librephotos.${DOMAIN}
+        - librephotos.${DOMAIN}
       secretName: librephotos-cert

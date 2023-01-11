@@ -1,20 +1,21 @@
-'0xb0ce181400135c3f':
+---
+"0xb0ce181400135c3f":
   friendly_name: Right Bedside Lamp
-'0xb0ce181400136877':
+"0xb0ce181400136877":
   friendly_name: Left Bedside Lamp
-'0xb0ce18140015a528':
+"0xb0ce18140015a528":
   friendly_name: Ceiling Light 1
-'0xb0ce18140015bcc2':
+"0xb0ce18140015bcc2":
   friendly_name: Ceiling Light 2
-'0x00158d0006b79b6a':
+"0x00158d0006b79b6a":
   friendly_name: Closet Motion Sensor
-'0xb0ce18140013571c':
+"0xb0ce18140013571c":
   friendly_name: Closet Light
-'0x00158d0005724b98':
+"0x00158d0005724b98":
   friendly_name: Desk Button
-'0xb0ce1814001367d2':
+"0xb0ce1814001367d2":
   friendly_name: Desk Lamp
-'0x000d6ffffe2369ae':
-  friendly_name: '0x000d6ffffe2369ae'
-'0x00158d00052b9a1e':
+"0x000d6ffffe2369ae":
+  friendly_name: "0x000d6ffffe2369ae"
+"0x00158d00052b9a1e":
   friendly_name: Right Bedside Button

@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -11,17 +12,17 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: paperless.${DOMAIN}
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: paperless
-            port: 
-              number: 8000
+    - host: paperless.${DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: paperless
+                port:
+                  number: 8000
   tls:
     - hosts:
-      - paperless.${DOMAIN}
+        - paperless.${DOMAIN}
       secretName: paperless-cert

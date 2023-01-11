@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -87,15 +88,6 @@ spec:
         name: home-assistant-google-service-account
         mountPath: /config/service_account.json
         subPath: service_account.json
-
-      # deploy-key:
-      #   enabled: true
-      #   type: secret
-      #   name: home-assistant-deploykey
-      #   defaultMode: 256
-      #   subPath:
-      #     - path: id_rsa
-      #       mountPath: /root/.ssh/id_rsa
 
     probes:
       liveness:
