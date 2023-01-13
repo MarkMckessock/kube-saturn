@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: mariadb
-          image: mariadb:10.8
+          image: mariadb:10.10
           ports:
             - containerPort: 3306
           envFrom:

@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -7,17 +8,17 @@ spec:
   template:
     spec:
       containers:
-      - name: backup
-        image: ubuntu
-        command: 
-          - /bin/bash
-          - -c
-        args: ["tar -czvf /src /dst/home-automation_zigbee2mqtt-data.tar.gz"]
-        volumeMounts:
-          - mountPath: /src
-            name: pvc
-          - mountPath: /dst
-            name: backups
+        - name: backup
+          image: ubuntu
+          command:
+            - /bin/bash
+            - -c
+          args: ["tar -czvf /src /dst/home-automation_zigbee2mqtt-data.tar.gz"]
+          volumeMounts:
+            - mountPath: /src
+              name: pvc
+            - mountPath: /dst
+              name: backups
       restartPolicy: Never
       volumes:
         - name: pvc

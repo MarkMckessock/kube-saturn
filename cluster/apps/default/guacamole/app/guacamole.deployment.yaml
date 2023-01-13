@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: guacamole
     app.kubernetes.io/component: guacamole
-  
+
 spec:
   selector:
     matchLabels:
@@ -22,7 +23,7 @@ spec:
         - name: guacamole
           image: guacamole/guacamole:1.4.0
           imagePullPolicy: IfNotPresent
-          env: 
+          env:
             - name: POSTGRES_HOSTNAME
               value: postgres
             - name: POSTGRES_PORT

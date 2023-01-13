@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -8,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.2.0
+      version: 1.2.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -22,7 +23,7 @@ spec:
 
     image:
       repository: docker.io/koenkk/zigbee2mqtt
-      tag: 1.28.4
+      tag: 1.29.1
 
     env:
       ZIGBEE2MQTT_DATA: /data
@@ -85,7 +86,7 @@ spec:
         subPath:
           - path: E21-N1EA.js
             mountPath: /data/E21-N1EA.js
-            readOnly: true        
+            readOnly: true
       config:
         enabled: true
         type: custom
@@ -95,7 +96,7 @@ spec:
         subPath:
           - path: devices.yaml
             mountPath: /data/devices.yaml
-            readOnly: true       
+            readOnly: true
           - path: configuration.yaml
             mountPath: /data/configuration.yaml
             readOnly: true

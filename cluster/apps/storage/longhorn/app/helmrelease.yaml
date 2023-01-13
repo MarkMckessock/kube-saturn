@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -9,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.longhorn.io
       chart: longhorn
-      version: 1.3.2
+      version: 1.4.0
       sourceRef:
         kind: HelmRepository
         name: longhorn-charts
@@ -18,6 +19,7 @@ spec:
   values:
     # csi:
     #   kubeletRootDir: /var/lib/kubelet
+    # namespaceOverride: storage
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -31,4 +33,3 @@ spec:
       defaultDataLocality: best-effort
       replicaSoftAntiAffinity: true
       replicaAutoBalance: best-effort
-    # namespaceOverride: storage

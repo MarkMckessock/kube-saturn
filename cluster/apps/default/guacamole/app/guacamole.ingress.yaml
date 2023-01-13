@@ -1,6 +1,7 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-metadata: 
+metadata:
   name: guacamole
   namespace: guacamole
   annotations:
@@ -11,16 +12,16 @@ metadata:
 
 spec:
   rules:
-  - host: guacamole.${DOMAIN}
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: guacamole
-            port: 
-              number: 80
+    - host: guacamole.${DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: guacamole
+                port:
+                  number: 80
   tls:
     - hosts:
         - guacamole.${DOMAIN}

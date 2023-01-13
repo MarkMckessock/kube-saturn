@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -8,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.2.0
+      version: 1.2.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -18,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2022.12.6
+      tag: 2023.1.2
 
     podAnnotations:
       secret.reloader.stakater.com/reload: home-assistant-secrets
@@ -87,15 +88,6 @@ spec:
         name: home-assistant-google-service-account
         mountPath: /config/service_account.json
         subPath: service_account.json
-
-      # deploy-key:
-      #   enabled: true
-      #   type: secret
-      #   name: home-assistant-deploykey
-      #   defaultMode: 256
-      #   subPath:
-      #     - path: id_rsa
-      #       mountPath: /root/.ssh/id_rsa
 
     probes:
       liveness:

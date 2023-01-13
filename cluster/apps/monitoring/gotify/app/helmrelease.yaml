@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -8,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.2.0
+      version: 1.2.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -18,7 +19,7 @@ spec:
   values:
     image:
       repository: gotify/server
-      tag: 2.2.0
+      tag: 2.2.4
 
     service:
       main:
@@ -50,7 +51,6 @@ spec:
         storageClass: longhorn
         mountPath: /app/data
         retain: true
-
 
     probes:
       liveness:

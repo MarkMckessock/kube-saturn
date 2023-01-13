@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -30,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.328@sha256:8c0ff01a11ccf1149252cdf26fca1a50b2e6debdd9515adfdef36e3c052f89ec
+      tag: 4.0.0.344@sha256:4526203586c606530ec90e24b845c02b031b1b9807e91347c30ea28483f7458a
     env:
       TZ: America/Toronto
       SONARR__INSTANCE_NAME: Sonarr

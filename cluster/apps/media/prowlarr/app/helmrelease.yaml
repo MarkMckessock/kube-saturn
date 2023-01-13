@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -30,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/prowlarr-nightly
-      tag: 1.1.0.2271@sha256:0453308653e652f7d7e90aba9bcad5f1966b49f62a76c2489debb33725cce073
+      tag: 1.1.0.2295@sha256:be4bfa0bd62882db780489aecd5e03d9a3199b695c6f12ffcaff10fa5e449ef5
     env:
       TZ: America/Toronto
       PROWLARR__INSTANCE_NAME: Prowlarr

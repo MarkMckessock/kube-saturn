@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,5 +8,5 @@ spec:
   selector:
     app: r610-idrac
   ports:
-  - port: 5900
-    targetPort: vnc
+    - port: 5900
+      targetPort: vnc

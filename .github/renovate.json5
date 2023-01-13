@@ -11,7 +11,8 @@
     ":automergeBranch",
     "github>markmckessock/kube-saturn//.github/renovate/labels.json5",
     "github>markmckessock/kube-saturn//.github/renovate/autoMerge.json5",
-    "github>markmckessock/kube-saturn//.github/renovate/semanticCommits.json5"
+    "github>markmckessock/kube-saturn//.github/renovate/semanticCommits.json5",
+    "github>markmckessock/kube-saturn//.github/renovate/autoMerge.json5"
   ],
   "platform": "github",
   "username": "markmckessock-bot[bot]",
