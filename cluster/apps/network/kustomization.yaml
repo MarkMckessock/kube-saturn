@@ -8,3 +8,7 @@ resources:
   - ./cloudflare-ddns/ks.yaml
   - ./omada-controller/ks.yaml
   - ./cloudflare-tunnel/ks.yaml
+  - ./metallb/ks.yaml
+  - ./k8s-gateway/ks.yaml
+  - ./ingress-nginx/ks.yaml
+  - ./external-dns/ks.yaml
