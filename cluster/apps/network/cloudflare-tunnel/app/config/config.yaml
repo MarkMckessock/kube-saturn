@@ -8,7 +8,7 @@ ingress:
   - hostname: hello.${DOMAIN}
     service: hello_world
   - hostname: "*.${DOMAIN}"
-    service: https://ingress-nginx-controller.ingress-nginx.svc
+    service: https://ingress-nginx-controller.network.svc
     originRequest:
       noTLSVerify: true
   - service: http_status:404
