@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: cluster-apps-minio
     - name: cluster-apps-snapshot-controller
-  path: ./kubernetes/apps/storage/volsync/app
+  path: ./cluster/apps/storage/volsync/app
   prune: true
   sourceRef:
     kind: GitRepository
