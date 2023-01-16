@@ -26,3 +26,4 @@ resources:
   - kubernetes-sigs-descheduler.yaml
   - external-dns.yaml
   - backube.yaml
+  - piraeus.yaml
