@@ -44,9 +44,9 @@ spec:
     env:
       RADARR_4K_API_KEY:
         valueFrom:
-        secretKeyRef:
-          name: radarr-4k-secret
-          key: RADARR__API_KEY
+          secretKeyRef:
+            name: radarr-4k-secret
+            key: RADARR__API_KEY
     service:
       main:
         enabled: false
