@@ -33,8 +33,6 @@ spec:
       cronjob:
         concurrencyPolicy: Forbid
         schedule: "0 */6 * * *"
-        successfulJobsHistory: 0
-        failedJobsHistory: 0
     restartPolicy: OnFailure
     image:
       repository: meisnate12/plex-meta-manager
