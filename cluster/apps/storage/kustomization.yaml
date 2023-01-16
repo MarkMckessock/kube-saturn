@@ -7,3 +7,4 @@ resources:
   # Flux-Kustomizations
   - ./minio/ks.yaml
   - ./longhorn/ks.yaml
+  - ./volsync/ks.yaml

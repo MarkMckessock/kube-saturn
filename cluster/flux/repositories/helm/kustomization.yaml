@@ -25,3 +25,4 @@ resources:
   - minio.yaml
   - kubernetes-sigs-descheduler.yaml
   - external-dns.yaml
+  - backube.yaml
