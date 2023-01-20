@@ -8,7 +8,7 @@ spec:
   trigger:
     schedule: "0 0 * * *"
   restic:
-    copyMethod: Snapshot
+    copyMethod: Clone
     pruneIntervalDays: 10
     repository: radarr-restic-secret
     cacheCapacity: 2Gi
