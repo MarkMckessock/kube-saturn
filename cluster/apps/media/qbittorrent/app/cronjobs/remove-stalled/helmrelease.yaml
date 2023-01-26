@@ -39,6 +39,7 @@ spec:
       tag: latest
     env:
       QB_HOST: "http://qbittorrent:8080"
+    args: ["/app/remove-stalled.py"]
     service:
       main:
         enabled: false
