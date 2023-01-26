@@ -36,6 +36,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: markmckessock/qbittorrent-scripts
+      tag: latest
     env:
       QB_HOST: "http://qbittorrent:8080"
     service:
