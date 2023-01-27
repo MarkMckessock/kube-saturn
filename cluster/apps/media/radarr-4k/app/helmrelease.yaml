@@ -98,6 +98,7 @@ spec:
               secretKeyRef:
                 name: radarr-4k-secret
                 key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
       init-db-log:
         image: ghcr.io/onedr0p/postgres-initdb:14.6
         env:
@@ -126,6 +127,7 @@ spec:
               secretKeyRef:
                 name: radarr-4k-secret
                 key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
     persistence:
       config:
         enabled: true
