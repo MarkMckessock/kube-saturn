@@ -69,6 +69,63 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
+    initContainers:
+      init-db-main:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_MAIN_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_PASS
+      init-db-log:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_LOG_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_PASS
     persistence:
       config:
         enabled: true
