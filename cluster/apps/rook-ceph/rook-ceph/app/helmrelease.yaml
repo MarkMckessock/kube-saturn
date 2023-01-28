@@ -31,6 +31,8 @@ spec:
     pspEnable: false
     monitoring:
       enabled: true
+    csi:
+      allowUnsupportedVersion: true
     resources:
       requests:
         cpu: 10m
