@@ -28,3 +28,4 @@ resources:
   - external-dns.yaml
   - backube.yaml
   - piraeus.yaml
+  - rook-ceph.yaml
