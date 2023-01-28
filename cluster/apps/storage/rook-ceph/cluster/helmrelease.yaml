@@ -63,7 +63,7 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: kari.saturn.kube.markmckessock.com
+          - name: kari.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C # sdc
               # - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13BBE #sdb
