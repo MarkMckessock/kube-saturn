@@ -57,6 +57,8 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+      mon:
+        allowMultiplePerNode: true
       storage:
         useAllNodes: false
         useAllDevices: false
