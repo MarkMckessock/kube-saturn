@@ -31,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/radarr-develop
-      tag: 4.3.2.6857@sha256:722b5c7a3809841caa711a2339dbe58e6d437c79ef147bdefb2275b422a9b106
+      tag: 4.4.0.6882@sha256:2aff920f979d0137c8e2e7de497c90bbe5ca079c3c1aff44872c8e867acc81e5
     env:
       TZ: America/Toronto
       RADARR__INSTANCE_NAME: Radarr-4K
@@ -69,6 +69,65 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
+    initContainers:
+      init-db-main:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_MAIN_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
+      init-db-log:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_LOG_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: RADARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: radarr-4k-secret
+                key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
     persistence:
       config:
         enabled: true
