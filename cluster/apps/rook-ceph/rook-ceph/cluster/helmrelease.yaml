@@ -46,7 +46,6 @@ spec:
       bdev_async_discard = true
     cephClusterSpec:
       network:
-        provider: host
         connections:
           compression:
             # TODO: Test out enabling this on next cluster rebuild
@@ -58,7 +57,6 @@ spec:
         urlPrefix: /
         ssl: false
       mon:
-        count: 2
         allowMultiplePerNode: true
       storage:
         useAllNodes: false
