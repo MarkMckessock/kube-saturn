@@ -75,7 +75,7 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: longhorn
+        storageClass: ceph-block
         retain: true
       external-converters:
         enabled: true

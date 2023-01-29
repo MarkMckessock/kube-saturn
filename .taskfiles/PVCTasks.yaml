@@ -1,0 +1,22 @@
+---
+version: "3"
+
+x-task-vars: &task-vars
+  src: '{{.src}}'
+  date: '{{.date}}'
+  namespace: '{{.namespace}}'
+
+vars:
+  backup_template: "{{.ROOT_DIR}}/.taskfiles/backup-job.tmpl.yaml"
+
+tasks:
+  backup:
+    desc: Create a tar backup of a PVC
+    cmds:
+      - envsubst < <(cat "{{.backup_template}}") | kubectl apply -f -
+    env: *task-vars
+    vars:
+      src: '{{ or .src (fail "Source PVC `src` is required") }}'
+      namespace: '{{.namespace | default "default"}}'
+      date:
+        sh: date +'%d-%m-%Y'
