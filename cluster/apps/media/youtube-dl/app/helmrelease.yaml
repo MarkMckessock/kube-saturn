@@ -70,7 +70,7 @@ spec:
         type: pvc
         size: 1Gi
         accessMode: ReadWriteOnce
-        storageClass: longhorn
+        storageClass: ceph-block
         mountPath: /archive
         retain: true
       config:

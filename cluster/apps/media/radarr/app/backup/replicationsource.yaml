@@ -12,8 +12,7 @@ spec:
     pruneIntervalDays: 10
     repository: radarr-restic-secret
     cacheCapacity: 2Gi
-    volumeSnapshotClassName: longhorn
-    storageClassName: longhorn
+    storageClassName: ceph-block
     retain:
       daily: 10
       within: 3d
