@@ -68,7 +68,7 @@ spec:
         size: 5Gi
         accessMode: ReadWriteOnce
         mountPath: /data
-        storageClass: longhorn
+        storageClass: ceph-block
         retain: true
 
     resources:

@@ -2,8 +2,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: restore-overseerr
-  namespace: media
+  name: restore-${src}
+  namespace: ${namespace}
 spec:
   template:
     spec:
@@ -15,7 +15,7 @@ spec:
             - -c
           args:
             [
-              "rm -rf /dst/* && tar -xzvf /backups/media_overseerr.tar.gz --strip-components 1 -C /dst",
+              "rm -rf /dst/* && tar -xzvf /backups/${date}-pvc-backup/${namespace}_${src}.tar.gz --strip-components 1 -C /dst",
             ]
           volumeMounts:
             - mountPath: /dst
@@ -26,8 +26,8 @@ spec:
       volumes:
         - name: pvc
           persistentVolumeClaim:
-            claimName: overseerr-config
+            claimName: ${src}
         - name: backups
           nfs:
-            path: /volume1/Backups/Homelab Backups/03-01-2023-pvc-backup
+            path: /volume1/Backups/Homelab Backups
             server: granite.markmckessock.com

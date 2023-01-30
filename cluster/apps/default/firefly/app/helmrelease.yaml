@@ -77,7 +77,7 @@ spec:
         size: 1Gi
         accessMode: ReadWriteOnce
         mountPath: /var/www/html/firefly-iii/storage/upload
-        storageClass: longhorn
+        storageClass: ceph-block
         retain: true
 
     resources:
