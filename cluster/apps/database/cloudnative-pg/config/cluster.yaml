@@ -8,11 +8,8 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.6
   primaryUpdateStrategy: unsupervised
-  # bootstrap:
-  #   recovery:
-  #     source: &active-cluster postgres-v2
   externalClusters:
-  - name: *active-cluster
+  - name: &previous-cluster postgres-v1
     barmanObjectStore:
       wal:
         compression: bzip2
@@ -26,6 +23,9 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-postgres-s3
           key: S3_SECRET_KEY
+  # bootstrap:
+  #   recovery:
+  #     source: *previous-cluster
   storage:
     size: 50Gi
     storageClass: ceph-block
@@ -45,7 +45,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://minio.storage.svc:9000
-      serverName: postgres-v3
+      serverName: postgres-v1 # when a restore is needed, increment this and change 'previousCluster'
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-postgres-s3
