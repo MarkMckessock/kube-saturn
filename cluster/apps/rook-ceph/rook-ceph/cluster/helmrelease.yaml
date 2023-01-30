@@ -76,7 +76,7 @@ spec:
         spec:
           failureDomain: osd
           replicated:
-            size: 1 # TODO(markmckessock)
+            size: 3
         storageClass:
           enabled: true
           name: ceph-block
