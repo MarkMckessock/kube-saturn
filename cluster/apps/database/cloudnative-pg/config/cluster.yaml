@@ -8,9 +8,9 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.6
   primaryUpdateStrategy: unsupervised
-  bootstrap:
-    recovery:
-      source: &active-cluster postgres-v2
+  # bootstrap:
+  #   recovery:
+  #     source: &active-cluster postgres-v2
   externalClusters:
   - name: *active-cluster
     barmanObjectStore:
