@@ -170,7 +170,7 @@ spec:
         enabled: true
         type: pvc
         size: 5Gi
-        storageClass: longhorn
+        storageClass: ceph-block
         mountPath: /opt/tplink/EAPController/data
         accessMode: ReadWriteOnce
         retain: true
