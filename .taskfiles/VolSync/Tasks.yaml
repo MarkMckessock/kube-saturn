@@ -1,0 +1,23 @@
+---
+version: "3"
+
+x-task-vars: &task-vars
+  rsrc: '{{.rsrc}}'
+  namespace: '{{.namespace}}'
+  claim: '{{.claim}}'
+  ts: '{{.ts}}'
+
+vars:
+  replication_destination_template: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates/ReplicationDestination.tmpl.yaml"
+  ts: '{{now | date "150405"}}'
+
+tasks:
+  restore:
+    desc: Restore a VolSync volume
+    cmds:
+      - envsubst < <(cat "{{.replication_destination_template}}") | kubectl apply -f -
+    env: *task-vars
+    vars:
+      rsrc: '{{ or .rsrc (fail "Replication Source is required") }}'
+      claim: '{{ or .claim (fail "Target PVC name is required") }}'
+      namespace: '{{ or .namespace (fail "Namespace is required") }}'

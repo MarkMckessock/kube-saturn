@@ -20,6 +20,7 @@ includes:
   terraform: .taskfiles/TerraformTasks.yml
   pvc: .taskfiles/PVCTasks.yaml
   cnpg: .taskfiles/CloudnativePg/Tasks.yaml
+  volsync: .taskfiles/VolSync/Tasks.yaml
 
 tasks:
   init:
