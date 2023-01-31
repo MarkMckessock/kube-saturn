@@ -1,0 +1,38 @@
+---
+version: "3"
+
+x-task-vars: &task-vars
+  dbUser: '{{.dbUser}}'
+  dbName: '{{.dbName}}'
+  dbPassword: '{{.dbPassword}}'
+
+vars:
+  initdb_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/init-db.tmpl.yaml"
+  backup_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/db-backup.tmpl.yaml"
+  restore_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/db-restore.tmpl.yaml"
+
+tasks:
+  init-db:
+    desc: Create a new cloudnative-pg database with a provided user
+    cmds:
+      - envsubst < <(cat "{{.initdb_template}}") | kubectl apply -f -
+    env: *task-vars
+    vars:
+      dbUser: '{{ or .dbUser (fail "Database User is required") }}'
+      dbName: '{{ or .dbName (fail "Database name is required") }}'
+      dbPassword: '{{ or .dbPassword (fail "Database password is required") }}'
+  backup:
+    desc: Create a backup of a cloudnative-pg database
+    cmds:
+      - envsubst < <(cat "{{.backup_template}}") | kubectl apply -f -
+    env: *task-vars
+    vars:
+      dbName: '{{ or .dbName (fail "Database name is required") }}'
+  restore:
+    desc: Restore a backup of a cloudnative-pg database
+    cmds:
+      # - envsubst --variables < <(cat "{{.restore_template}}")
+      - cat "{{.restore_template}}" | envsubst '$dbName' | kubectl apply -f -
+    env: *task-vars
+    vars:
+      dbName: '{{ or .dbName (fail "Database name is required") }}'

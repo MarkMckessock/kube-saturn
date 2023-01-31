@@ -19,7 +19,7 @@ includes:
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   pvc: .taskfiles/PVCTasks.yaml
-  cnpg: .taskfiles/CloudnativePgTasks.yaml
+  cnpg: .taskfiles/CloudnativePg/Tasks.yaml
 
 tasks:
   init:

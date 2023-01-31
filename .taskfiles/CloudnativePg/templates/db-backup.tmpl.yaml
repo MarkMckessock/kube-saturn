@@ -1,0 +1,49 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-${dbName}
+  namespace: database
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
+      containers:
+        - name: postgres-backup
+          image: docker.io/prodrigestivill/postgres-backup-local:15@sha256:93f597a7ad95d5a9d988e57c32442e6f78d6e88d809ca96bb0a3270e45c85650
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/backup.sh"
+          env:
+            - name: POSTGRES_HOST
+              value: postgres-ro
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudnative-pg-postgres-superuser
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudnative-pg-postgres-superuser
+                  key: password
+            - name: POSTGRES_DB
+              value: "${dbName}"
+            - name: POSTGRES_EXTRA_OPTS
+              value: "-Z6 --clean --if-exists"
+          volumeMounts:
+            - name: nas-backups
+              mountPath: /backups
+      restartPolicy: OnFailure
+      volumes:
+        - name: nas-backups
+          nfs:
+            server: "granite.markmckessock.com"
+            path: /volume1/Backups/databases/postgresql

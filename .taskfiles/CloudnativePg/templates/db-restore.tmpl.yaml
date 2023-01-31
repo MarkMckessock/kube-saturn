@@ -1,0 +1,42 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: restore-${dbName}
+  namespace: database
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: postgres-backup
+          image: postgres:15
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - "zcat /backups/last/${dbName}-latest.sql.gz | psql -h $POSTGRES_HOST -U $POSTGRES_USER --dbname=$POSTGRES_DB"
+          env:
+            - name: POSTGRES_HOST
+              value: postgres-rw
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudnative-pg-postgres-superuser
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudnative-pg-postgres-superuser
+                  key: password
+            - name: POSTGRES_DB
+              value: "${dbName}"
+          volumeMounts:
+            - name: nas-backups
+              mountPath: /backups
+      restartPolicy: OnFailure
+      volumes:
+        - name: nas-backups
+          nfs:
+            server: "granite.markmckessock.com"
+            path: /volume1/Backups/databases/postgresql
