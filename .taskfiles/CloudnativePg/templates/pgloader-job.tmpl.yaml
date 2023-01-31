@@ -1,0 +1,27 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pgloader-${dbName}
+  namespace: ${namespace}
+spec:
+  template:
+    spec:
+      containers:
+        - name: pgloader
+          image: ghcr.io/roxedus/pgloader
+          args:
+            - --with
+            - "quote identifiers"
+            - --with
+            - "data only"
+            - /data/${dbPath}
+            - "postgresql://${dbUser}:${dbPassword}@postgres-rw.database.svc/${dbName}"
+          volumeMounts:
+            - mountPath: /data
+              name: pvc
+      restartPolicy: Never
+      volumes:
+        - name: pvc
+          persistentVolumeClaim:
+            claimName: ${pvcName}

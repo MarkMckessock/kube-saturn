@@ -37,7 +37,7 @@ spec:
                       name: cloudnative-pg-postgres-superuser
                       key: password
                 - name: POSTGRES_DB
-                  value: "home-assistant,radarr-4k,radarr-4k-log,firefly"
+                  value: "home-assistant,radarr-4k,radarr-4k-log,firefly,prowlarr,prowlarr-log"
                 - name: POSTGRES_EXTRA_OPTS
                   value: "-Z6 --clean --if-exists"
               volumeMounts:
