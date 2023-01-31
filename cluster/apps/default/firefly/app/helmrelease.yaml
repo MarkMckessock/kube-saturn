@@ -66,9 +66,37 @@ spec:
     initContainers:
       init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.6
-        envFrom:
-          - secretRef:
-              name: firefly-secret
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: DB_DATABASE
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: DB_USERNAME
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: DB_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: POSTGRES_SUPER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: POSTGRES_SUPER_PASS
+          POSTGRES_HOST:
+            valueFrom:
+              secretKeyRef:
+                name: firefly-secret
+                key: DB_HOST
 
     persistence:
       firefly-upload:
