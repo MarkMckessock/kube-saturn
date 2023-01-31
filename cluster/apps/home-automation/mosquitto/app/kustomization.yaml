@@ -5,7 +5,7 @@ namespace: home-automation
 resources:
   - ./helmrelease.yaml
   - ./mosquitto-cert.yaml
-  - ./mosquitto-passwordfile.yaml
+  - ./externalsecret.yaml
   - ./backup
 commonLabels:
   app.kubernetes.io/name: mosquitto
