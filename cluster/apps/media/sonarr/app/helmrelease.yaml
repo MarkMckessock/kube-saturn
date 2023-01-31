@@ -68,6 +68,65 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
+    initContainers:
+      init-db-main:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_MAIN_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
+      init-db-log:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        env:
+          POSTGRES_DB:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_LOG_DB
+          POSTGRES_USER:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_USER
+          POSTGRES_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: SONARR__POSTGRES_PASSWORD
+          POSTGRES_SUPER_USER:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: POSTGRES_SUPERUSER_USER
+          POSTGRES_SUPER_PASS:
+            valueFrom:
+              secretKeyRef:
+                name: sonarr-secret
+                key: POSTGRES_SUPERUSER_PASS
+          POSTGRES_HOST: postgres-rw.database.svc
     persistence:
       config:
         enabled: true
