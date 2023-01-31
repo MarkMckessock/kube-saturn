@@ -5,6 +5,7 @@ namespace: home-automation
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./backup
 configMapGenerator:
   - name: home-assistant-config
     files:

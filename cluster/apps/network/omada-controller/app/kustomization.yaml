@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: network
 resources:
   - ./helmrelease.yaml
+  - ./backup
 configMapGenerator:
   - name: nginx-config
     files:
