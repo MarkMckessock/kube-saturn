@@ -148,6 +148,10 @@ spec:
           failureDomain: osd
           replicated:
             size: 3
+          parameters:
+            compression_mode: none
+          mirroring:
+            enabled: false
     cephFileSystems:
       - name: ceph-filesystem
         spec:
