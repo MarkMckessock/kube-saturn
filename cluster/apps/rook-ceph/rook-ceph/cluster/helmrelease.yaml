@@ -152,6 +152,8 @@ spec:
             compression_mode: none
           mirroring:
             enabled: false
+        storageClass:
+          enabled: false
     cephFileSystems:
       - name: ceph-filesystem
         spec:
