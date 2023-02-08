@@ -40,7 +40,7 @@ spec:
           routes:
             - receiver: "null"
               matchers:
-                - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown"
+                - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown|CephNodeInconsistentMTU|CephNodeNetworkPacketDrops"
             - receiver: "gotify"
               matchers:
                 - severity = "critical"
