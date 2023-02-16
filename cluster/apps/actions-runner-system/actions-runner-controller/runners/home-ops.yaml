@@ -12,7 +12,7 @@ spec:
       dockerdWithinRunnerContainer: true
       ephemeral: true
       repository: markmckessock/kube-saturn
-      # labels: ["self-hosted"]
+      labels: ["self-hosted"]
       volumeMounts:
         - name: cache-volume
           mountPath: /cache
