@@ -71,7 +71,7 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
     initContainers:
       init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
         env:
           POSTGRES_DB:
             valueFrom:
@@ -100,7 +100,7 @@ spec:
                 key: POSTGRES_SUPERUSER_PASS
           POSTGRES_HOST: postgres-rw.database.svc
       init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
         env:
           POSTGRES_DB:
             valueFrom:
