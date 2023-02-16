@@ -29,3 +29,4 @@ resources:
   - backube.yaml
   - piraeus.yaml
   - rook-ceph.yaml
+  - actions-runner-controller.yaml
