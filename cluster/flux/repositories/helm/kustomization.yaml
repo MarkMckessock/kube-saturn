@@ -29,4 +29,5 @@ resources:
   - backube.yaml
   - piraeus.yaml
   - rook-ceph.yaml
+  - tf-controller.yaml
   - actions-runner-controller.yaml
