@@ -43,6 +43,9 @@ spec:
         type: LoadBalancer
         loadBalancerIP: ${MQTT_IP}
         externalTrafficPolicy: Local
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          external-dns.alpha.kubernetes.io/hostname: mosquitto.${DOMAIN}.
         ports:
           http:
             enabled: false
