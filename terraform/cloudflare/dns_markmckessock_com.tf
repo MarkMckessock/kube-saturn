@@ -23,6 +23,15 @@ resource "cloudflare_record" "host_kari" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "saturn_cluster" {
+  name    = "saturn.kube"
+  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
+  value   = "10.0.70.2"
+  proxied = false
+  type    = "A"
+  ttl     = 1
+}
+
 resource "cloudflare_record" "host_titan" {
   name    = "titan.saturn.kube"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")

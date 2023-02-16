@@ -48,6 +48,7 @@ spec:
       ingress:
         enabled: true
         annotations:
+          external-dns.home.arpa/enabled: "true"
           kubernetes.io/ingress.class: nginx
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
@@ -83,6 +84,7 @@ spec:
       ingress:
         enabled: true
         annotations:
+          external-dns.home.arpa/enabled: "true"
           kubernetes.io/ingress.class: nginx
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
@@ -96,6 +98,7 @@ spec:
       ingress:
         enabled: true
         annotations:
+          external-dns.home.arpa/enabled: "true"
           kubernetes.io/ingress.class: nginx
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
