@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 44.3.0
+      version: 45.1.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -40,7 +40,7 @@ spec:
           routes:
             - receiver: "null"
               matchers:
-                - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown"
+                - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|KubeProxyDown|KubeSchedulerDown|CephNodeInconsistentMTU|CephNodeNetworkPacketDrops"
             - receiver: "gotify"
               matchers:
                 - severity = "critical"
@@ -124,7 +124,7 @@ spec:
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
         thanos:
-          image: quay.io/thanos/thanos:v0.30.1
+          image: quay.io/thanos/thanos:v0.30.2
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.29.0"
         ruleSelectorNilUsesHelmValues: false
