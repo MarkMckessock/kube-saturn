@@ -50,13 +50,13 @@ spec:
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
         ingressClassName: nginx
         hosts:
-          - host: &host arc-webhook.${DOMAIN}
+          - host: arc-webhook.${DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - *host
+              - arc-webhook.${DOMAIN}
     metrics:
       serviceMonitor: true
       port: 8080
