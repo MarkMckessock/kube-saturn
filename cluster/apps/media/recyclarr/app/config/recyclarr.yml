@@ -49,11 +49,17 @@ sonarr:
           - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
           - 9c14d194486c4014d422adc64092d794 # Dubs Only
           - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
-          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
         quality_profiles:
           - name: Any
             reset_unmatched_scores: true
+          - name: HD-1080p
+            reset_unmatched_scores: true
+          - name: Ultra-HD
+            reset_unmatched_scores: true
+      - trash_ids:
+          - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+        quality_profiles:
           - name: HD-1080p
             reset_unmatched_scores: true
           - name: Ultra-HD
