@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-rook-ceph-cluster
-    - name: cluster-apps-volsync-app
+    - name: cluster-apps-volsync
   path: ./cluster/apps/media/sabnzbd/app
   prune: true
   sourceRef:
