@@ -41,7 +41,7 @@ spec:
         sabnzbd.default.svc,
         sabnzbd.default.svc.cluster,
         sabnzbd.default.svc.cluster.local,
-        sabnzbd.devbu.io
+        sabnzbd.${DOMAIN}
     envFrom:
       - secretRef:
           name: sabnzbd-secret
@@ -57,7 +57,7 @@ spec:
         spec:
           httpGet:
             path: /api?mode=version
-            port: *port
+            port: 8080
           initialDelaySeconds: 0
           periodSeconds: 10
           timeoutSeconds: 1
