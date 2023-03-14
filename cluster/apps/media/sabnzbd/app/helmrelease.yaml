@@ -96,8 +96,13 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: ceph-block
-    # Note: If downloading very large nzbs it might be worth using NFS for your download directory.
     persistence:
+      downloads:
+        enabled: true
+        type: nfs
+        server: ${NFS_SERVER}
+        path: /volume1/Downloads
+        mountPath: /complete
       media:
         enabled: true
         type: nfs
