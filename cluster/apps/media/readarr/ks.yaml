@@ -9,7 +9,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-prowlarr
-    - name: cluster-apps-sabnzbd
+    - name: cluster-apps-sabnzbd-app
   path: ./cluster/apps/media/readarr/app
   prune: true
   sourceRef:
