@@ -18,3 +18,4 @@ resources:
   - ./lidarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
+  - ./readarr/ks.yaml
