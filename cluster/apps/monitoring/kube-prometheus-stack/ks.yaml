@@ -33,5 +33,5 @@ spec:
     name: flux-system
   wait: true
   dependsOn:
-    - name: cluster-apps-longhorn
+    - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-alertmanager-gotify-bridge
