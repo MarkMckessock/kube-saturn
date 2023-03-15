@@ -70,13 +70,18 @@ spec:
         mountPath: /config
         storageClass: ceph-block
         retain: true
-
       media:
         enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Media
         mountPath: /media
+      downloads:
+        enabled: true
+        type: nfs
+        server: ${NFS_SERVER}
+        path: /volume1/Downloads
+        mountPath: /complete
 
     resources:
       requests:
