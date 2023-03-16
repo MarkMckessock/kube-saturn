@@ -41,7 +41,7 @@ resource "cloudflare_record" "host_titan" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "shost_phoebe" {
+resource "cloudflare_record" "host_phoebe" {
   name    = "phoebe.saturn.kube"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
   value   = "10.0.70.4"
@@ -68,7 +68,7 @@ resource "cloudflare_record" "host_janus" {
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_janus" {
+resource "cloudflare_record" "host_tarvos" {
   name    = "tarvos.saturn.kube"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
   value   = "10.0.70.9"
