@@ -22,5 +22,20 @@ detect:
   enabled: false
 rtmp:
   enabled: true
+
+snapshots:
+  enabled: true
+  timestamp: false
+  # bounding_box: true
+  retain:
+    default: 2
+
 record:
   enabled: true
+  retain:
+    days: 2
+    mode: all
+  # events:
+  #   retain:
+  #     default: 2
+  #     mode: active_objects
