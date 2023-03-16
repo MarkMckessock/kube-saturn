@@ -31,3 +31,5 @@ resources:
   - rook-ceph.yaml
   - tf-controller.yaml
   - actions-runner-controller.yaml
+  - node-feature-discovery.yaml
+  - nvidia.yaml
