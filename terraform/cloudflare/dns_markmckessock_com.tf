@@ -26,7 +26,7 @@ resource "cloudflare_record" "host_kari" {
 resource "cloudflare_record" "saturn_cluster" {
   name    = "saturn.kube"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.2"
+  value   = "10.0.70.5"
   proxied = false
   type    = "A"
   ttl     = 1
@@ -63,6 +63,15 @@ resource "cloudflare_record" "host_janus" {
   name    = "janus.saturn.kube"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
   value   = "10.0.70.7"
+  proxied = false
+  type    = "A"
+  ttl     = 1
+}
+
+resource "cloudflare_record" "host_janus" {
+  name    = "tarvos.saturn.kube"
+  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
+  value   = "10.0.70.9"
   proxied = false
   type    = "A"
   ttl     = 1
