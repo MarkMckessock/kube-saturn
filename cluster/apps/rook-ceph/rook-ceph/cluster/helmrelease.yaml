@@ -124,10 +124,13 @@ spec:
           - name: kari.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C # sdc
-              - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13BBE #sdb
+
           - name: mimas.saturn.kube.markmckessock.com
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2125E5B12A66 #sdb
+          - name: tarvos.saturn.kube.markmckessock.com
+            devices:
+              - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13BBE #sda
     cephBlockPools:
       - name: ceph-blockpool
         spec:
