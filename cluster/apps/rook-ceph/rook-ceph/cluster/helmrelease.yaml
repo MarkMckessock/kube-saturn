@@ -125,10 +125,10 @@ spec:
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C # sdc
 
-          - name: mimas.saturn.kube.markmckessock.com
+          - name: mimas.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2125E5B12A66 #sdb
-          - name: tarvos.saturn.kube.markmckessock.com
+          - name: tarvos.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13BBE #sda
     cephBlockPools:
