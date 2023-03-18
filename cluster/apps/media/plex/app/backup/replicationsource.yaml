@@ -13,9 +13,6 @@ spec:
     repository: plex-restic-secret
     cacheCapacity: 5Gi
     volumeSnapshotClassName: csi-ceph-blockpool
-    moverSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
     storageClassName: ceph-block
     retain:
       daily: 10
