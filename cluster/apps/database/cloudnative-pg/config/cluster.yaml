@@ -8,29 +8,14 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.6
   primaryUpdateStrategy: unsupervised
-  externalClusters:
-  - name: &previous-cluster postgres-v1
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://postgresql/
-      endpointURL: http://minio.storage.svc:9000
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-postgres-s3
-          key: S3_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg-postgres-s3
-          key: S3_SECRET_KEY
-  bootstrap:
-    recovery:
-      source: *previous-cluster
   storage:
-    size: 50Gi
+    size: 25Gi
     storageClass: local-path
   superuserSecret:
     name: cloudnative-pg-postgres-superuser
+  bootstrap:
+    recovery:
+      source: &previous-cluster postgres-v1
   monitoring:
     enablePodMonitor: true
   postgresql:
@@ -53,3 +38,18 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-postgres-s3
           key: S3_SECRET_KEY
+  externalClusters:
+    - name: *previous-cluster
+      barmanObjectStore:
+        wal:
+          compression: bzip2
+          maxParallel: 8
+        destinationPath: s3://postgresql/
+        endpointURL: http://minio.storage.svc:9000
+        s3Credentials:
+          accessKeyId:
+            name: cloudnative-pg-postgres-s3
+            key: S3_ACCESS_KEY
+          secretAccessKey:
+            name: cloudnative-pg-postgres-s3
+            key: S3_SECRET_KEY
