@@ -84,11 +84,6 @@ spec:
     securityContext:
       capabilities:
         add: ["NET_ADMIN"]
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
