@@ -14,9 +14,9 @@ spec:
     storageClass: local-path
   superuserSecret:
     name: cloudnative-pg-postgres-superuser
-  bootstrap:
-    recovery:
-      source: &previous-cluster postgres-v1
+  # bootstrap:
+  #   recovery:
+  #     source: *previous-cluster
   monitoring:
     enablePodMonitor: true
   postgresql:
@@ -40,7 +40,7 @@ spec:
           name: cloudnative-pg-postgres-s3
           key: S3_SECRET_KEY
   externalClusters:
-    - name: *previous-cluster
+    - name: &previous-cluster postgres-v1
       barmanObjectStore:
         wal:
           compression: bzip2
