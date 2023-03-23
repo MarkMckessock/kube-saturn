@@ -27,7 +27,7 @@ spec:
     recovery:
       source: *previous-cluster
   storage:
-    size: 25Gi
+    size: 50Gi
     storageClass: local-path
   superuserSecret:
     name: cloudnative-pg-postgres-superuser
