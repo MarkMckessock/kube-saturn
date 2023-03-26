@@ -50,8 +50,8 @@ spec:
           value: nvidia
         - name: CONTAINERD_SET_AS_DEFAULT
           value: "true"
-    # validator:
-    #   plugin:
-    #     env:
-    #       - name: WITH_WORKLOAD
-    #         value: "false"
+    validator:
+      plugin:
+        env:
+          - name: WITH_WORKLOAD
+            value: "false"
