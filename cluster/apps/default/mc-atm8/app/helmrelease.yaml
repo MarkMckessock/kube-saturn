@@ -47,6 +47,7 @@ spec:
           http:
             enabled: false
           minecraft:
+            enabled: true
             type: LoadBalancer
             loadBalancerIP: ${MC_SERVER_IP}
             externalTrafficPolicy: Local
