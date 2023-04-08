@@ -65,6 +65,8 @@ spec:
         retain: true
 
     resources:
+      requests:
+        cpu: 2000m
+        memory: 16000Mi
       limits:
-        cpu: 500m
         memory: 16000Mi
