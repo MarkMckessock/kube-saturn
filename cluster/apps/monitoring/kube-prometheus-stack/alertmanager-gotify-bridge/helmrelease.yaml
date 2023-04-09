@@ -31,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: druggeri/alertmanager_gotify_bridge
-      tag: "2.1"
+      tag: "2.2"
     env:
       GOTIFY_ENDPOINT: http://gotify.monitoring.svc:80/message
     envFrom:
