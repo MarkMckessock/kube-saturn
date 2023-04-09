@@ -33,3 +33,4 @@ resources:
   - actions-runner-controller.yaml
   - node-feature-discovery.yaml
   - nvidia.yaml
+  - itzg.yaml

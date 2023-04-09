@@ -8,63 +8,35 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 1.3.2
+      chart: minecraft
+      version: 4.7.3
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: itzg
         namespace: flux-system
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      repository: itzg/minecraft-server
-      tag: java17
-
-    env:
-      EULA: "TRUE"
-      TYPE: AUTO_CURSEFORGE
-      CF_SLUG: all-the-mods-8
-      DIFFICULTY: hard
-      OVERRIDE_SERVER_PROPERTIES: "TRUE"
-      JVM_XX_OPTS: -Xms6G -Xmx12G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1
-      MAX_PLAYERS: 50
-      MOTD: "Minecraft ATM 8"
-      SPAWN_PROTECTION: 0
-      MEMORY: 12G
-      # ENFORCE_WHITELIST: "true"
-      # WHITELIST: player,name
-      # OPS: player,name
-    envFrom:
-      - secretRef:
-          name: curseforge-api-key
-
-    service:
-      main:
-        ports:
-          http:
-            enabled: false
-            primary: false
-          minecraft:
-            enabled: true
-            primary: true
-            type: LoadBalancer
-            loadBalancerIP: ${MC_SERVER_IP}
-            externalTrafficPolicy: Local
-            port: &port 25565
-            protocol: TCP
+    minecraftServer:
+      eula: "TRUE"
+      type: AUTO_CURSEFORGE
+      difficulty: hard
+      maxPlayers: 20
+      spawnProtection: 0
+      motd: "Minecraft ATM 8"
+      pvp: true
+      memory: 12G
+      serviceType: LoadBalancer
+      loadBalancerIP: ${MC_SERVER_IP}
+      autoCurseForge:
+        apiKey:
+          existingSecret: curseforge-api-key
+          secretKey: CF_API_KEY
+        slug: all-the-mods-8
 
     persistence:
-      data:
+      storageClass: ceph-block
+      dataDir:
         enabled: true
-        type: pvc
-        size: 5Gi
-        accessMode: ReadWriteOnce
-        mountPath: /data
-        storageClass: ceph-block
-        retain: true
+        Size: 5Gi
 
     resources:
       requests:
