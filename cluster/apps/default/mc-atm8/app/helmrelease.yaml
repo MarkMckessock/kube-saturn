@@ -44,3 +44,9 @@ spec:
         memory: 16000Mi
       limits:
         memory: 16000Mi
+
+    livenessProbe:
+      initialDelaySeconds: 600
+
+    readinessProbe:
+      initialDelaySeconds: 600
