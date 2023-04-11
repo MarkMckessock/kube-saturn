@@ -58,7 +58,7 @@ spec:
     initContainers:
       modpack:
         image: busybox
-        command: wget -O /data/Server-Files-1.0.15.zip https://mediafilez.forgecdn.net/files/4461/196/Server-Files-1.0.15.zip
+        command: ["wget", "-O", "/data/Server-Files-1.0.15.zip", "https://mediafilez.forgecdn.net/files/4461/196/Server-Files-1.0.15.zip"]
         volumeMounts:
           - name: data
             mountPath: /data
