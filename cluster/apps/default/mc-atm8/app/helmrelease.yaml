@@ -24,15 +24,17 @@ spec:
       tag: java17
 
     env:
-      EULA: "TRUE"
+      EULA: "true"
       TYPE: AUTO_CURSEFORGE
       CF_SLUG: all-the-mods-8
       CF_FILENAME_MATCHER: "1.0.15"
       DIFFICULTY: hard
-      OVERRIDE_SERVER_PROPERTIES: "TRUE"
+      OVERRIDE_SERVER_PROPERTIES: "true"
       MAX_PLAYERS: 50
       MOTD: "Minecraft ATM 8"
       SPAWN_PROTECTION: 0
+      ALLOW_FLIGHT: "true"
+      PVP: "true"
       MEMORY: 12G
       # ENFORCE_WHITELIST: "true"
       # WHITELIST: player,name
