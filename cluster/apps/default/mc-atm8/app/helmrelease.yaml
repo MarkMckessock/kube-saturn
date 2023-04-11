@@ -25,8 +25,9 @@ spec:
 
     env:
       EULA: "TRUE"
-      TYPE: CURSEFORGE
-      CF_SERVER_MOD: Server-Files-1.0.15.zip
+      TYPE: AUTO_CURSEFORGE
+      CF_SLUG: all-the-mods-8
+      CF_MODPACK_ZIP: /data/All+the+Mods+8-1.0.15.zip
       DIFFICULTY: hard
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
       MAX_PLAYERS: 50
@@ -36,9 +37,9 @@ spec:
       # ENFORCE_WHITELIST: "true"
       # WHITELIST: player,name
       # OPS: player,name
-    # envFrom:
-    #   - secretRef:
-    #       name: curseforge-api-key
+    envFrom:
+      - secretRef:
+          name: curseforge-api-key
 
     service:
       main:
@@ -58,7 +59,7 @@ spec:
     initContainers:
       modpack:
         image: busybox
-        command: ["wget", "-O", "/data/Server-Files-1.0.15.zip", "https://mediafilez.forgecdn.net/files/4461/196/Server-Files-1.0.15.zip"]
+        command: ["wget", "-O", "/data/All+the+Mods+8-1.0.15.zip", "https://mediafilez.forgecdn.net/files/4461/163/All+the+Mods+8-1.0.15.zip"]
         volumeMounts:
           - name: data
             mountPath: /data
