@@ -88,7 +88,6 @@ spec:
         spec:
           exec:
             command: ["mc-health"]
-          initialDelaySeconds: 600
           periodSeconds: 5
           failureThreshold: 6
       readiness:
@@ -96,7 +95,6 @@ spec:
         spec:
           exec:
             command: ["mc-health"]
-          initialDelaySeconds: 600
           periodSeconds: 5
           failureThreshold: 6
       startup:
