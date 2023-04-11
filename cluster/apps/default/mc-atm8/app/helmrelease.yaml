@@ -78,6 +78,36 @@ spec:
         type: emptyDir
         mountPath: /mods
 
+    securityContext:
+      runAsUser: 1000
+      fsGroup: 2000
+
+    probes:
+      liveness:
+        custom: true
+        spec:
+          exec:
+            command: ["mc-health"]
+          initialDelaySeconds: 600
+          periodSeconds: 5
+          failureThreshold: 6
+      readiness:
+        custom: true
+        spec:
+          exec:
+            command: ["mc-health"]
+          initialDelaySeconds: 600
+          periodSeconds: 5
+          failureThreshold: 6
+      startup:
+        custom: true
+        spec:
+          exec:
+            command: ["mc-health"]
+          periodSeconds: 10
+          failureThreshold: 60
+
+
     resources:
       requests:
         cpu: 2000m
