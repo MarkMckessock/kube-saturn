@@ -27,6 +27,7 @@ spec:
       EULA: "TRUE"
       TYPE: AUTO_CURSEFORGE
       CF_SLUG: all-the-mods-8
+      CF_FILENAME_MATCHER: "1.0.15"
       DIFFICULTY: hard
       OVERRIDE_SERVER_PROPERTIES: "TRUE"
       MAX_PLAYERS: 50
@@ -58,7 +59,7 @@ spec:
     initContainers:
       modpack:
         image: busybox
-        command: ["wget", "-P", "/mods/", "https://mediafilez.forgecdn.net/files/4035/671/hexerei-0.2.5.jar", "&&", "wget", "-P", "/mods/", "https://mediafilez.forgecdn.net/files/4178/188/ExperienceBugFix-1.19-1.41.2.3.jar", "&&", "wget", "-P", "/mods/", "https://mediafilez.forgecdn.net/files/4322/445/moreoverlays-1.21.5-mc1.19.2.jar"]
+        command: ["wget", "-P", "/mods/", "-O", "hexerei-0.2.5.jar", "https://mediafilez.forgecdn.net/files/4035/671/hexerei-0.2.5.jar", "&&", "wget", "-P", "/mods/", "-O", "ExperienceBugFix-1.19-1.41.2.3.jar", "https://mediafilez.forgecdn.net/files/4178/188/ExperienceBugFix-1.19-1.41.2.3.jar", "&&", "wget", "-P", "/mods/", "-O", "moreoverlays-1.21.5-mc1.19.2.jar", "https://mediafilez.forgecdn.net/files/4322/445/moreoverlays-1.21.5-mc1.19.2.jar"]
         volumeMounts:
           - name: mods
             mountPath: /mods
