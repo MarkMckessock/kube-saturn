@@ -1,0 +1,27 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: westar-sms-backup
+  namespace: database
+spec:
+  schedule: "0 4 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          containers:
+            - name: sms-backup
+              image: schickling/mysql-backup-s3
+              imagePullPolicy: IfNotPresent
+              envFrom:
+              - secretRef:
+                  name: westar-sms-backup-secret
+          restartPolicy: OnFailure

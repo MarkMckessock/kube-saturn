@@ -7,3 +7,4 @@ resources:
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
   - ./postgres-backup/ks.yaml
+  - ./westar-sms-backup/ks.yaml
