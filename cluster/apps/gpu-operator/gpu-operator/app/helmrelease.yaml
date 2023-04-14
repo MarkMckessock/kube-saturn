@@ -16,14 +16,18 @@ spec:
         name: nvidia
         namespace: flux-system
       interval: 15m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
       retries: 3
+    crds: CreateReplace
   upgrade:
     disableOpenAPIValidation: true
+    cleanupOnFail: true
     remediation:
       retries: 3
+    crds: CreateReplace
   values:
     operator:
       defaultRuntime: "containerd"

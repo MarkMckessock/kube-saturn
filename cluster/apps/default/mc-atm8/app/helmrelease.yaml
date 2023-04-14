@@ -14,6 +14,18 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  timeout: 15m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controller:
       annotations:
