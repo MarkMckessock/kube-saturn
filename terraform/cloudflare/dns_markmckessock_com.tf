@@ -77,6 +77,15 @@ resource "cloudflare_record" "host_tarvos" {
   ttl     = 1
 }
 
+resource "cloudflare_record" "host_aegir" {
+  name    = "aegir.saturn.kube"
+  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
+  value   = "10.0.70.10"
+  proxied = false
+  type    = "A"
+  ttl     = 1
+}
+
 resource "cloudflare_record" "mosquitto" {
   name    = "mosquitto"
   zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
