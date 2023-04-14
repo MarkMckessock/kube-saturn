@@ -121,15 +121,15 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: kari.saturn.kube.${DOMAIN}
-            devices:
-              - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C # sdc
           - name: tarvos.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13BBE #sda
           - name: anthe.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2125E5B12A66 #sda
+          - name: aegir.saturn.kube.${DOMAIN}
+            devices:
+              - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C #sda
     cephBlockPools:
       - name: ceph-blockpool
         spec:
