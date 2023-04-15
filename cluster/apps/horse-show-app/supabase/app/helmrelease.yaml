@@ -20,20 +20,10 @@ spec:
       secretName: supabase-smtp
 
     db:
-      enabled: true
-      image:
-        repository: supabase/postgres
-        pullPolicy: IfNotPresent
-        tag: "15.1.0.54-rc0"
+      enabled: false
       secretName: supabase-db
       persistence:
         enabled: false
-      storage:
-      mountPath: /var/lib/postgresql/data
-      size: 10Gi
-      storageClass: ceph-block
-      annotations:
-        helm.sh/resource-policy: "keep"
 
     studio:
       image:
