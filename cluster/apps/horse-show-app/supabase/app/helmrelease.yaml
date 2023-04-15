@@ -1,0 +1,144 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: supabase
+  namespace: horse-show-app
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: ./charts/supabase
+      sourceRef:
+        kind: GitRepository
+        name: supabase-kubernetes
+        namespace: flux-system
+  values:
+    jwt:
+      secretName: supabase-jwt
+    smtp:
+      secretName: supabase-smtp
+
+    studio:
+      environment:
+        SUPABASE_URL: https://api.markmckessock.com
+        SUPABASE_REST_URL: https://api.markmckessock.com/rest/v1/
+        STUDIO_PG_META_URL: http://supabase-kong.horse-show-app.svc.cluster.local:8000/pg
+      ingress:
+        hosts:
+          - host: supabase.markmckessock.com
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  serviceName: api
+                  servicePort: 3000
+        tls:
+          - secretName: supabase.markmckessock.com
+            hosts:
+              - supabase.markmckessock.com
+
+    auth:
+      environment:
+        DB_HOST: postgres-rw.database.svc.cluster.local
+        DB_PORT: "5432"
+        DB_DRIVER: postgres
+        DB_NAME: supabase
+        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
+        GOTRUE_API_HOST: "0.0.0.0"
+        GOTRUE_API_PORT: "9999"
+        GOTRUE_SITE_URL: https://supabase.markmckessock.com
+        GOTRUE_URI_ALLOW_LIST: "*"
+        GOTRUE_DISABLE_SIGNUP: "false"
+        GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+        GOTRUE_JWT_ADMIN_ROLES: service_role
+        GOTRUE_JWT_AUD: authenticated
+        GOTRUE_JWT_EXP: "3600"
+        GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+        GOTRUE_MAILER_AUTOCONFIRM: "true"
+        GOTRUE_SMTP_ADMIN_EMAIL: "mark.mckessock@gmail.com"
+        GOTRUE_SMTP_HOST: "smtp.gmail.com"
+        GOTRUE_SMTP_PORT: "465"
+        GOTRUE_SMTP_SENDER_NAME: "Supabase"
+        GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+        GOTRUE_SMS_AUTOCONFIRM: "false"
+        GOTRUE_MAILER_URLPATHS_INVITE: "https://api.markmckessock.com/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_CONFIRMATION: "https://api.markmckessock.com/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_RECOVERY: "https://api.markmckessock.com/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "https://api.markmckessock.com/auth/v1/verify"
+
+    rest:
+      environment:
+        DB_HOST: postgres-rw.database.svc.cluster.local
+        DB_PORT: "5432"
+        DB_DRIVER: postgres
+        DB_NAME: supabase
+        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
+        PGRST_DB_SCHEMA: public,storage
+        PGRST_DB_ANON_ROLE: anon
+        PGRST_DB_USE_LEGACY_GUCS: "false"
+
+    realtime:
+      environment:
+        DB_HOST: postgres-rw.database.svc.cluster.local
+        DB_PORT: "5432"
+        DB_NAME: supabase
+        DB_SSL: "false"
+        PORT: "4000"
+        REPLICATION_MODE: RLS
+        REPLICATION_POLL_INTERVAL: "100"
+        SECURE_CHANNELS: "true"
+        SLOT_NAME: supabase_realtime_rls
+        TEMPORARY_SLOT: "true"
+
+    meta:
+      environment:
+        DB_HOST: postgres-rw.database.svc.cluster.local
+        DB_PORT: "5432"
+        DB_DRIVER: postgres
+        DB_NAME: supabase
+        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
+        PG_META_PORT: "8080"
+
+    storage:
+      environment:
+        DB_HOST: postgres-rw.database.svc.cluster.local
+        DB_PORT: "5432"
+        DB_DRIVER: postgres
+        DB_NAME: supabase
+        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
+        POSTGREST_URL: http://supabase-rest.horse-show-app.svc.cluster.local:3000
+        PGOPTIONS: -c search_path=storage,public
+        FILE_SIZE_LIMIT: '52428800'
+        STORAGE_BACKEND: file
+        FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+        TENANT_ID: stub
+        REGION: stub
+        GLOBAL_S3_BUCKET: stub
+      persistence:
+        enabled: true
+        storageClassName: "ceph-block"
+        size: 10Gi
+        accessModes:
+          - ReadWriteOnce
+
+    kong:
+      environment:
+        KONG_DATABASE: "off"
+        KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+        # https://github.com/supabase/cli/issues/14
+        KONG_DNS_ORDER: LAST,A,CNAME
+        KONG_PLUGINS: request-transformer,cors,key-auth,acl
+      ingress:
+        tls:
+          - secretName: api.markmckessock.com
+            hosts:
+              - api.markmckessock.com
+        hosts:
+          - host: api.markmckessock.com
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  serviceName: api
+                  servicePort: 80
