@@ -37,7 +37,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: supabase-jwt
-            key: SECRET
+            key: secret
       FLY_ALLOC_ID: fly123
       FLY_APP_NAME: realtime
       ERL_AFLAGS: -proto_dist inet_tcp
@@ -83,6 +83,6 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 100Mi
+        memory: 1000Mi
       limits:
-        memory: 100Mi
+        memory: 1000Mi
