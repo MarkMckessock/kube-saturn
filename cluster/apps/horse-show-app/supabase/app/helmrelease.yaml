@@ -97,21 +97,7 @@ spec:
         PGRST_DB_USE_LEGACY_GUCS: "false"
 
     realtime:
-      image:
-        repository: supabase/realtime
-        pullPolicy: IfNotPresent
-        tag: "v2.12.2"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_PORT: "5432"
-        DB_NAME: supabase
-        DB_SSL: "false"
-        PORT: "4000"
-        REPLICATION_MODE: RLS
-        REPLICATION_POLL_INTERVAL: "100"
-        SECURE_CHANNELS: "true"
-        SLOT_NAME: supabase_realtime_rls
-        TEMPORARY_SLOT: "true"
+      enabled: false
 
     meta:
       image:
