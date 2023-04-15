@@ -21,10 +21,15 @@ spec:
 
     db:
       enabled: false
+      secretName: "null"
       persistence:
         enabled: false
 
     studio:
+      image:
+        repository: supabase/studio
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         SUPABASE_URL: https://api.markmckessock.com
         SUPABASE_REST_URL: https://api.markmckessock.com/rest/v1/
@@ -44,6 +49,10 @@ spec:
               - supabase.markmckessock.com
 
     auth:
+      image:
+        repository: supabase/gotrue
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         DB_HOST: postgres-rw.database.svc.cluster.local
         DB_PORT: "5432"
@@ -73,6 +82,10 @@ spec:
         GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "https://api.markmckessock.com/auth/v1/verify"
 
     rest:
+      image:
+        repository: postgrest/postgrest
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         DB_HOST: postgres-rw.database.svc.cluster.local
         DB_PORT: "5432"
@@ -84,6 +97,10 @@ spec:
         PGRST_DB_USE_LEGACY_GUCS: "false"
 
     realtime:
+      image:
+        repository: supabase/realtime
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         DB_HOST: postgres-rw.database.svc.cluster.local
         DB_PORT: "5432"
@@ -97,6 +114,10 @@ spec:
         TEMPORARY_SLOT: "true"
 
     meta:
+      image:
+        repository: supabase/postgres-meta
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         DB_HOST: postgres-rw.database.svc.cluster.local
         DB_PORT: "5432"
@@ -106,6 +127,10 @@ spec:
         PG_META_PORT: "8080"
 
     storage:
+      image:
+        repository: supabase/storage-api
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         DB_HOST: postgres-rw.database.svc.cluster.local
         DB_PORT: "5432"
@@ -130,12 +155,17 @@ spec:
           helm.sh/resource-policy: "keep"
 
     kong:
+      image:
+        repository: kong
+        pullPolicy: IfNotPresent
+        tag: "latest"
       environment:
         KONG_DATABASE: "off"
         KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
         # https://github.com/supabase/cli/issues/14
         KONG_DNS_ORDER: LAST,A,CNAME
         KONG_PLUGINS: request-transformer,cors,key-auth,acl
+        KONG_LOG_LEVEL: debug
       ingress:
         tls:
           - secretName: api.markmckessock.com
