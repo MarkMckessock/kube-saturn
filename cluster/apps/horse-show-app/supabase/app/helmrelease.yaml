@@ -20,7 +20,7 @@ spec:
       jwt:
         existingSecret: supabase-jwt
         existingSecretKey: secret
-        existingSecretAnonKet: anonKey
+        existingSecretAnonKey: anonKey
         existingSecretServiceKey: serviceKey
       storageClass: ceph-block
 
