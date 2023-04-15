@@ -25,14 +25,14 @@ spec:
       POSTGRES_PORT: 5432
       PGPASSWORD:
         valueFrom:
-        secretKeyRef:
-          name: supabase-db
-          key: password
+          secretKeyRef:
+            name: supabase-db
+            key: password
       POSTGRES_PASSWORD:
         valueFrom:
-        secretKeyRef:
-          name: supabase-db
-          key: password
+          secretKeyRef:
+            name: supabase-db
+            key: password
       PGDATABASE: supabase
       POSTGRES_DB: supabase
 
