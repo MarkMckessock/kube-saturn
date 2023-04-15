@@ -5,9 +5,3 @@ namespace: horse-show-app
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - supabase-db.yaml
-  - supabase-realtime.yaml
-  - supabase-storage.yaml
-  - supabase-imgproxy.yaml
-  - supabase-storage-pvc.yaml
-  - supabase-auth.yaml
