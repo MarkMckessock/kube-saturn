@@ -55,7 +55,8 @@ spec:
             port: *port
 
     initContainers:
-      - name: init-db
+      init-db:
+        name: init-db
         image: postgres:15-alpine
         imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
