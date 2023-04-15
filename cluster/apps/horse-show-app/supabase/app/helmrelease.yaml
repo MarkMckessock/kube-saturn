@@ -19,6 +19,11 @@ spec:
     smtp:
       secretName: supabase-smtp
 
+    db:
+      enabled: false
+      persistence:
+        enabled: false
+
     studio:
       environment:
         SUPABASE_URL: https://api.markmckessock.com
@@ -121,6 +126,8 @@ spec:
         size: 10Gi
         accessModes:
           - ReadWriteOnce
+        annotations:
+          helm.sh/resource-policy: "keep"
 
     kong:
       environment:
