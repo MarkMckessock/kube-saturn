@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: darthsim/imgproxy
-      tag: v3.13
+      tag: v3.15
 
     env:
       IMGPROXY_BIND: ":5001"
