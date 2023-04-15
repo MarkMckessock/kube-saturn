@@ -113,32 +113,7 @@ spec:
         PG_META_PORT: "8080"
 
     storage:
-      image:
-        repository: supabase/storage-api
-        pullPolicy: IfNotPresent
-        tag: "v0.37.3"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_PORT: "5432"
-        DB_DRIVER: postgres
-        DB_NAME: supabase
-        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
-        POSTGREST_URL: http://supabase-rest.horse-show-app.svc.cluster.local:3000
-        PGOPTIONS: -c search_path=storage,public
-        FILE_SIZE_LIMIT: '52428800'
-        STORAGE_BACKEND: file
-        FILE_STORAGE_BACKEND_PATH: /var/lib/storage
-        TENANT_ID: stub
-        REGION: stub
-        GLOBAL_S3_BUCKET: stub
-      persistence:
-        enabled: true
-        storageClassName: "ceph-block"
-        size: 10Gi
-        accessModes:
-          - ReadWriteOnce
-        annotations:
-          helm.sh/resource-policy: "keep"
+      enabled: false
 
     kong:
       image:
