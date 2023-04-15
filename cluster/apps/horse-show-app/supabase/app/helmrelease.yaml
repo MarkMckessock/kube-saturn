@@ -8,105 +8,73 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./charts/supabase
+      chart: supabase
+      version:  0.23.2
+      interval: 30m
       sourceRef:
-        kind: GitRepository
-        name: supabase-kubernetes
+        kind: HelmRepository
+        name: bitnami
         namespace: flux-system
   values:
-    jwt:
-      secretName: supabase-jwt
-    smtp:
-      secretName: supabase-smtp
+    global:
+      jwt:
+        existingSecret: supabase-jwt
+        existingSecretKey: secret
+        existingSecretAnonKet: anonKey
+        existingSecretServiceKey: serviceKey
+      storageClass: ceph-block
 
-    db:
-      enabled: false
-      secretName: supabase-db
-      persistence:
-        enabled: false
-
-    studio:
-      image:
-        repository: supabase/studio
-        pullPolicy: IfNotPresent
-        tag: "20230330-99fed3d"
-      environment:
-        SUPABASE_URL: https://api.markmckessock.com
-        SUPABASE_REST_URL: https://api.markmckessock.com/rest/v1/
-        STUDIO_PG_META_URL: http://supabase-kong.horse-show-app.svc.cluster.local:8000/pg
-      ingress:
-        hosts:
-          - host: supabase.markmckessock.com
-            paths:
-              - path: /
-                pathType: Prefix
-                backend:
-                  serviceName: api
-                  servicePort: 3000
-        tls:
-          - secretName: supabase.markmckessock.com
-            hosts:
-              - supabase.markmckessock.com
+    publicURL: https://api.markmckessock.com
 
     auth:
-      enabled: false
-
-    rest:
-      image:
-        repository: postgrest/postgrest
-        pullPolicy: IfNotPresent
-        tag: "v10.2.0"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_PORT: "5432"
-        DB_DRIVER: postgres
-        DB_NAME: supabase
-        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
-        PGRST_DB_SCHEMA: public,storage
-        PGRST_DB_ANON_ROLE: anon
-        PGRST_DB_USE_LEGACY_GUCS: "false"
+      defaultConfig: |
+        GOTRUE_API_HOST: "0.0.0.0"
+        GOTRUE_API_PORT: {{ .Values.auth.containerPorts.http | quote }}
+        GOTRUE_SITE_URL: {{ include "supabase.studio.publicURL" . | quote }}
+        GOTRUE_URI_ALLOW_LIST: "*"
+        GOTRUE_DISABLE_SIGNUP: "false"
+        GOTRUE_DB_DRIVER: "postgres"
+        GOTRUE_JWT_DEFAULT_GROUP_NAME: "authenticated"
+        GOTRUE_JWT_ADMIN_ROLES: "service_role"
+        GOTRUE_JWT_AUD: "authenticated"
+        GOTRUE_JWT_EXP: "3600"
+        GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+        GOTRUE_MAILER_AUTOCONFIRM: "true"
+        GOTRUE_SMTP_ADMIN_EMAIL: "mark.mckessock@gmail.com"
+        GOTRUE_SMTP_HOST: "smtp.gmail.com"
+        GOTRUE_SMTP_PORT: "587"
+        GOTRUE_SMTP_SENDER_NAME: "Supabase"
+        GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+        GOTRUE_SMS_AUTOCONFIRM: "false"
+        GOTRUE_MAILER_URLPATHS_INVITE: "{{ include "supabase.studio.publicURL" . }}/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_CONFIRMATION: "{{ include "supabase.studio.publicURL" . }}/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_RECOVERY: "{{ include "supabase.studio.publicURL" . }}/auth/v1/verify"
+        GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "{{ include "supabase.studio.publicURL" . }}/auth/v1/verify"
 
     realtime:
-      enabled: false
-
-    meta:
-      image:
-        repository: supabase/postgres-meta
-        pullPolicy: IfNotPresent
-        tag: "v0.64.6"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_PORT: "5432"
-        DB_DRIVER: postgres
-        DB_NAME: supabase
-        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
-        PG_META_PORT: "8080"
+      existingSecret: supabase-realtime
+      existingSecretKey: SECRET_KEY_BASE
 
     storage:
-      enabled: false
+      persistence:
+        storageClass: ceph-block
+
+    studio:
+      publicURL: https://supabase.markmckessock.com
+      ingress:
+        enabled: true
+        hostname: supabase.markmckessock.com
+        ingressClassName: nginx
+        tls: true
 
     kong:
-      image:
-        repository: kong
-        pullPolicy: IfNotPresent
-        tag: "2.8.1"
-      environment:
-        KONG_DATABASE: "off"
-        KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
-        # https://github.com/supabase/cli/issues/14
-        KONG_DNS_ORDER: LAST,A,CNAME
-        KONG_PLUGINS: request-transformer,cors,key-auth,acl
-        KONG_LOG_LEVEL: debug
       ingress:
-        tls:
-          - secretName: api.markmckessock.com
-            hosts:
-              - api.markmckessock.com
-        hosts:
-          - host: api.markmckessock.com
-            paths:
-              - path: /
-                pathType: Prefix
-                backend:
-                  serviceName: api
-                  servicePort: 80
+        enabled: true
+        hostname: api.markmckessock.com
+        tls: true
+
+    postgresql:
+      auth:
+        existingSecret: supabase-db
+
+
