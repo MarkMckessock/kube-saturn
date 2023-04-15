@@ -49,37 +49,7 @@ spec:
               - supabase.markmckessock.com
 
     auth:
-      image:
-        repository: supabase/gotrue
-        pullPolicy: IfNotPresent
-        tag: "v2.60.5"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_PORT: "5432"
-        DB_DRIVER: postgres
-        DB_NAME: supabase
-        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
-        GOTRUE_API_HOST: "0.0.0.0"
-        GOTRUE_API_PORT: "9999"
-        GOTRUE_SITE_URL: https://supabase.markmckessock.com
-        GOTRUE_URI_ALLOW_LIST: "*"
-        GOTRUE_DISABLE_SIGNUP: "false"
-        GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
-        GOTRUE_JWT_ADMIN_ROLES: service_role
-        GOTRUE_JWT_AUD: authenticated
-        GOTRUE_JWT_EXP: "3600"
-        GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
-        GOTRUE_MAILER_AUTOCONFIRM: "true"
-        GOTRUE_SMTP_ADMIN_EMAIL: "mark.mckessock@gmail.com"
-        GOTRUE_SMTP_HOST: "smtp.gmail.com"
-        GOTRUE_SMTP_PORT: "465"
-        GOTRUE_SMTP_SENDER_NAME: "Supabase"
-        GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
-        GOTRUE_SMS_AUTOCONFIRM: "false"
-        GOTRUE_MAILER_URLPATHS_INVITE: "https://api.markmckessock.com/auth/v1/verify"
-        GOTRUE_MAILER_URLPATHS_CONFIRMATION: "https://api.markmckessock.com/auth/v1/verify"
-        GOTRUE_MAILER_URLPATHS_RECOVERY: "https://api.markmckessock.com/auth/v1/verify"
-        GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "https://api.markmckessock.com/auth/v1/verify"
+      enabled: false
 
     rest:
       image:

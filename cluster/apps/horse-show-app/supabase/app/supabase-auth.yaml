@@ -1,0 +1,111 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: supabase-auth
+  namespace: horse-show-app
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    image:
+      repository: supabase/gotrue
+      tag: v2.47.0
+
+    env:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: https://api.markmckessock.com
+
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL:
+        valueFrom:
+          secretKeyRef:
+            name: supabase-db
+            key: DATABASE_URL
+
+      GOTRUE_SITE_URL: https://supabase.markmckessock.com
+      GOTRUE_URI_ALLOW_LIST: "*"
+      GOTRUE_DISABLE_SIGNUP: "false"
+
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_EXP: "3600"
+      GOTRUE_JWT_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: supabase-jwt
+            key: secret
+
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: "false"
+      # GOTRUE_MAILER_SECURE_EMAIL_CHANGE_ENABLED: true
+      # GOTRUE_SMTP_MAX_FREQUENCY: 1s
+      GOTRUE_SMTP_ADMIN_EMAIL: mark.mckessock@gmail.com
+      GOTRUE_SMTP_HOST: smtp.gmail.com
+      GOTRUE_SMTP_PORT: "465"
+      GOTRUE_SMTP_USER:
+        valueFrom:
+          secretKeyRef:
+            name: supabase-smtp
+            key: username
+      GOTRUE_SMTP_PASS:
+        valueFrom:
+          secretKeyRef:
+            name: supabase-smtp
+            key: password
+      GOTRUE_SMTP_SENDER_NAME: Supabase
+      GOTRUE_MAILER_URLPATHS_INVITE: "/auth/v1/verify"
+      GOTRUE_MAILER_URLPATHS_CONFIRMATION: "/auth/v1/verify"
+      GOTRUE_MAILER_URLPATHS_RECOVERY: "/auth/v1/verify"
+      GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "/auth/v1/verify"
+
+      GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+      GOTRUE_SMS_AUTOCONFIRM: "false"
+      MFA_ENABLED: "true"
+
+    service:
+      main:
+        ports:
+          http:
+            port: 9999
+
+    initContainers:
+      init-db:
+        name: init-db
+        image: postgres:15-alpine
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          until pg_isready -h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER); do
+          echo "Waiting for database to start..."
+          sleep 2
+          done
+        - echo "Database is ready"
+        env:
+        - name: DB_HOST
+          value: supabase-db.horse-show-app.svc.cluster.local
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: supabase-db
+
+
+    resources:
+      requests:
+        cpu: 10m
+        memory: 1000Mi
+      limits:
+        memory: 1000Mi
