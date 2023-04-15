@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: supabase/storage-api
-      tag: v0.28.2
+      tag: v0.37.3
 
     env:
       ANON_KEY:
