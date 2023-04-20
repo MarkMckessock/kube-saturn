@@ -47,6 +47,7 @@ spec:
         SUPABASE_URL: https://api.markmckessock.com
         SUPABASE_REST_URL: https://api.markmckessock.com/rest/v1/
         STUDIO_PG_META_URL: http://supabase-supabase-kong.horse-show-app.svc.cluster.local:8000/pg
+        SUPABASE_PUBLIC_URL: "https://api.markmckessock.com"
       ingress:
         hosts:
           - host: supabase.markmckessock.com
