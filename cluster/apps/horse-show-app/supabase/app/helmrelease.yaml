@@ -54,7 +54,7 @@ spec:
       environment:
         SUPABASE_URL: https://api.markmckessock.com
         SUPABASE_REST_URL: https://api.markmckessock.com/rest/v1/
-        STUDIO_PG_META_URL: http://supabase-kong.horse-show-app.svc.cluster.local:8000/pg
+        STUDIO_PG_META_URL: http://supabase-supabase-kong.horse-show-app.svc.cluster.local:8000/pg
       ingress:
         hosts:
           - host: supabase.markmckessock.com
@@ -160,7 +160,7 @@ spec:
         DB_DRIVER: postgres
         DB_NAME: supabase
         DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
-        POSTGREST_URL: http://supabase-rest.horse-show-app.svc.cluster.local:3000
+        POSTGREST_URL: http://supabase-supabase-rest.horse-show-app.svc.cluster.local:3000
         PGOPTIONS: -c search_path=storage,public
         FILE_SIZE_LIMIT: '52428800'
         STORAGE_BACKEND: file
