@@ -30,21 +30,13 @@ spec:
       secretName: supabase-smtp
 
     db:
-      enabled: true
+      enabled: false
       image:
         repository: supabase/postgres
         tag: 15.1.0.54-rc0
       secretName: supabase-db
       persistence:
-        enabled: true
-      environment:
-        POSTGRES_DB: supabase
-      storage:
-          mountPath: /var/lib/postgresql/data
-          size: 20Gi
-          storageClass: ceph-block
-          annotations:
-            helm.sh/resource-policy: "keep"
+        enabled: false
 
     studio:
       image:
@@ -75,7 +67,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v2.60.5"
       environment:
-        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -108,7 +100,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v10.2.0"
       environment:
-        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -123,7 +115,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v2.12.2"
       environment:
-        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_NAME: supabase
         DB_SSL: "false"
@@ -142,7 +134,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v0.64.6"
       environment:
-        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -155,7 +147,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v0.37.3"
       environment:
-        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
