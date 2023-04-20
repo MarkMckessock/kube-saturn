@@ -42,6 +42,14 @@ spec:
           http:
             port: 5432
 
+    securityContext:
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
+
     command:
       - postgres
       - -c
