@@ -65,7 +65,7 @@ spec:
       image:
         repository: supabase/gotrue
         pullPolicy: IfNotPresent
-        tag: "v2.60.5"
+        tag: "v2.47.0"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
@@ -98,7 +98,7 @@ spec:
       image:
         repository: postgrest/postgrest
         pullPolicy: IfNotPresent
-        tag: "v10.2.0"
+        tag: "v10.1.2"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
@@ -113,9 +113,10 @@ spec:
       image:
         repository: supabase/realtime
         pullPolicy: IfNotPresent
-        tag: "v2.12.2"
+        tag: "v2.5.1"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_USER: supabase_admin
         DB_PORT: "5432"
         DB_NAME: supabase
         DB_SSL: "false"
@@ -132,7 +133,7 @@ spec:
       image:
         repository: supabase/postgres-meta
         pullPolicy: IfNotPresent
-        tag: "v0.64.6"
+        tag: "v0.60.7"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
@@ -145,9 +146,10 @@ spec:
       image:
         repository: supabase/storage-api
         pullPolicy: IfNotPresent
-        tag: "v0.37.3"
+        tag: "v0.28.2"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_USER: supabase_storage_admin
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
