@@ -63,7 +63,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v2.60.5"
       environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -96,7 +96,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v10.2.0"
       environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -111,7 +111,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v2.12.2"
       environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_NAME: supabase
         DB_SSL: "false"
@@ -128,7 +128,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v0.64.6"
       environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
@@ -141,7 +141,7 @@ spec:
         pullPolicy: IfNotPresent
         tag: "v0.37.3"
       environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
+        DB_HOST: supabase-supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
