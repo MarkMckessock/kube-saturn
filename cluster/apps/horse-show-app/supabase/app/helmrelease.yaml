@@ -110,24 +110,7 @@ spec:
         PGRST_DB_USE_LEGACY_GUCS: "false"
 
     realtime:
-      image:
-        repository: supabase/realtime
-        pullPolicy: IfNotPresent
-        tag: "v2.5.1"
-      environment:
-        DB_HOST: supabase-db.horse-show-app.svc.cluster.local
-        DB_USER: supabase_admin
-        DB_PORT: "5432"
-        DB_NAME: supabase
-        DB_SSL: disable
-        PORT: "4000"
-
-        DB_AFTER_CONNECT_QUERY: 'SET search_path TO _realtime'
-        FLY_ALLOC_ID: fly123
-        FLY_APP_NAME: realtime
-        ERL_AFLAGS: -proto_dist inet_tcp
-        ENABLE_TAILSCALE: "false"
-        DNS_NODES: "''"
+      enabled: false
 
     meta:
       image:
