@@ -38,6 +38,7 @@ spec:
 
     service:
       main:
+        type: LoadBalancer
         ports:
           http:
             port: 5432
