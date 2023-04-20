@@ -13,6 +13,16 @@ spec:
         kind: GitRepository
         name: supabase-kubernetes
         namespace: flux-system
+  valuesFrom:
+    - kind: Secret
+      name: supabase-realtime
+      valuesKey: SECRET_KEY_BASE
+      targetPath: realtime.environment.SECRET_KEY_BASE
+    - kind: Secret
+      name: supabase-realtime
+      valuesKey: DB_ENC_KEY
+      targetPath: realtime.environment.DB_ENC_KEY
+
   values:
     jwt:
       secretName: supabase-jwt
@@ -118,11 +128,13 @@ spec:
         DB_NAME: supabase
         DB_SSL: "false"
         PORT: "4000"
-        REPLICATION_MODE: RLS
-        REPLICATION_POLL_INTERVAL: "100"
-        SECURE_CHANNELS: "true"
-        SLOT_NAME: supabase_realtime_rls
-        TEMPORARY_SLOT: "true"
+
+        DB_AFTER_CONNECT_QUERY: 'SET search_path TO _realtime'
+        FLY_ALLOC_ID: fly123
+        FLY_APP_NAME: realtime
+        ERL_AFLAGS: -proto_dist inet_tcp
+        ENABLE_TAILSCALE: "false"
+        DNS_NODES: "''"
 
     meta:
       image:
