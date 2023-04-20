@@ -66,7 +66,7 @@ spec:
       image:
         repository: supabase/gotrue
         pullPolicy: IfNotPresent
-        tag: "v2.47.0"
+        tag: "v2.60.8"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
