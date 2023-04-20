@@ -27,6 +27,8 @@ spec:
       secretName: supabase-db
       persistence:
         enabled: false
+      environment:
+        POSTGRES_DB: supabase
       storage:
           mountPath: /var/lib/postgresql/data
           size: 20Gi
