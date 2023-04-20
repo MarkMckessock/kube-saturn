@@ -149,7 +149,6 @@ spec:
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
-        DB_SSL: allow # disable, allow, prefer, require, verify-ca, verify-full
         POSTGREST_URL: http://supabase-supabase-rest.horse-show-app.svc.cluster.local:3000
         PGOPTIONS: -c search_path=storage,public
         FILE_SIZE_LIMIT: '52428800'
