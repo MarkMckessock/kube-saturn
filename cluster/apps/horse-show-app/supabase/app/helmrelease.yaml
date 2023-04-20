@@ -71,6 +71,7 @@ spec:
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
+        DB_SSL: disable
         GOTRUE_API_HOST: "0.0.0.0"
         GOTRUE_API_PORT: "9999"
         GOTRUE_SITE_URL: https://supabase.markmckessock.com
@@ -103,6 +104,7 @@ spec:
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
+        DB_SSL: disable
         PGRST_DB_SCHEMA: public,storage
         PGRST_DB_ANON_ROLE: anon
         PGRST_DB_USE_LEGACY_GUCS: "false"
@@ -117,6 +119,7 @@ spec:
         DB_USER: supabase_admin
         DB_PORT: "5432"
         DB_NAME: supabase
+        DB_SSL: disable
         PORT: "4000"
 
         DB_AFTER_CONNECT_QUERY: 'SET search_path TO _realtime'
@@ -136,6 +139,7 @@ spec:
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
+        DB_SSL: disable
         PG_META_PORT: "8080"
 
     storage:
@@ -149,6 +153,7 @@ spec:
         DB_PORT: "5432"
         DB_DRIVER: postgres
         DB_NAME: supabase
+        DB_SSL: disable
         POSTGREST_URL: http://supabase-supabase-rest.horse-show-app.svc.cluster.local:3000
         PGOPTIONS: -c search_path=storage,public
         FILE_SIZE_LIMIT: '52428800'
