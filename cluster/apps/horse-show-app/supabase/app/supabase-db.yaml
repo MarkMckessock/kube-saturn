@@ -42,20 +42,23 @@ spec:
           http:
             port: 5432
 
-    securityContext:
-      capabilities:
-        drop:
-        - ALL
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-      runAsUser: 1000
+    # securityContext:
+    #   capabilities:
+    #     drop:
+    #     - ALL
+    #   readOnlyRootFilesystem: true
+    #   runAsNonRoot: true
+    #   runAsUser: 1000
 
-    command:
-      - postgres
-      - -c
-      - config_file=/etc/postgresql/postgresql.conf
-      - -c
-      - log_min_messages=fatal # prevents Realtime polling queries from appearing in logs
+    # podSecurityContext:
+    #   fsGroup: 1000
+
+    # command:
+    #   - postgres
+    #   - -c
+    #   - config_file=/etc/postgresql/postgresql.conf
+    #   - -c
+    #   - log_min_messages=fatal # prevents Realtime polling queries from appearing in logs
 
     configMaps:
       realtime:
