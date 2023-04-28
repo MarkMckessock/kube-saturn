@@ -120,7 +120,7 @@ spec:
       host: redis-ha.default.svc
       sentinels:
        - redis-ha.default.svc:26379
-      sentinelService: redis-ha
+      sentinelService: mymaster
       # existingSecretName: netbox
       # existingSecretKey: redis_tasks_password
 
@@ -129,7 +129,7 @@ spec:
       host: redis-ha.default.svc
       sentinels:
        - redis-ha.default.svc:26379
-      sentinelService: redis-ha
+      sentinelService: mymaster
       # existingSecretName: netbox
       # existingSecretKey: redis_cache_password
 
