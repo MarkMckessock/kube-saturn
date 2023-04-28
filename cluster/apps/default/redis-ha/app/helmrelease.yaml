@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: redis
-      tag: 7.0.9-alpine3.17
+      tag: 7.0.11-alpine3.17
     replicas: 3
     persistentVolume:
       enabled: true
