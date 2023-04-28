@@ -106,7 +106,7 @@ spec:
 
     externalDatabase:
       host: postgres-rw.database.svc
-      existingSecretName: netbox
+      existingSecretName: netbox-secret
       existingSecretKey: db_password
 
     redis:
