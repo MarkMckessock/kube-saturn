@@ -74,12 +74,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: netbox-secret
-                key: postgres_superuser_pass
+                key: postgres_superuser_user
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
                 name: netbox-secret
-                key: postgres_superuser_user
+                key: postgres_superuser_pass
           - name: POSTGRES_HOST
             value: postgres-rw.database.svc
 
