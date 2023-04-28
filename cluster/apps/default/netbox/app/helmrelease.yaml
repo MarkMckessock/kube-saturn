@@ -94,6 +94,7 @@ spec:
       enabled: true
       header: HTTP_CF_ACCESS_AUTHENTICATED_USER_EMAIL
       superusers: ['mark.mckessock@gmail.com']
+      groupSyncEnabled: true
 
     existingSecret: netbox-secret
 
