@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: redis-ha
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: redis-ha
+      version: 4.23.0
+      sourceRef:
+        kind: HelmRepository
+        name: dandydev
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: redis
+      tag: 7.0.9-alpine3.17
+    replicas: 3

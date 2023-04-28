@@ -34,3 +34,4 @@ resources:
   - node-feature-discovery.yaml
   - nvidia.yaml
   - itzg.yaml
+  - dandydev.yaml

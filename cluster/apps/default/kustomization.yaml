@@ -8,3 +8,4 @@ resources:
   - ./firefly/ks.yaml
   - ./vaultwarden/ks.yaml
   - mc-atm8/ks.yaml
+  - redis-ha/ks.yaml
