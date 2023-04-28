@@ -51,6 +51,9 @@ spec:
     extraInitContainers:
       - name: init-db
         image: ghcr.io/onedr0p/postgres-initdb:14.7
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
         env:
           - name: POSTGRES_DB
             valueFrom:
