@@ -1,0 +1,145 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: netbox
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.boo.tc
+      chart: netbox
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: bootc
+        namespace: flux-system
+      interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: supabase-realtime
+      valuesKey: netbox-secret
+      targetPath: storageConfig.AWS_ACCESS_KEY_ID
+    - kind: Secret
+      name: netbox-secret
+      valuesKey: AWS_SECRET_ACCESS_KEY
+      targetPath: storageConfig.AWS_SECRET_ACCESS_KEY
+  values:
+    image:
+      tag: v3.4.4
+
+    superuser:
+      name: admin
+      email: admin@${DOMAIN}
+      password: ""
+      apiToken: ""
+
+    allowedHosts:
+      - https://netbox.${DOMAIN}
+
+    admins:
+      - ['Mark Mckessock', 'mark.mckessock@gmail.com']
+
+    email:
+      server: smtp.gmail.com
+      port: 587
+      username: mark.mckessock@gmail.com
+      useTLS: true
+      from: netbox@${DOMAIN}
+
+    extraInitContainers:
+      - name: init-db
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: netbox-secret
+                key: db_database
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: netbox-secret
+                key: db_username
+          - name: POSTGRES_PASS
+            valueFrom:
+              secretKeyRef:
+                name: netbox-secret
+                key: db_password
+          - name: POSTGRES_SUPER_USER
+            valueFrom:
+              secretKeyRef:
+                name: netbox-secret
+                key: postgres_superuser_pass
+          - name: POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: netbox-secret
+                key: postgres_superuser_user
+          - name: POSTGRES_HOST
+            value: postgres-rw.database.svc
+
+    loginRequired: true
+
+    storageBackend: storages.backends.s3boto3.S3Boto3Storage
+    storageConfig:
+      AWS_S3_ENDPOINT: http://minio.storage.svc:9000
+      AWS_STORAGE_BUCKET_NAME: netbox
+
+    remoteAuth:
+      enabled: true
+      header: HTTP_CF_ACCESS_AUTHENTICATED_USER_EMAIL
+      superusers: ['mark.mckessock@gmail.com']
+
+    existingSecret: netbox-secret
+
+    worker:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+
+    nodeSelector:
+      kubernetes.io/arch: amd64
+
+    postgresql:
+      enabled: false
+
+    externalDatabase:
+      host: postgres-rw.database.svc
+      existingSecretName: netbox
+      existingSecretKey: db_password
+
+    redis:
+      enabled: false
+
+    tasksRedis:
+      database: 0
+      host: redis-ha.default.svc
+      sentinelService: redis-ha.default.svc
+      # existingSecretName: netbox
+      # existingSecretKey: redis_tasks_password
+
+    cachingRedis:
+      database: 1
+      host: redis-ha.default.svc
+      sentinelService: redis-ha.default.svc
+      # existingSecretName: netbox
+      # existingSecretKey: redis_cache_password
+
+    persistence:
+      enabled: false
+
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/auth-response-headers: "Cf-Access-Authenticated-User-Email"
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
+      hosts:
+        - host: netbox.${DOMAIN}
+          paths:
+            - /
+      tls:
+        - secretName: netbox-cert
+          hosts:
+            - netbox.${DOMAIN}
