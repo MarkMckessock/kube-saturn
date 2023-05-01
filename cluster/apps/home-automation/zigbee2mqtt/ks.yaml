@@ -16,6 +16,5 @@ spec:
   wait: true
   dependsOn:
     - name: cluster-apps-mosquitto
-    # - name: cluster-apps-prometheus
     - name: cluster-apps-external-secrets
     - name: cluster-apps-external-secrets-stores
