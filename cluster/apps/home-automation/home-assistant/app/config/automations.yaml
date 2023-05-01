@@ -119,6 +119,33 @@
       entity_id: light.closet_light
       domain: light
   mode: single
+- description: ''
+  mode: single
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.closet_motion_sensor_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: time
+    after: '23:00:00'
+    before: '07:00:00'
+  action:
+  - type: turn_on
+    device_id: 713b818f8865e47846ddfcb4a9bd3164
+    entity_id: light.closet_light
+    domain: light
+    brightness_pct: 10
+  - wait_for_trigger:
+    - platform: state
+      entity_id: binary_sensor.closet_motion_sensor_occupancy
+      from: 'on'
+      to: 'off'
+  - type: turn_off
+    device_id: 713b818f8865e47846ddfcb4a9bd3164
+    entity_id: light.closet_light
+    domain: light
+  alias: Closet Light Motion (Night Mode)
 - id: "1649029640888"
   alias: Toggle Right Bedside Lamp
   description: ""
