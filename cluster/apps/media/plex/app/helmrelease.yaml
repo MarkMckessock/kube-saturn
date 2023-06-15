@@ -70,7 +70,7 @@ spec:
       config:
         enabled: true
         type: pvc
-        size: 100Gi
+        size: 400Gi
         accessMode: ReadWriteOnce
         mountPath: /config
         storageClass: ceph-block
