@@ -96,7 +96,6 @@ spec:
         subPath:
           - path: devices.yaml
             mountPath: /data/devices.yaml
-            readOnly: true
           - path: configuration.yaml
             mountPath: /data/configuration.yaml
             readOnly: true
