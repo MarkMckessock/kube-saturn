@@ -1,6 +1,7 @@
 ---
 mqtt:
-  server: mqtts://mosquitto.markmckessock.com:8883
+  # server: mqtts://mosquitto.markmckessock.com:8883
+  server: mqtt://mosquitto.markmckessock.com:1883
   base_topic: zigbee2mqtt
   version: 5
   include_device_information: true
