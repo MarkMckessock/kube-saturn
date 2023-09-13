@@ -10,7 +10,9 @@ permit_join: true
 serial:
   port: tcp://${ZIGBEE2MQTT_ADAPTER_IP}:20108
 
-devices: devices.yaml
+devices:
+  - devices_temp.yaml
+  - devices.yaml
 
 external_converters:
   - E21-N1EA.js
