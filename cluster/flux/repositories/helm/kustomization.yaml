@@ -35,3 +35,4 @@ resources:
   - nvidia.yaml
   - itzg.yaml
   - dandydev.yaml
+  - crunchydata.yaml
