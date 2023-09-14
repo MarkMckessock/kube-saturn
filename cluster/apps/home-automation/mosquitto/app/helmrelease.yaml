@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,11 +21,11 @@ spec:
 
     image:
       repository: eclipse-mosquitto
-      tag: 2.0.15
+      tag: 2.0.17
 
     initContainers:
       copy-config:
-        image: eclipse-mosquitto:2.0.15@sha256:0e0886befecf2bf77e2e613f926f6ee0b77b93f76e49847471177143a8b3863c
+        image: eclipse-mosquitto:2.0.17@sha256:d30913b55488ffb6f5f15eea27c2aca4e38d862b62b13c758f756c77e2acd173
         command:
           - "/bin/sh"
           - -c
@@ -51,7 +51,7 @@ spec:
             enabled: false
           mqtt:
             enabled: true
-            port: 8883
+            port: 1883
 
     persistence:
       data:

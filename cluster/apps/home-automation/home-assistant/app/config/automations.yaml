@@ -109,6 +109,7 @@
       device_id: 713b818f8865e47846ddfcb4a9bd3164
       entity_id: light.closet_light
       domain: light
+      brightness_pct: 100
     - wait_for_trigger:
         - platform: state
           entity_id: binary_sensor.closet_motion_sensor_occupancy

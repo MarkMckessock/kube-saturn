@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -23,7 +23,7 @@ spec:
 
     image:
       repository: docker.io/koenkk/zigbee2mqtt
-      tag: 1.30.3
+      tag: 1.33.0
 
     env:
       ZIGBEE2MQTT_DATA: /data
@@ -96,7 +96,6 @@ spec:
         subPath:
           - path: devices.yaml
             mountPath: /data/devices.yaml
-            readOnly: true
           - path: configuration.yaml
             mountPath: /data/configuration.yaml
             readOnly: true
@@ -111,7 +110,7 @@ spec:
     additionalContainers:
       exporter:
         name: exporter
-        image: docker.io/kpetrem/mqtt-exporter:latest@sha256:9098d1cc5b357f44ae2da72833a1eb349330dbcbb27f7c06012bace9d93c8af1
+        image: docker.io/kpetrem/mqtt-exporter:latest@sha256:fbff8472a18239297e699955b43695f714e4fa6fdd7a36875a65375e2dfa8e67
         env:
           - name: LOG_LEVEL
             value: DEBUG
@@ -120,7 +119,7 @@ spec:
           - name: MQTT_ADDRESS
             value: mosquitto.home-automation.svc
           - name: MQTT_PORT
-            value: 8883
+            value: 1883
           - name: MQTT_TOPIC
             value: "zigbee2mqtt/#"
           - name: MQTT_V5_PROTOCOL

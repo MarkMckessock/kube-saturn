@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: pod-gateway
-      version: 6.0.0
+      version: 6.5.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -27,7 +27,7 @@ spec:
         image:
           # TODO: Replace with ghcr.io/qdm12/gluetun when a versioned tag is available
           repository: docker.io/qmcgaw/gluetun
-          tag: v3.33.0@sha256:cadc352ebed5988c9fbc750f2759ea703dc7587f969d70342cc5eff05282024b
+          tag: v3.34.3@sha256:3b4d498939ef1f9ceac9049a73598acfcda25a9e58010fcd991afed32cd16eac
         env:
           - name: VPN_SERVICE_PROVIDER
             value: "private internet access"
@@ -88,4 +88,4 @@ spec:
       gatewayLabel: setGateway
       image:
         repository: ghcr.io/angelnu/gateway-admision-controller
-        tag: v3.7.0@sha256:985eb60fd0017f657d5e66707f7e9b3f764f3337a87a379d26cd15e950bd79ad
+        tag: v3.9.0@sha256:4e169da5af107a9c6c784d3e03c89da07fad45f18358ab5b7177662df12d955a

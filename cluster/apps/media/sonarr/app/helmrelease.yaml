@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.439@sha256:704e614112688d442ddf353cdd9e50051738aa482d8aa829be72637e5b03040f
+      tag: 4.0.0.669@sha256:df6283fd3d747f8f7ca10dfb13a51b26e0b48cd7dd497e4cf32786d909a2bc6d
     env:
       TZ: America/Toronto
       SONARR__INSTANCE_NAME: Sonarr
@@ -70,7 +70,7 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
     initContainers:
       init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        image: ghcr.io/onedr0p/postgres-initdb:14.8
         env:
           POSTGRES_DB:
             valueFrom:
@@ -99,7 +99,7 @@ spec:
                 key: POSTGRES_SUPERUSER_PASS
           POSTGRES_HOST: postgres-rw.database.svc
       init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        image: ghcr.io/onedr0p/postgres-initdb:14.8
         env:
           POSTGRES_DB:
             valueFrom:

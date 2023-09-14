@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -33,7 +33,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: ghcr.io/recyclarr/recyclarr
-      tag: edge@sha256:41c92e356df97bc44271ae522e9442fb41f4973bb171fd54dc8ea585823557b9
+      tag: edge@sha256:121d1a88b3a557f1187de14047bd7de2903ab247c56dafaba839f1257933a467
     command: ["/app/recyclarr/recyclarr"]
     args: ["sync"]
     envFrom:

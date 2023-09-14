@@ -13,7 +13,7 @@ on:
         default: "debug"
         required: false
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 0 * * *"
   push:
     branches: ["main"]
     paths:
@@ -31,10 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
 
       - name: Generate Token
-        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
+        uses: tibdex/github-app-token@0914d50df753bbc42180d982a6550f195390069f # v2.0.0
         id: generate-token
         with:
           app_id: "${{ secrets.APP_ID }}"
@@ -46,7 +46,7 @@ jobs:
           echo "LOG_LEVEL=${{ github.event.inputs.logLevel || env.LOG_LEVEL }}" >> "${GITHUB_ENV}"
 
       - name: Renovate
-        uses: renovatebot/github-action@81cd2edbb5fd1dc42115b0d1c8854d5a6b74d835 # v36.0.3
+        uses: renovatebot/github-action@3cef36a9aba515d8726b491905b3bc766832e221 # v39.0.5
         with:
           configurationFile: "${{ env.RENOVATE_CONFIG_FILE }}"
           token: "${{ steps.generate-token.outputs.token }}"

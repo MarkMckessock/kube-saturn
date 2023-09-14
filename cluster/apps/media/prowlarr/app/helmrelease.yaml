@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,7 +31,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/prowlarr-nightly
-      tag: 1.5.0.3278@sha256:c072cf57862a744ea8470b9fbea1885d86a7c3d06301d033e9f9de108a9e1105
+      tag: 1.9.0.3956@sha256:f1bcb36c58282b73f28852618161aebfbce939985c85bf3c893fc19cf6ea6464
     env:
       TZ: America/Toronto
       PROWLARR__INSTANCE_NAME: Prowlarr
@@ -74,7 +74,7 @@ spec:
       fsGroupChangePolicy: "OnRootMismatch"
     initContainers:
       init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        image: ghcr.io/onedr0p/postgres-initdb:14.8
         env:
           POSTGRES_DB:
             valueFrom:
@@ -103,7 +103,7 @@ spec:
                 key: POSTGRES_SUPERUSER_PASS
           POSTGRES_HOST: postgres-rw.database.svc
       init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        image: ghcr.io/onedr0p/postgres-initdb:14.8
         env:
           POSTGRES_DB:
             valueFrom:

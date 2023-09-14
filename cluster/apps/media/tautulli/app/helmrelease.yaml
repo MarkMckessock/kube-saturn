@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.4.0
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/tautulli
-      tag: 2.12.2@sha256:4df605e37c63fbf9d602f22e87a4e5675bba15a8f41681350ff5c036e754dd6c
+      tag: 2.13.1@sha256:0a995c25a9c56b609c80dedfd9432c006b0d4835bd4fa2ba911ed112b50c5034
     env:
       TZ: America/Toronto
     service:
