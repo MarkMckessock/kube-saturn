@@ -36,9 +36,9 @@ spec:
       TZ: America/Toronto
       SONARR__INSTANCE_NAME: Sonarr
       SONARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: sonarr-secret
+    # envFrom:
+    #   - secretRef:
+    #       name: sonarr-secret
     service:
       main:
         ports:
