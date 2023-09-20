@@ -15,6 +15,7 @@ spec:
             - "quote identifiers"
             - --with
             - "data only"
+            - --with "prefetch rows = 100" --with "batch size = 1MB"
             - /data/${dbPath}
             - "postgresql://${dbUser}:${dbPassword}@postgres-rw.database.svc/${dbName}"
           volumeMounts:
