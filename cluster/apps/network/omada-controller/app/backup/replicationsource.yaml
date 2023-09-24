@@ -12,11 +12,13 @@ spec:
     pruneIntervalDays: 10
     repository: omada-controller-restic-secret
     cacheCapacity: 2Gi
+    cacheStorageClassName: local-path
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
     moverSecurityContext:
       runAsUser: 508
       runAsGroup: 508
+      fsGroup: 508
     retain:
       daily: 10
       within: 3d
