@@ -165,12 +165,6 @@ spec:
       startup:
         enabled: false
 
-    podSecurityContext:
-      runAsUser: 508
-      runAsGroup: 508
-      fsGroup: 508
-      fsGroupChangePolicy: OnRootMismatch
-
     persistence:
       data:
         enabled: true
