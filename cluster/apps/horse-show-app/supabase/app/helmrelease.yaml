@@ -99,7 +99,7 @@ spec:
       image:
         repository: postgrest/postgrest
         pullPolicy: IfNotPresent
-        tag: "v10.1.2"
+        tag: "v11.2.2"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
