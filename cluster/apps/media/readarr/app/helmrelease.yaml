@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/readarr-develop
-      tag: 0.3.6.2232@sha256:3f52afecfce13f17ce17d0e06f7c200d6f0b59e74efb586f2210251c07492e2b
+      tag: 0.3.10.2287@sha256:f7b1f6dfb57b6df1dff804b27864eab91761c2b05a19a36c8b897eb59b73136b
 
     podAnnotations:
       secret.reloader.stakater.com/reload: readarr-secrets
