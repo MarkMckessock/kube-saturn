@@ -11,6 +11,10 @@
     "ansible": "ansible/*.yml",
     "Kubernetes": "cluster/*.yaml"
   },
+  "yaml.customTags": [
+    "!secret scalar",
+    "!env_var scalar"
+  ],
   "prettier.configPath": ".ci/prettier/.prettierrc.yaml",
   "prettier.ignorePath": ".ci/prettier/.prettierignore",
   "editor.bracketPairColorization.enabled": true,
