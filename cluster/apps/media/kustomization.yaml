@@ -10,6 +10,7 @@ resources:
   - ./radarr-4k/ks.yaml
   - ./youtube-dl/ks.yaml
   - ./sonarr/ks.yaml
+  - ./sonarr-4k/ks.yaml
   - ./tautulli/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
