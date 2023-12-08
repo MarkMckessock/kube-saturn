@@ -9,7 +9,8 @@
   },
   "yaml.schemas": {
     "ansible": "ansible/*.yml",
-    "Kubernetes": "cluster/*.yaml"
+    "Kubernetes": "cluster/*.yaml",
+    "https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json": "file:///c%3A/Users/Mark%20Mckessock/Documents/kube-saturn/cluster/apps/security/external-secrets/stores/onepassword/helmrelease.yaml"
   },
   "yaml.customTags": [
     "!secret scalar",
