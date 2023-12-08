@@ -27,110 +27,93 @@ spec:
     keepHistory: false
   values:
     controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: quay.io/minio/minio
-      tag: RELEASE.2022-12-12T19-27-27Z
-    env:
-      TZ: America/Toronto
-      MINIO_UPDATE: "off"
-      MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring.svc:9090
-      MINIO_PROMETHEUS_JOB_ID: minio
-      MINIO_BROWSER_REDIRECT_URL: https://minio.${DOMAIN}
-      MINIO_SERVER_URL: https://s3.${DOMAIN}
-    envFrom:
-      - secretRef:
-          name: minio-secret
-    args: ["server", "/data", "--console-address", ":9001"]
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: quay.io/minio/minio
+              tag: RELEASE.2023-11-20T22-40-07Z
+            env:
+              TZ: America/Toronto
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${DOMAIN},https://s3.${DOMAIN}
+              MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring.svc:9090
+              MINIO_PROMETHEUS_JOB_ID: minio
+              MINIO_BROWSER_REDIRECT_URL: https://minio.${DOMAIN}
+              MINIO_SERVER_URL: https://s3.${DOMAIN}
+              MINIO_UPDATE: "off"
+            envFrom:
+              - secretRef:
+                  name: minio-secret
+            args:
+              - server
+              - /data
+              - --console-address
+              - :9001
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /minio/health/live
+                    port: 9000
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 6
+              readiness: *probes
+              startup:
+                enabled: false
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
+              supplementalGroups: [100]
     service:
       main:
-        enabled: true
         ports:
           http:
-            port: &console-port 9001
-          api:
-            enabled: true
-            port: &api-port 9000
+            port: 9001
+          s3:
+            port: 9000
     serviceMonitor:
       main:
         enabled: true
         endpoints:
-          - port: api
+          - port: s3
             scheme: http
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-            bearerTokenSecret:
-              name: minio-secret
-              key: MINIO_PROMETHEUS_TOKEN
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /minio/health/live
-            port: *api-port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: internal
         hosts:
-          - host: &console-host "{{ .Release.Name }}.${DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  port: *console-port
-        tls:
-          - hosts:
-              - *console-host
-      s3:
-        enabled: true
-        ingressClassName: nginx
-        annotations:
-          external-dns.home.arpa/enabled: "true"
-          nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
-          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            chunked_transfer_encoding off;
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
-        hosts:
-          - host: &api-host s3.${DOMAIN}
+                  name: main
+                  port: http
+          - host: &s3Host s3.${DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  port: *api-port
+                  name: main
+                  port: s3
         tls:
           - hosts:
-              - *api-host
-            secretName: minio-s3-tls
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
+              - *host
+              - *s3Host
     persistence:
       config:
         enabled: true
         type: nfs
-        path: /volume1/Apps/minio
         server: ${NFS_SERVER}
-        mountPath: /data
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-      limits:
-        memory: 750Mi
+        path: /volume1/Apps/minio
+        globalMounts:
+          - path: /data
