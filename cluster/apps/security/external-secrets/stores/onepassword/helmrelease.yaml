@@ -41,7 +41,7 @@ spec:
               XDG_DATA_HOME: &configDir /config
               OP_BUS_PORT: "11220"
               OP_BUS_PEERS: "localhost:11221"
-              OP_HTTP_PORT: &port 8080
+              OP_HTTP_PORT: &apiPort 80
               OP_SESSION:
                 valueFrom:
                   secretKeyRef:
@@ -54,7 +54,7 @@ spec:
                 spec:
                   httpGet:
                     path: /heartbeat
-                    port: *port
+                    port: *apiPort
                   initialDelaySeconds: 15
                   periodSeconds: 30
                   failureThreshold: 3
@@ -64,7 +64,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: *port
+                    port: *apiPort
                   initialDelaySeconds: 15
               startup:
                 enabled: false
