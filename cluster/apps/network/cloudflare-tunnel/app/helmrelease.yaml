@@ -26,57 +26,55 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      repository: cloudflare/cloudflared
-      tag: 2023.10.0
-
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: cloudflare/cloudflared
+              tag: 2023.10.0
+            args:
+            - tunnel
+            - --config
+            - /etc/cloudflared/config/config.yaml
+            - run
+            resources:
+              limits:
+                memory: "128Mi"
+                cpu: "100m"
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ready
+                    port: 2000
+                  failureThreshold: 1
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
     service:
       main:
         enabled: false
-
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ready
-            port: 2000
-          failureThreshold: 1
-          initialDelaySeconds: 10
-          periodSeconds: 10
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-
     persistence:
       config:
-        enabled: true
         type: configMap
         name: cloudflared-config
-        mountPath: /etc/cloudflared/config/config.yaml
+        globalMounts:
+           - path: /etc/cloudflared/config/config.yaml
         subPath: config.yaml
         readOnly: true
       tunnel-credentials:
-        enabled: true
         type: secret
         name: cloudflare-tunnel-credentials
-        mountPath: /etc/cloudflared/creds/credentials.json
+        globalMounts:
+           - path: /etc/cloudflared/creds/credentials.json
         subPath: credentials.json
         readOnly: true
-
-    args:
-      - tunnel
-      - --config
-      - /etc/cloudflared/config/config.yaml
-      - run
-
-    resources:
-      limits:
-        memory: "128Mi"
-        cpu: "100m"
