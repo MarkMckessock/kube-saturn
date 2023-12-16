@@ -26,8 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
+    controllers:
       main:
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -66,12 +67,13 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups: [100]
+    pod:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [100]
     service:
       main:
         ports:
@@ -111,7 +113,6 @@ spec:
               - *s3Host
     persistence:
       config:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Apps/minio
