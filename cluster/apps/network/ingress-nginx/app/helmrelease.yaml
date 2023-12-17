@@ -92,5 +92,5 @@ spec:
       valuesKey: cloudflare-networks.txt
     - targetPath: controller.maxmindLicenseKey
       kind: Secret
-      name: nginx-external-maxmind-secret
+      name: nginx-ingress-maxmind-secret
       valuesKey: MAXMIND_LICENSE_KEY
