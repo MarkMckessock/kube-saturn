@@ -55,6 +55,10 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 6000Mi
+        pod:
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
     service:
       main:
         ports:
@@ -87,10 +91,6 @@ spec:
         tls:
           - hosts:
               - *host
-    pod:
-      securityContext:
-        capabilities:
-          add: ["NET_ADMIN"]
     persistence:
       config:
         enabled: true
