@@ -78,7 +78,7 @@ spec:
               - *host
     persistence:
       config:
-        type: pvc
+        type: persistentVolumeClaim
         size: 5Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block
