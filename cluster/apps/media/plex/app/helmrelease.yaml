@@ -26,17 +26,29 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.8.7639-fb6452ebf
-    env:
-      TZ: "America/Toronto"
-      PUID: 1000
-      PGID: 1000
-      VERSION: docker
-      NVIDIA_VISIBLE_DEVICES: "all"
-      NVIDIA_DRIVER_CAPABILITIES: "all"
-      HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.8.7639-fb6452ebf
+            env:
+              TZ: "America/Toronto"
+              PUID: 1000
+              PGID: 1000
+              VERSION: docker
+              NVIDIA_VISIBLE_DEVICES: "all"
+              NVIDIA_DRIVER_CAPABILITIES: "all"
+              HARDWARE_DEVICE_PATH: "/dev/nvidia0"
+            resources:
+              requests:
+                nvidia.com/gpu: 1
+                cpu: 100m
+                memory: 2000Mi
+              limits:
+                nvidia.com/gpu: 1
+                memory: 10000Mi
     service:
       main:
         type: LoadBalancer
@@ -61,45 +73,39 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+      runtimeClassName: nvidia
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: nvidia.com/gpu.present
+                    operator: In
+                    values:
+                      - "true"
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         size: 400Gi
         accessMode: ReadWriteOnce
-        mountPath: /config
+        globalMounts:
+          - path: /config
         storageClass: ceph-block
         retain: true
       media:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Media
-        mountPath: /data
+        globalMounts:
+          - path: /data
         readOnly: true
       transcode:
-        enabled: true
         type: emptyDir
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: nvidia.com/gpu.present
-                  operator: In
-                  values:
-                    - "true"
-    runtimeClassName: nvidia
-    resources:
-      requests:
-        nvidia.com/gpu: 1
-        cpu: 100m
-        memory: 2000Mi
-      limits:
-        nvidia.com/gpu: 1
-        memory: 10000Mi
+        globalMounts:
+          - path: /transcode

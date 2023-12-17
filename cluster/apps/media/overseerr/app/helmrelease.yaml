@@ -26,12 +26,22 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/sct/overseerr
-      tag: 1.33.2
-    env:
-      TZ: America/Toronto
-      LOG_LEVEL: "info"
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/sct/overseerr
+              tag: 1.33.2
+            env:
+              TZ: America/Toronto
+              LOG_LEVEL: "info"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 1500Mi
     service:
       main:
         ports:
@@ -49,23 +59,18 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         size: 1Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block
-        mountPath: /app/config
+        globalMounts:
+          - path: /app/config
         retain: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 1500Mi

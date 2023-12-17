@@ -15,19 +15,32 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    image:
-      repository: ghcr.io/miguelndecarvalho/speedtest-exporter
-      tag: v3.5.4
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/miguelndecarvalho/speedtest-exporter
+              tag: v3.5.4
 
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
-      limits:
-        memory: 64M
-
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                memory: 64M
     service:
       main:
         ports:

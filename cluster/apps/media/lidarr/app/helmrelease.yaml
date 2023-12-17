@@ -26,19 +26,88 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/lidarr-develop
-      tag: 2.0.5.3813@sha256:b0da2927ae973864445e468dafe13297f958ee2b9cfb197bfabcb9979cfb6db7
-    env:
-      TZ: America/Toronto
-      LIDARR__INSTANCE_NAME: Lidarr
-      LIDARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: lidarr-secret
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db-main:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_MAIN_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
+          init-db-log:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_LOG_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: LIDARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: lidarr-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/lidarr-develop
+              tag: 2.0.5.3813@sha256:b0da2927ae973864445e468dafe13297f958ee2b9cfb197bfabcb9979cfb6db7
+            env:
+              TZ: America/Toronto
+              LIDARR__INSTANCE_NAME: Lidarr
+              LIDARR__LOG_LEVEL: info
+            envFrom:
+              - secretRef:
+                  name: lidarr-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2000Mi
     service:
       main:
         ports:
@@ -46,7 +115,6 @@ spec:
             port: 8686
     ingress:
       main:
-        enabled: true
         ingressClassName: nginx
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -63,94 +131,30 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    initContainers:
-      init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_MAIN_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
-      init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_LOG_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: LIDARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: lidarr-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         size: 5Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block
-        mountPath: /config
+        globalMounts:
+           - path: /config
         retain: true
       media:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Media
-        mountPath: /media
+        globalMounts:
+           - path: /media
       downloads:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Downloads
-        mountPath: /complete
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi
+        globalMounts:
+           - path: /complete
