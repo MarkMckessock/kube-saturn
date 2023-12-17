@@ -78,6 +78,9 @@ spec:
           - host: &host "hass.${DOMAIN}"
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
