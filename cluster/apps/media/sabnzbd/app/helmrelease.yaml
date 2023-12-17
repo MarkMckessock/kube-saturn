@@ -106,15 +106,18 @@ spec:
           - hosts:
               - *host
     persistence:
+      # config:
+      #   enabled: true
+      #   type: persistentVolumeClaim
+      #   accessMode: ReadWriteOnce
+      #   size: 1Gi
+      #   storageClass: ceph-block
+      #   retain: true
+      #   globalMounts:
+      #     - path: /config
       config:
         enabled: true
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
-        retain: true
-        globalMounts:
-          - path: /config
+        existingClaim: config-sabnzbd-0
       downloads:
         type: nfs
         server: ${NFS_SERVER}
