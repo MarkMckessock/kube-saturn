@@ -15,18 +15,44 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    image:
-      repository: gotify/server
-      tag: 2.4.0
-
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: gotify/server
+              tag: 2.4.0
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              limits:
+                memory: "128Mi"
+                cpu: "100m"
     service:
       main:
         ports:
           http:
             port: 80
-
     ingress:
       main:
         enabled: true
@@ -41,26 +67,12 @@ spec:
         tls:
           - hosts:
               - *host
-
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: ceph-block
-        mountPath: /app/data
+        globalMounts:
+           - path: /app/data
         retain: true
-
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-
-    resources:
-      limits:
-        memory: "128Mi"
-        cpu: "100m"
