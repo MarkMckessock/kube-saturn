@@ -28,18 +28,21 @@ spec:
   dependsOn:
     - name: qbittorrent
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        concurrencyPolicy: Forbid
-        schedule: "@daily"
-    restartPolicy: OnFailure
-    image:
-      repository: markmckessock/qbittorrent-scripts
-      tag: latest
-    env:
-      QB_HOST: "http://qbittorrent:8080"
-    args: ["/app/remove-stalled.py"]
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "@daily"
+        restartPolicy: OnFailure
+        containers:
+          main:
+            image:
+              repository: markmckessock/qbittorrent-scripts
+              tag: latest
+            env:
+              QB_HOST: "http://qbittorrent:8080"
+            args: ["/app/remove-stalled.py"]
     service:
       main:
         enabled: false
