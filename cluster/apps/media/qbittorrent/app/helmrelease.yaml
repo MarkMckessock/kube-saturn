@@ -46,6 +46,9 @@ spec:
               WEBUI_PORT: 8080
               STRICT_PORT_FORWARD: "yes"
               QBITTORRENT__BT_PORT: &port-bt 50413
+            securityContext:
+              capabilities:
+                add: ["NET_ADMIN"]
             envFrom:
               - secretRef:
                   name: pia-vpn-credentials
@@ -55,10 +58,6 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 6000Mi
-        pod:
-          securityContext:
-            capabilities:
-              add: ["NET_ADMIN"]
     service:
       main:
         ports:
