@@ -72,7 +72,7 @@ spec:
         globalMounts:
           - path: /downloads
       archive:
-        type: pvc
+        type: persistentVolumeClaim
         size: 1Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block

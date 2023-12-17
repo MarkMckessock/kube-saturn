@@ -64,6 +64,9 @@ spec:
           - host: &host "{{ .Release.Name }}.${DOMAIN}"
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
