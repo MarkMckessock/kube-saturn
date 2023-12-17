@@ -33,7 +33,9 @@ spec:
           reloader.stakater.com/auto: "true"
         initContainers:
           init-db-main:
-            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            image:
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: "14.8"
             env:
               POSTGRES_DB:
                 valueFrom:
@@ -62,7 +64,9 @@ spec:
                     key: POSTGRES_SUPERUSER_PASS
               POSTGRES_HOST: postgres-rw.database.svc
           init-db-log:
-            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            image:
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: "14.8"
             env:
               POSTGRES_DB:
                 valueFrom:
