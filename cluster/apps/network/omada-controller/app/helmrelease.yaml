@@ -55,6 +55,7 @@ spec:
           http:
             port: 8043
       controller-tcp:
+        controller: main
         type: LoadBalancer
         loadBalancerIP: ${OMADA_CONTROLLER_IP}
         annotations:
@@ -97,6 +98,7 @@ spec:
             protocol: TCP
             targetPort: 29813
       controller-udp:
+        controller: main
         type: LoadBalancer
         loadBalancerIP: ${OMADA_CONTROLLER_IP}
         annotations:
