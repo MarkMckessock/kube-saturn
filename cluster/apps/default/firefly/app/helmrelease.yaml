@@ -14,38 +14,88 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      repository: fireflyiii/core
-      tag: version-5.7.15
-
-    env:
-      - name: APP_ENV
-        value: "production"
-      - name: DB_CONNECTION
-        value: pgsql
-      - name: TRUSTED_PROXIES
-        value: "**"
-      - name: TZ
-        value: America/Toronto
-      - name: AUTHENTICATION_GUARD
-        value: remote_user_guard
-      - name: AUTHENTICATION_GUARD_HEADER
-        value: Cf-Access-Authenticated-User-Email
-    envFrom:
-      - secretRef:
-          name: firefly-secret
-
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: fireflyiii/core
+              tag: version-5.7.15
+            env:
+              - name: APP_ENV
+                value: "production"
+              - name: DB_CONNECTION
+                value: pgsql
+              - name: TRUSTED_PROXIES
+                value: "**"
+              - name: TZ
+                value: America/Toronto
+              - name: AUTHENTICATION_GUARD
+                value: remote_user_guard
+              - name: AUTHENTICATION_GUARD_HEADER
+                value: Cf-Access-Authenticated-User-Email
+            envFrom:
+              - secretRef:
+                  name: firefly-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 1000Mi
+              limits:
+                memory: 6000Mi
+        initContainers:
+          init-db:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: DB_DATABASE
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: DB_USERNAME
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: DB_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: POSTGRES_SUPER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: POSTGRES_SUPER_PASS
+              POSTGRES_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: firefly-secret
+                    key: DB_HOST
     service:
       main:
         ports:
           http:
             port: &port 8080
-
     ingress:
       main:
         enabled: true
@@ -62,57 +112,12 @@ spec:
         tls:
           - hosts:
               - *host
-
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: DB_DATABASE
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: DB_USERNAME
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: DB_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: POSTGRES_SUPER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: POSTGRES_SUPER_PASS
-          POSTGRES_HOST:
-            valueFrom:
-              secretKeyRef:
-                name: firefly-secret
-                key: DB_HOST
-
     persistence:
       firefly-upload:
-        enabled: true
         type: pvc
         size: 1Gi
         accessMode: ReadWriteOnce
-        mountPath: /var/www/html/firefly-iii/storage/upload
         storageClass: ceph-block
         retain: true
-
-    resources:
-      requests:
-        cpu: 10m
-        memory: 1000Mi
-        # gpu.intel.com/i915: "1"
-      limits:
-        memory: 6000Mi
-        # gpu.intel.com/i915: "1"
+        globalMounts:
+          - path: /var/www/html/firefly-iii/storage/upload

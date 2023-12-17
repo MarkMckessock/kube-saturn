@@ -15,35 +15,56 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    image:
-      repository: ghcr.io/home-assistant/home-assistant
-      tag: 2023.12.0
-
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        envFrom:
-          - secretRef:
-              name: home-assistant-secrets
-
-    env:
-      TZ: America/Toronto
-    envFrom:
-      - secretRef:
-          name: home-assistant-secrets
-
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/home-assistant/home-assistant
+              tag: 2023.12.0
+            env:
+              TZ: America/Toronto
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secrets
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 126m
+                memory: 411M
+              limits:
+                memory: 4417M
+        initContainers:
+          init-db:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secrets
     service:
       main:
         ports:
           http:
             port: 8123
-
     ingress:
       main:
         enabled: true
@@ -58,49 +79,35 @@ spec:
         tls:
           - hosts:
               - *host
-
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
         storageClass: ceph-block
         retain: true
+        globalMounts:
+          - path: /config
       config-file:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: home-assistant-config
-        subPath:
-          - path: configuration.yaml
-            mountPath: /config/configuration.yaml
-            readOnly: true
-          - path: automations.yaml
-            mountPath: /config/automations.yaml
-            readOnly: true
-          - path: scenes.yaml
-            mountPath: /config/scenes.yaml
-            readOnly: true
+        type: configMap
+        name: home-assistant-config
+        advancedMounts:
+          main:
+            main:
+            - subPath: configuration.yaml
+              path: /config/configuration.yaml
+              readOnly: true
+            - subPath: automations.yaml
+              path: /config/automations.yaml
+              readOnly: true
+            - subPath: scenes.yaml
+              path: /config/scenes.yaml
+              readOnly: true
       google-service-account:
-        enabled: true
         type: secret
         name: home-assistant-google-service-account
-        mountPath: /config/service_account.json
-        subPath: service_account.json
-
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-
-    resources:
-      requests:
-        cpu: 126m
-        memory: 411M
-      limits:
-        memory: 4417M
+        advancedMounts:
+          main:
+            main:
+              - subPath: service_account.json
+                path: /config/service_account.json

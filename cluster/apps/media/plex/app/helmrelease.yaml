@@ -70,6 +70,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -104,7 +107,7 @@ spec:
         path: /volume1/Media
         globalMounts:
           - path: /data
-        readOnly: true
+            readOnly: true
       transcode:
         type: emptyDir
         globalMounts:

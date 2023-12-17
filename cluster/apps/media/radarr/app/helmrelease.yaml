@@ -26,23 +26,91 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/radarr-develop
-      tag: 5.2.3.8303@sha256:bdc6980e8320b1cedf30852202d2ced17d8ddc43da2206472dafda57219d1f14
-    env:
-      TZ: America/Toronto
-      RADARR__INSTANCE_NAME: Radarr
-      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${DOMAIN}"
-      RADARR__AUTHENTICATION_METHOD: External
-      RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
-      RADARR__THEME: dark
-      RADARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: radarr-secret
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.2.3.8303@sha256:bdc6980e8320b1cedf30852202d2ced17d8ddc43da2206472dafda57219d1f14
+            env:
+              TZ: America/Toronto
+              RADARR__INSTANCE_NAME: Radarr
+              RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${DOMAIN}"
+              RADARR__AUTHENTICATION_METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__THEME: dark
+              RADARR__LOG_LEVEL: info
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2000Mi
+        initContainers:
+          init-db-main:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_MAIN_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
+          init-db-log:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_LOG_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
     service:
       main:
         ports:
@@ -63,94 +131,30 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    initContainers:
-      init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_MAIN_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
-      init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_LOG_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: RADARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: radarr-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         size: 10Gi
         accessMode: ReadWriteOnce
-        mountPath: /config
+        globalMounts:
+          - path: /config
         storageClass: ceph-block
         retain: true
       media:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
+        globalMounts:
+          - path: /media
         path: /volume1/Media
-        mountPath: /media
       downloads:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Downloads
-        mountPath: /complete
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi
+        globalMounts:
+          - path: /complete

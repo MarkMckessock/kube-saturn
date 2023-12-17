@@ -26,19 +26,87 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.733@sha256:7f1496845bc0bf1d46b37b1013bb2a4b7af79e13b2a12dbc882d456bc869ca39
-    env:
-      TZ: America/Toronto
-      SONARR__INSTANCE_NAME: Sonarr-4K
-      SONARR__LOG_LEVEL: info
-    envFrom:
-      - secretRef:
-          name: sonarr-4k-secret
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/sonarr-develop
+              tag: 4.0.0.733@sha256:7f1496845bc0bf1d46b37b1013bb2a4b7af79e13b2a12dbc882d456bc869ca39
+            env:
+              TZ: America/Toronto
+              SONARR__INSTANCE_NAME: Sonarr-4K
+              SONARR__LOG_LEVEL: info
+            envFrom:
+              - secretRef:
+                  name: sonarr-4k-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 2000Mi
+        initContainers:
+          init-db-main:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_MAIN_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
+          init-db-log:
+            image: ghcr.io/onedr0p/postgres-initdb:14.8
+            env:
+              POSTGRES_DB:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_LOG_DB
+              POSTGRES_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_USER
+              POSTGRES_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__POSTGRES_PASSWORD
+              POSTGRES_SUPER_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: POSTGRES_SUPERUSER_USER
+              POSTGRES_SUPER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: POSTGRES_SUPERUSER_PASS
+              POSTGRES_HOST: postgres-rw.database.svc
     service:
       main:
         ports:
@@ -59,94 +127,30 @@ spec:
         tls:
           - hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    initContainers:
-      init-db-main:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_MAIN_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
-      init-db-log:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        env:
-          POSTGRES_DB:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_LOG_DB
-          POSTGRES_USER:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_USER
-          POSTGRES_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: SONARR__POSTGRES_PASSWORD
-          POSTGRES_SUPER_USER:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: POSTGRES_SUPERUSER_USER
-          POSTGRES_SUPER_PASS:
-            valueFrom:
-              secretKeyRef:
-                name: sonarr-4k-secret
-                key: POSTGRES_SUPERUSER_PASS
-          POSTGRES_HOST: postgres-rw.database.svc
+    pod:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        enabled: true
         type: pvc
         size: 10Gi
         accessMode: ReadWriteOnce
-        mountPath: /config
         storageClass: ceph-block
         retain: true
+        globalMounts:
+          - path: /config
       media:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Media
-        mountPath: /media
+        globalMounts:
+          - path: /media
       downloads:
-        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Downloads
-        mountPath: /complete
-    resources:
-      requests:
-        cpu: 10m
-        memory: 250Mi
-      limits:
-        memory: 2000Mi
+        globalMounts:
+          - path: /complete

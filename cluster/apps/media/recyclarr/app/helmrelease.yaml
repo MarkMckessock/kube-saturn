@@ -25,42 +25,45 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        schedule: "@daily"
-        ttlSecondsAfterFinished: 86400
-    restartPolicy: OnFailure
-    image:
-      repository: ghcr.io/recyclarr/recyclarr
-      tag: edge@sha256:1fcd45797acaf5381fb4ae0d95d60a270112c04cb24d3f996fbc46412a6e7369
-    command: ["/app/recyclarr/recyclarr"]
-    args: ["sync"]
-    envFrom:
-      - secretRef:
-          name: radarr-secret
-      - secretRef:
-          name: sonarr-secret
-    env:
-      RADARR_4K_API_KEY:
-        valueFrom:
-          secretKeyRef:
-            name: radarr-4k-secret
-            key: RADARR__API_KEY
-      SONARR_4K_API_KEY:
-        valueFrom:
-          secretKeyRef:
-            name: sonarr-4k-secret
-            key: SONARR__API_KEY
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          schedule: "@daily"
+          ttlSecondsAfterFinished: 86400
+        restartPolicy: OnFailure
+        containers:
+          main:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: edge@sha256:1fcd45797acaf5381fb4ae0d95d60a270112c04cb24d3f996fbc46412a6e7369
+            command: ["/app/recyclarr/recyclarr"]
+            args: ["sync"]
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
+              - secretRef:
+                  name: sonarr-secret
+            env:
+              RADARR_4K_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-4k-secret
+                    key: RADARR__API_KEY
+              SONARR_4K_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-4k-secret
+                    key: SONARR__API_KEY
     service:
       main:
         enabled: false
     persistence:
       config:
-        enabled: true
         type: configMap
         name: recyclarr-configmap
         subPath: recyclarr.yml
-        mountPath: /config/recyclarr.yml
+        globalMounts:
+          - path: /config/recyclarr.yml
         defaultMode: 0775
         readOnly: true

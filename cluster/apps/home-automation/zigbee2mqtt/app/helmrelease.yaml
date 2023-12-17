@@ -15,29 +15,83 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      repository: docker.io/koenkk/zigbee2mqtt
-      tag: 1.34.0
-
-    env:
-      ZIGBEE2MQTT_DATA: /data
-      ZIGBEE2MQTT_CONFIG_MQTT_USER:
-        valueFrom:
-          secretKeyRef:
-            name: zigbee2mqtt-secrets
-            key: mqtt_user
-      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: zigbee2mqtt-secrets
-            key: mqtt_password
-
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        contains:
+          main:
+            image:
+              repository: docker.io/koenkk/zigbee2mqtt
+              tag: 1.34.0
+            env:
+              ZIGBEE2MQTT_DATA: /data
+              ZIGBEE2MQTT_CONFIG_MQTT_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: zigbee2mqtt-secrets
+                    key: mqtt_user
+              ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: zigbee2mqtt-secrets
+                    key: mqtt_password
+            resources:
+              requests:
+                cpu: 15m
+                memory: 127M
+              limits:
+                memory: 1364M
+          exporter:
+            name: exporter
+            image: docker.io/kpetrem/mqtt-exporter:latest@sha256:fbff8472a18239297e699955b43695f714e4fa6fdd7a36875a65375e2dfa8e67
+            env:
+              - name: LOG_LEVEL
+                value: DEBUG
+              - name: LOG_MQTT_MESSAGE
+                value: "True"
+              - name: MQTT_ADDRESS
+                value: mosquitto.home-automation.svc
+              - name: MQTT_PORT
+                value: 1883
+              - name: MQTT_TOPIC
+                value: "zigbee2mqtt/#"
+              - name: MQTT_V5_PROTOCOL
+                value: "True"
+              - name: MQTT_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: zigbee2mqtt-secrets
+                    key: mqtt_user
+              - name: MQTT_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: zigbee2mqtt-secrets
+                    key: mqtt_password
+              - name: PROMETHEUS_PORT
+                value: 9000
+              - name: PROMETHEUS_PREFIX
+                value: zigbee2mqtt_
+              - name: ZIGBEE2MQTT_AVAILABILITY
+                value: "True"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 200Mi
     service:
       main:
         ports:
@@ -46,7 +100,6 @@ spec:
           metrics:
             enabled: true
             port: 9000
-
     serviceMonitor:
       main:
         enabled: true
@@ -56,7 +109,6 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-
     ingress:
       main:
         enabled: true
@@ -68,87 +120,36 @@ spec:
         tls:
           - hosts:
               - *host
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-
+    pod:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
-        enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: ceph-block
         retain: true
       external-converters:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: zigbee2mqtt-external-converters
-        subPath:
-          - path: E21-N1EA.js
-            mountPath: /data/E21-N1EA.js
-            readOnly: true
+        type: configMap
+        name: zigbee2mqtt-external-converters
+        advancedMounts:
+          main:
+            main:
+              - subPath: E21-N1EA.js
+                path: /data/E21-N1EA.js
+                readOnly: true
       config:
-        enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: zigbee2mqtt-config
-        subPath:
-          - path: devices.yaml
-            mountPath: /data/devices.yaml
-          - path: configuration.yaml
-            mountPath: /data/configuration.yaml
-            readOnly: true
-
-    resources:
-      requests:
-        cpu: 15m
-        memory: 127M
-      limits:
-        memory: 1364M
-
-    additionalContainers:
-      exporter:
-        name: exporter
-        image: docker.io/kpetrem/mqtt-exporter:latest@sha256:fbff8472a18239297e699955b43695f714e4fa6fdd7a36875a65375e2dfa8e67
-        env:
-          - name: LOG_LEVEL
-            value: DEBUG
-          - name: LOG_MQTT_MESSAGE
-            value: "True"
-          - name: MQTT_ADDRESS
-            value: mosquitto.home-automation.svc
-          - name: MQTT_PORT
-            value: 1883
-          - name: MQTT_TOPIC
-            value: "zigbee2mqtt/#"
-          - name: MQTT_V5_PROTOCOL
-            value: "True"
-          - name: MQTT_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: zigbee2mqtt-secrets
-                key: mqtt_user
-          - name: MQTT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: zigbee2mqtt-secrets
-                key: mqtt_password
-          - name: PROMETHEUS_PORT
-            value: 9000
-          - name: PROMETHEUS_PREFIX
-            value: zigbee2mqtt_
-          - name: ZIGBEE2MQTT_AVAILABILITY
-            value: "True"
-        resources:
-          requests:
-            cpu: 10m
-            memory: 50Mi
-          limits:
-            memory: 200Mi
+        type: configMap
+        name: zigbee2mqtt-config
+        advancedMounts:
+          main:
+            main:
+              - subPath: devices.yaml
+                path: /data/devices.yaml
+              - subPath: configuration.yaml
+                path: /data/configuration.yaml
+                readOnly: true
