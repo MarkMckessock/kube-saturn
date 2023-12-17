@@ -90,3 +90,7 @@ spec:
       kind: ConfigMap
       name: cloudflare-networks
       valuesKey: cloudflare-networks.txt
+    - targetPath: controller.maxmindLicenseKey
+      kind: Secret
+      name: nginx-external-maxmind-secret
+      valuesKey: MAXMIND_LICENSE_KEY
