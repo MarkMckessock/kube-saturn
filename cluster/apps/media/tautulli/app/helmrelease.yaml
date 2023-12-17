@@ -41,6 +41,12 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 500Mi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         ports:
@@ -68,12 +74,6 @@ spec:
         tls:
           - hosts:
               - *host
-    pod:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true

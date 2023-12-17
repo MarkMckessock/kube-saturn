@@ -49,6 +49,12 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
         initContainers:
           init-db-main:
             image:
@@ -139,12 +145,6 @@ spec:
         tls:
           - hosts:
               - *host
-    pod:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true

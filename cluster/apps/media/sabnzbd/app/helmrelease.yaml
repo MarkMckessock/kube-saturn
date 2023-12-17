@@ -72,6 +72,12 @@ spec:
                 memory: 2Gi
               limits:
                 memory: 12Gi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
@@ -99,12 +105,6 @@ spec:
         tls:
           - hosts:
               - *host
-    pod:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         enabled: true

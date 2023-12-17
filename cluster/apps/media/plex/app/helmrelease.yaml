@@ -49,6 +49,22 @@ spec:
               limits:
                 nvidia.com/gpu: 1
                 memory: 10000Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+          runtimeClassName: nvidia
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: nvidia.com/gpu.present
+                        operator: In
+                        values:
+                          - "true"
     service:
       main:
         type: LoadBalancer
@@ -76,22 +92,6 @@ spec:
         tls:
           - hosts:
               - *host
-    pod:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
-      runtimeClassName: nvidia
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: nvidia.com/gpu.present
-                    operator: In
-                    values:
-                      - "true"
     persistence:
       config:
         enabled: true
