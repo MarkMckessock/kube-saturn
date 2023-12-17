@@ -60,6 +60,7 @@ spec:
         enabled: false
     persistence:
       config:
+        enabled: true
         type: configMap
         name: recyclarr-configmap
         subPath: recyclarr.yml

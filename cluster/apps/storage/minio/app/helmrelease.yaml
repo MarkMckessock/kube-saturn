@@ -113,6 +113,7 @@ spec:
               - *s3Host
     persistence:
       config:
+        enabled: true
         type: nfs
         server: ${NFS_SERVER}
         path: /volume1/Apps/minio

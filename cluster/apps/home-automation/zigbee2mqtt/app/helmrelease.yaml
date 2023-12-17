@@ -146,6 +146,7 @@ spec:
                 path: /data/E21-N1EA.js
                 readOnly: true
       config:
+        enabled: true
         type: configMap
         name: zigbee2mqtt-config
         advancedMounts:

@@ -142,7 +142,8 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
-        type: pvc
+        enabled: true
+        type: persistentVolumeClaim
         size: 10Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block

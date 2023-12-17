@@ -94,6 +94,7 @@ spec:
                       - "true"
     persistence:
       config:
+        enabled: true
         type: persistentVolumeClaim
         size: 400Gi
         accessMode: ReadWriteOnce

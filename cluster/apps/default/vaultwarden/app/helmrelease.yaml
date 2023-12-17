@@ -78,6 +78,7 @@ spec:
               - *host
     persistence:
       config:
+        enabled: true
         type: persistentVolumeClaim
         size: 5Gi
         accessMode: ReadWriteOnce

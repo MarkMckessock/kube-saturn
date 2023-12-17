@@ -65,6 +65,7 @@ spec:
         enabled: false
     persistence:
       config:
+        enabled: true
         type: configMap
         name: cloudflared-config
         globalMounts:

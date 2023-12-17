@@ -28,18 +28,21 @@ spec:
   dependsOn:
     - name: plex
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        concurrencyPolicy: Forbid
-        schedule: "0 */6 * * *"
-    restartPolicy: OnFailure
-    image:
-      repository: meisnate12/plex-meta-manager
-      tag: v1.19.1
-    env:
-      PMM_READ_ONLY_CONFIG: "true"
-      PMM_RUN: "true"
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "0 */6 * * *"
+        restartPolicy: OnFailure
+        contains:
+          main:
+            image:
+              repository: meisnate12/plex-meta-manager
+              tag: v1.19.1
+            env:
+              PMM_READ_ONLY_CONFIG: "true"
+              PMM_RUN: "true"
 
     service:
       main:
@@ -47,41 +50,46 @@ spec:
     persistence:
       config-dir:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         size: 1Gi
         accessMode: ReadWriteOnce
         storageClass: ceph-block
-        mountPath: /config
         retain: true
+        globalMounts:
+          - path: /config
       config:
         enabled: true
         type: secret
         name: plex-meta-manager-config
-        subPath: config.yaml
-        mountPath: /config/config.yml
+        advancedMounts:
+          main:
+            main:
+              - subPath: config.yaml
+                path: /config/config.yml
       collections-dir:
         enabled: true
         type: emptyDir
-        mountPath: /collections
+        globalMounts:
+          - path: /collections
       collections:
         enabled: true
-        type: custom
-        volumeSpec:
-          configMap:
-            name: plex-meta-manager-collections
-        subPath:
-          - path: charts.yaml
-            mountPath: /collections/movies-charts.yaml
-            readOnly: true
-          - path: movies.yaml
-            mountPath: /collections/movies-movies.yaml
-            readOnly: true
-          - path: holidays.yaml
-            mountPath: /collections/movies-holidays.yaml
-            readOnly: true
-          - path: studios.yaml
-            mountPath: /collections/movies-studios.yaml
-            readOnly: true
-          - path: tv-charts.yaml
-            mountPath: /collections/tv-charts.yaml
-            readOnly: true
+        type: configMap
+        name: plex-meta-manager-collections
+        advancedMounts:
+          main:
+            main:
+            - subPath: charts.yaml
+              path: /collections/movies-charts.yaml
+              readOnly: true
+            - subPath: movies.yaml
+              path: /collections/movies-movies.yaml
+              readOnly: true
+            - subPath: holidays.yaml
+              path: /collections/movies-holidays.yaml
+              readOnly: true
+            - subPath: studios.yaml
+              path: /collections/movies-studios.yaml
+              readOnly: true
+            - subPath: tv-charts.yaml
+              path: /collections/tv-charts.yaml
+              readOnly: true

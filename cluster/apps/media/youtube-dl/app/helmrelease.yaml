@@ -80,6 +80,7 @@ spec:
         globalMounts:
           - path: /archive
       config:
+        enabled: true
         type: configMap
         name: youtube-dl-config
         advancedMounts:
