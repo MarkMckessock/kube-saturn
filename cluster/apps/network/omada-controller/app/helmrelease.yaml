@@ -26,67 +26,35 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      repository: mbentley/omada-controller
-      tag: "5.13"
-
-    env:
-      TZ: America/Toronto
-      MANAGE_HTTP_PORT: 8088
-      MANAGE_HTTPS_PORT: 8043
-      PORTAL_HTTP_PORT: 8088
-      PORTAL_HTTPS_PORT: 8843
-      SHOW_SERVER_LOGS: true
-      SHOW_MONGODB_LOGS: true
-
-      # additionalContainers:
-      #   nginx:
-      #     image: nginx
-      #     ports:
-      #       - name: nginx-http
-      #         containerPort: 80
-      #       - name: nginx-https
-      #         containerPort: 443
-      #     volumeMounts:
-      #       - mountPath: /etc/nginx/nginx.conf
-      #         name: nginx-config
-      #         subPath: nginx.conf
-      #       - name: tls-key
-      #         mountPath: /etc/ssl/certs/tls.key
-      #         subPath: tls.key
-      #       - name: tls-crt
-      #         mountPath: /etc/ssl/certs/tls.crt
-      #         subPath: tls.crt
-
-      # ingress:
-      #   main:
-      #     enabled: true
-      #     annotations:
-      #       nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-      #       kubernetes.io/tls-acme: "true"
-      #       cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
-      #     hosts:
-      #       - host: "omada.${DOMAIN}"
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
-      #     tls:
-      #       - hosts:
-      #           - "omada.${DOMAIN}"
-      #         secretName: omada-tls
-
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: mbentley/omada-controller
+              tag: "5.13"
+            env:
+              TZ: America/Toronto
+              MANAGE_HTTP_PORT: 8088
+              MANAGE_HTTPS_PORT: 8043
+              PORTAL_HTTP_PORT: 8088
+              PORTAL_HTTPS_PORT: 8843
+              SHOW_SERVER_LOGS: true
+              SHOW_MONGODB_LOGS: true
+            resources:
+              requests:
+                memory: 1200M
+              limits:
+                memory: 1500M
     service:
       main:
-        enabled: true
         ports:
           http:
             port: 8043
       controller-tcp:
-        enabled: true
         type: LoadBalancer
         loadBalancerIP: ${OMADA_CONTROLLER_IP}
         annotations:
@@ -129,7 +97,6 @@ spec:
             protocol: TCP
             targetPort: 29813
       controller-udp:
-        enabled: true
         type: LoadBalancer
         loadBalancerIP: ${OMADA_CONTROLLER_IP}
         annotations:
@@ -156,28 +123,12 @@ spec:
             port: 29813
             protocol: UDP
             targetPort: 29813
-
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-
     persistence:
       data:
-        enabled: true
         type: pvc
         size: 5Gi
         storageClass: ceph-block
-        mountPath: /opt/tplink/EAPController/data
+        globalMounts:
+           - path:  /opt/tplink/EAPController/data
         accessMode: ReadWriteOnce
         retain: true
-
-    resources:
-      requests:
-        memory: 1200M
-        # cpu: 1200m
-      limits:
-        memory: 1500M
