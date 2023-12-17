@@ -125,7 +125,7 @@ spec:
             targetPort: 29813
     persistence:
       data:
-        type: pvc
+        type: persistentVolumeClaim
         size: 5Gi
         storageClass: ceph-block
         globalMounts:
