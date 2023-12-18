@@ -63,8 +63,10 @@ spec:
         enabled: true
         type: configMap
         name: recyclarr-configmap
-        subPath: recyclarr.yml
-        globalMounts:
-          - path: /config/recyclarr.yml
         defaultMode: 0775
-        readOnly: true
+        advancedMounts:
+          main:
+            main:
+              subPath: recyclarr.yml
+              path: /config/recyclarr.yml
+              readOnly: true
