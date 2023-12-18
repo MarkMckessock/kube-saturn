@@ -67,6 +67,6 @@ spec:
         advancedMounts:
           main:
             main:
-              subPath: recyclarr.yml
-              path: /config/recyclarr.yml
-              readOnly: true
+              - subPath: recyclarr.yml
+                path: /config/recyclarr.yml
+                readOnly: true
