@@ -49,14 +49,7 @@ spec:
             command:
               - "/bin/sh"
               - -c
-            args:
-              - cp /data/mosquitto_pwd /data/external_config/ && mosquitto_passwd -U /data/external_config/mosquitto_pwd
-            volumeMounts:
-              - name: mosquitto-passwordfile
-                mountPath: /data/mosquitto_pwd
-                subPath: mosquitto_pwd
-              - name: external-config
-                mountPath: /data/external_config
+            args: ["cp /tmp/secret/* /mosquitto/external_config/ && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd"]
     service:
       main:
         type: LoadBalancer
@@ -110,9 +103,10 @@ spec:
       mosquitto-passwordfile:
         type: secret
         name: mosquitto-passwordfile
-        items:
-          - key: mosquitto_pwd
-            path: mosquitto_pwd
+        advancedMounts:
+          main:
+            copy-config:
+              - path: /tmp/secret
       external-config:
         type: emptyDir
         globalMounts:
