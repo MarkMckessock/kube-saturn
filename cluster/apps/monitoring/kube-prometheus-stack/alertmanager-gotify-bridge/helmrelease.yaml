@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: druggeri/alertmanager_gotify_bridge
-              tag: "2.2"
+              tag: "2.3"
             env:
               GOTIFY_ENDPOINT: http://gotify.monitoring.svc:80/message
             envFrom:
