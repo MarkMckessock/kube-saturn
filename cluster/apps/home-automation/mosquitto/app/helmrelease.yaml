@@ -45,7 +45,7 @@ spec:
           copy-config:
             image:
               repository: eclipse-mosquitto
-              tag: 2.0.18@sha256:ca730cd797023cddeba1e9b1ad1db8ccb6ca12ffbe0bb6255f100c842522ce6d
+              tag: 2.0.18@sha256:b2ad81cbe9ebbdb91aee9b4e670c58a8d7e00cee316562e88d1827e1b3de2a7d
             command:
               - "/bin/sh"
               - -c
