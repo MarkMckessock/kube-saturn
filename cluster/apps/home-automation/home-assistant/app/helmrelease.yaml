@@ -69,7 +69,7 @@ spec:
             command:
               - "/bin/sh"
               - -c
-            args: ["cp /tmp/automations.yaml /config/automation.yaml && cp /tmp/scenes.yaml /config/scenes.yaml"]
+            args: ["cp /tmp/automations.yaml /config/automation.yaml && cp /tmp/scenes.yaml /config/scenes.yaml && cp /tmp/configuration.yaml /config/configuration.yaml"]
     service:
       main:
         ports:
@@ -107,9 +107,9 @@ spec:
         name: home-assistant-config
         advancedMounts:
           main:
-            main:
+            copy-config:
             - subPath: configuration.yaml
-              path: /config/configuration.yaml
+              path: /tmp/configuration.yaml
               readOnly: true
             - subPath: automations.yaml
               path: /tmp/automations.yaml
