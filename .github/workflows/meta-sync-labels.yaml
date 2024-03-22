@@ -19,10 +19,10 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }}
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Sync Labels
-        uses: EndBug/label-sync@da00f2c11fdb78e4fae44adac2fdd713778ea3e8 # renovate: tag=v2.3.2
+        uses: EndBug/label-sync@52074158190acb45f3077f9099fea818aa43f97a # v2.3.3
         with:
           config-file: .github/labels.yaml
           token: "${{ steps.generate-token.outputs.token }}"
