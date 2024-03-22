@@ -62,6 +62,14 @@ spec:
             envFrom:
               - secretRef:
                   name: home-assistant-secrets
+          copy-config:
+            image:
+              repository: busybox
+              tag: "1.36.1"
+            command:
+              - "/bin/sh"
+              - -c
+            args: ["cp /tmp/automations.yaml /config/automation.yaml && cp /tmp/scenes.yaml /config/scenes.yaml"]
     service:
       main:
         ports:
@@ -104,10 +112,10 @@ spec:
               path: /config/configuration.yaml
               readOnly: true
             - subPath: automations.yaml
-              path: /config/automations.yaml
+              path: /tmp/automations.yaml
               readOnly: true
             - subPath: scenes.yaml
-              path: /config/scenes.yaml
+              path: /tmp/scenes.yaml
               readOnly: true
       google-service-account:
         type: secret
