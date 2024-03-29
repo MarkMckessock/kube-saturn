@@ -69,7 +69,7 @@ spec:
             command:
               - "/bin/sh"
               - -c
-            args: ["cp /tmp/automations.yaml /config/automation.yaml && cp /tmp/scenes.yaml /config/scenes.yaml && cp /tmp/configuration.yaml /config/configuration.yaml"]
+            args: ["cp /tmp/automations.yaml /config/automations.yaml && cp /tmp/scenes.yaml /config/scenes.yaml && cp /tmp/configuration.yaml /config/configuration.yaml"]
     service:
       main:
         ports:

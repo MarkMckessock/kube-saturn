@@ -164,3 +164,21 @@
       entity_id: light.right_bedside_lamp
       domain: light
   mode: single
+- id: '1711074525437'
+  alias: Party Lights
+  description: ''
+  use_blueprint:
+    path: Twanne/party_lights.yaml
+    input:
+      target_light:
+      - light.bedroom_lights
+      color_mode: random
+      brightness_mode: fixed
+      fixed_brightness_pct: 100
+      time_between_changes:
+        hours: 0
+        minutes: 0
+        seconds: 3
+      transition_time: 1
+      sync_lights: true
+      party_mode_trigger: input_boolean.party_mode
