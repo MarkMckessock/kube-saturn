@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: guacamole
-          image: guacamole/guacamole:1.5.2
+          image: guacamole/guacamole:1.5.5
           imagePullPolicy: IfNotPresent
           env:
             - name: POSTGRES_HOSTNAME
