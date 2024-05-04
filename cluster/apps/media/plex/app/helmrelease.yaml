@@ -109,6 +109,13 @@ spec:
         globalMounts:
           - path: /data
             readOnly: true
+      basalt_media:
+        type: nfs
+        server: basalt.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /basalt/media
+            readOnly: true
       transcode:
         type: emptyDir
         globalMounts:
