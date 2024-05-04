@@ -47,9 +47,12 @@ spec:
               STRICT_PORT_FORWARD: "yes"
               QBITTORRENT__BT_PORT: &port-bt 50413
               NAME_SERVERS: 1.1.1.1,1.0.0.1,8.8.8.8
-            securityContext:
-              capabilities:
-                add: ["NET_ADMIN"]
+              VPN_CLIENT: wireguard
+              VPN_PROV: pia
+            # securityContext:
+            #   privileged: true
+              # capabilities:
+              #   add: ["NET_ADMIN"]
             envFrom:
               - secretRef:
                   name: pia-vpn-credentials
