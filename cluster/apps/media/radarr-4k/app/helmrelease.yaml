@@ -160,7 +160,7 @@ spec:
         path: /volume1/Media
         globalMounts:
           - path: /media
-      basalt_media:
+      basalt-media:
         type: nfs
         server: basalt.markmckessock.com
         path: /volume1/Media
