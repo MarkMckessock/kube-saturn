@@ -49,10 +49,10 @@ spec:
               NAME_SERVERS: 1.1.1.1,1.0.0.1,8.8.8.8
               VPN_CLIENT: wireguard
               VPN_PROV: pia
-            # securityContext:
-            #   privileged: true
-              # capabilities:
-              #   add: ["NET_ADMIN"]
+            securityContext:
+              privileged: true
+              capabilities:
+                add: ["NET_ADMIN"]
             envFrom:
               - secretRef:
                   name: pia-vpn-credentials
