@@ -50,7 +50,6 @@ spec:
               - --embed-thumbnail
               - --embed-metadata
               - --embed-chapters
-              - --embed-info-json
               - --no-progress
               # - --username
               # - mark.mckessock@gmail.com
