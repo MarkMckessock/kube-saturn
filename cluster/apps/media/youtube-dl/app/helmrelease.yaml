@@ -43,7 +43,6 @@ spec:
               - /urls
               - --output
               - /downloads/%(uploader)s [%(channel_id)s]/%(title)s [%(id)s].%(ext)s
-              - --write-description
               - --format
               - bestvideo[ext=mp4]+bestaudio[ext=m4a]/best
               - --embed-subs
