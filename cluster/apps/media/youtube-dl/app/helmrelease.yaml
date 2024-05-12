@@ -33,6 +33,7 @@ spec:
           reloader.stakater.com/auto: "true"
         cronjob:
           schedule: "@daily"
+          concurrencyPolicy: Forbid
         containers:
           main:
             image:
