@@ -44,7 +44,7 @@ tasks:
 
   unlock:
     desc: Unlocks restic repository for a given ReplicationSource (ex. task volsync:unlock rsrc=plex [namespace=default])
-    silent: true
+    # silent: true
     cmds:
       - envsubst < <(cat "{{.unlockJobTemplate}}") | kubectl apply -f -
       - bash "{{.waitForJobScript}}" unlock-{{.rsrc}}-{{.ts}} {{.namespace}}

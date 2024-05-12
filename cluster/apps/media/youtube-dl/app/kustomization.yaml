@@ -8,7 +8,6 @@ resources:
 configMapGenerator:
   - name: youtube-dl-config
     files:
-      - config/channels.yaml
-      - config/playlists.yaml
+      - config/urls
 generatorOptions:
   disableNameSuffixHash: true

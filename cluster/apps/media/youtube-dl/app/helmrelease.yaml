@@ -37,11 +37,20 @@ spec:
           main:
             image:
               repository: markmckessock/youtube-dl
-              tag: v1.6
-            env:
-              DOWNLOAD_FOLDER: /downloads
-              ARCHIVE_FILE_PATH: /archive/archive.txt
-              SKIP_LIVESTREAMS: "True"
+              tag: latest
+            args:
+              - --batch-file /urls
+              - --output /downloads/%(uploader)s [%(channel_id)s]/%(title)s [%(id)s].%(ext)s
+              - --write-description
+              - --format bestvideo+bestaudio[ext=m4a]/mp4
+              - --embed-subs
+              - --embed-thumbnail
+              - --embed-metadata
+              - --embed-chapters
+              - --embed-info-json
+              - --username mark.mckessock@gmail.com
+              # - --password
+
             probes:
               liveness:
                 enabled: false
@@ -68,17 +77,9 @@ spec:
       downloads:
         type: nfs
         path: /volume1/Media/youtube
-        server: ${NFS_SERVER}
+        server: basalt.markmckessock.coms
         globalMounts:
           - path: /downloads
-      archive:
-        type: persistentVolumeClaim
-        size: 1Gi
-        accessMode: ReadWriteOnce
-        storageClass: ceph-block
-        retain: true
-        globalMounts:
-          - path: /archive
       config:
         enabled: true
         type: configMap
@@ -86,9 +87,6 @@ spec:
         advancedMounts:
           main:
             main:
-              - subPath: channels.yaml
-                path: /app/channels.yaml
-                readOnly: true
-              - subPath: playlists.yaml
-                path: /app/playlists.yaml
+              - subPath: urls
+                path: /urls
                 readOnly: true
