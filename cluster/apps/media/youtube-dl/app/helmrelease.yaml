@@ -51,7 +51,8 @@ spec:
               - --embed-metadata
               - --embed-chapters
               - --no-progress
-              - --no-overwrites
+              - --download-archive
+              - /downloads/archive.txt
               # - --username
               # - mark.mckessock@gmail.com
               # - --password
