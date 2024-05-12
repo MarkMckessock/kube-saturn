@@ -77,7 +77,7 @@ spec:
       downloads:
         type: nfs
         path: /volume1/Media/youtube
-        server: basalt.markmckessock.coms
+        server: basalt.markmckessock.com
         globalMounts:
           - path: /downloads
       config:
