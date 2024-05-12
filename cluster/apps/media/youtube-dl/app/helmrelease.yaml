@@ -45,12 +45,13 @@ spec:
               - /downloads/%(uploader)s [%(channel_id)s]/%(title)s [%(id)s].%(ext)s
               - --write-description
               - --format
-              - bestvideo+bestaudio[ext=m4a]/mp4
+              - bestvideo[ext=mp4]+bestaudio[ext=m4a]/best
               - --embed-subs
               - --embed-thumbnail
               - --embed-metadata
               - --embed-chapters
               - --embed-info-json
+              - --no-progress
               # - --username
               # - mark.mckessock@gmail.com
               # - --password
