@@ -51,6 +51,7 @@ spec:
               - --no-progress
               - --download-archive
               - /downloads/archive.txt
+              - --write-info-json
               # - --username
               # - mark.mckessock@gmail.com
               # - --password
