@@ -159,7 +159,7 @@ spec:
       image:
         repository: kong
         pullPolicy: IfNotPresent
-        tag: "2.8.1"
+        tag: "2.8.5"
       environment:
         KONG_DATABASE: "off"
         KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
