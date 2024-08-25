@@ -2,24 +2,6 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cluster-apps-alertmanager-gotify-bridge
-  namespace: flux-system
-  labels:
-    substitution.flux.home.arpa/enabled: "true"
-spec:
-  interval: 10m
-  path: "./cluster/apps/monitoring/kube-prometheus-stack/alertmanager-gotify-bridge"
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: true
-  dependsOn:
-    - name: cluster-apps-gotify
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
   name: cluster-apps-kube-prometheus-stack
   namespace: flux-system
   labels:
@@ -34,4 +16,3 @@ spec:
   wait: true
   dependsOn:
     - name: cluster-apps-rook-ceph-cluster
-    - name: cluster-apps-alertmanager-gotify-bridge
