@@ -24,6 +24,7 @@ resources:
   - stakater.yaml
   - fairwinds.yaml
   - minio.yaml
+  - openebs.yaml
   - kubernetes-sigs-descheduler.yaml
   - external-dns.yaml
   - backube.yaml

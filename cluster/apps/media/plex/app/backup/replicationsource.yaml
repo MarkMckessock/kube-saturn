@@ -9,7 +9,7 @@ spec:
     schedule: "0 0 * * *"
   restic:
     copyMethod: Snapshot
-    pruneIntervalDays: 10
+    pruneIntervalDays: 7
     repository: plex-restic-secret
     cacheCapacity: 20Gi
     volumeSnapshotClassName: csi-ceph-blockpool
@@ -19,5 +19,4 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
     retain:
-      daily: 10
-      within: 3d
+      daily: 7
