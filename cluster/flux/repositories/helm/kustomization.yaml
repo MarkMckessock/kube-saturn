@@ -23,6 +23,7 @@ resources:
   - cloudnative-pg.yaml
   - stakater.yaml
   - fairwinds.yaml
+  - tofu-controller.yaml
   - openebs.yaml
   - kubernetes-sigs-descheduler.yaml
   - external-dns.yaml
