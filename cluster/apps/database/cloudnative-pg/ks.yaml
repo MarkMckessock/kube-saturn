@@ -35,7 +35,7 @@ spec:
   wait: true
   dependsOn:
     - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-external-secrets-stores
+    - name: external-secrets-stores
   interval: 30m
   retryInterval: 1m
   timeout: 3m

@@ -15,5 +15,5 @@ spec:
   interval: 10m
   wait: true
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
+    - name: external-secrets-stores
     # - name: cluster-apps-prometheus
