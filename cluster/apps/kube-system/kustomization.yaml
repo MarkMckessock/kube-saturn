@@ -9,3 +9,4 @@ resources:
   - ./reloader/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./kube-vip/ks.yaml
+  - ./node-feature-discovery/ks.yaml
