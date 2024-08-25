@@ -11,8 +11,10 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 7
     repository: plex-restic-secret
-    cacheCapacity: 20Gi
     volumeSnapshotClassName: csi-ceph-blockpool
+    cacheCapacity: 4Gi
+    cacheStorageClassName: openebs-hostpath
+    cacheAccessModes: ["ReadWriteOnce"]
     storageClassName: ceph-block
     moverSecurityContext:
       runAsUser: 1000
