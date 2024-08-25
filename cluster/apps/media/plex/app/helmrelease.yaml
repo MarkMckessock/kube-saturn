@@ -102,6 +102,16 @@ spec:
           - path: /config
         storageClass: ceph-block
         retain: true
+      cache:
+        existingClaim: plex-cache
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      tmp:
+        type: emptyDir
       media:
         type: nfs
         server: ${NFS_SERVER}

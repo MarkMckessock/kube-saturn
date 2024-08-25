@@ -7,3 +7,4 @@ resources:
   - ./externalsecret.yaml
   - ./cronjobs
   - ./backup
+  - ./plex-cache-pvc.yaml
