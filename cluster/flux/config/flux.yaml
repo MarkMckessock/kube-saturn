@@ -23,20 +23,8 @@ spec:
   sourceRef:
     kind: OCIRepository
     name: flux-manifests
-  images:
-    - name: fluxcd/helm-controller
-      newName: ghcr.io/fluxcd/helm-controller
-    - name: fluxcd/image-automation-controller
-      newName: ghcr.io/fluxcd/image-automation-controller
-    - name: fluxcd/image-reflector-controller
-      newName: ghcr.io/fluxcd/image-reflector-controller
-    - name: fluxcd/kustomize-controller
-      newName: ghcr.io/fluxcd/kustomize-controller
-    - name: fluxcd/notification-controller
-      newName: ghcr.io/fluxcd/notification-controller
-    - name: fluxcd/source-controller
-      newName: ghcr.io/fluxcd/source-controller
   patches:
+    # Remove the network policies that does not work with k3s
     - patch: |
         $patch: delete
         apiVersion: networking.k8s.io/v1
@@ -45,49 +33,65 @@ spec:
           name: not-used
       target:
         group: networking.k8s.io
-        version: v1
         kind: NetworkPolicy
+    # Increase the number of reconciliations that can be performed in parallel and bump the resources limits
+    # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
     - patch: |
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --concurrent=20
+          value: --concurrent=12
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --requeue-dependency=5s
-      target:
-        kind: Deployment
-        name: "(kustomize-controller|helm-controller|source-controller)"
-    - patch: |
+          value: --kube-api-qps=500
         - op: add
           path: /spec/template/spec/containers/0/args/-
-          value: --concurrent=20
+          value: --kube-api-burst=1000
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --requeue-dependency=5s
       target:
         kind: Deployment
-        name: "(kustomize-controller|helm-controller|source-controller)"
+        name: (kustomize-controller|helm-controller|source-controller)
     - patch: |
-        - op: add
-          path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/eventSources/items/properties/kind/enum/-
-          value: Terraform
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: not-used
+        spec:
+          template:
+            spec:
+              containers:
+                - name: manager
+                  resources:
+                    limits:
+                      memory: 2Gi
       target:
-        kind: CustomResourceDefinition
-        name: alerts.notification.toolkit.fluxcd.io
+        kind: Deployment
+        name: (kustomize-controller|helm-controller|source-controller)
+    # Enable in-memory-kustomize builds
+    # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-in-memory-kustomize-builds
     - patch: |
-        - op: add
-          path: /spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/resources/items/properties/kind/enum/-
-          value: Terraform
-      target:
-        kind: CustomResourceDefinition
-        name: receivers.notification.toolkit.fluxcd.io
-    - patch: |
-        - op: add
-          path: /rules/-
+        - op: replace
+          path: /spec/template/spec/volumes/0
           value:
-            apiGroups: ["infra.contrib.fluxcd.io"]
-            resources: ["*"]
-            verbs: ["*"]
+            name: temp
+            emptyDir:
+              medium: Memory
       target:
-        kind: ClusterRole
-        name: crd-controller-flux-system
+        kind: Deployment
+        name: kustomize-controller
+    # Enable Helm near OOM detection
+    # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-helm-near-oom-detection
+    - patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --feature-gates=OOMWatch=true
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --oom-watch-memory-threshold=95
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --oom-watch-interval=500ms
+      target:
+        kind: Deployment
+        name: helm-controller
