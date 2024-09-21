@@ -241,6 +241,11 @@ spec:
         globalMounts:
           - path: /opt/recipes/mediafiles
             subPath: files
+        advancedMounts:
+          main:
+            nginx:
+              - path: /static
+                subPath: files
       static:
         type: persistentVolumeClaim
         size: 1Gi
@@ -250,6 +255,11 @@ spec:
         globalMounts:
           - path: /opt/recipes/staticfiles
             subPath: files
+        advancedMounts:
+          main:
+            nginx:
+              - path: /static
+                subPath: files
       nginx-config:
         type: configMap
         name: tandoor-config
