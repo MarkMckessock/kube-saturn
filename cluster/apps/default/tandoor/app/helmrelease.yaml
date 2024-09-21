@@ -77,19 +77,26 @@ spec:
             envFrom:
               - secretRef:
                   name: tandoor-secret
-            livenessProbe:
-              failureThreshold: 3
-              httpGet:
-                path: /
-                port: 8080
-                scheme: HTTP
-              periodSeconds: 30
-            readinessProbe:
-              httpGet:
-                path: /
-                port: 8080
-                scheme: HTTP
-              periodSeconds: 30
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  failureThreshold: 3
+                  periodSeconds: 30
+                  httpGet:
+                    path: /
+                    port: 8080
+                    scheme: HTTP
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 30
+                  httpGet:
+                    path: /
+                    port: 8080
+                    scheme: HTTP
             resources:
               requests:
                 cpu: 250m
@@ -131,7 +138,7 @@ spec:
         initContainers:
           init-chmod-data:
             image:
-              respository: vabene1111/recipes
+              repository: vabene1111/recipes
               tag: 1.5.19
             securityContext:
               runAsUser: 0
@@ -205,7 +212,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: ${CLUSTER_ISSUER}
@@ -217,7 +224,6 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
         tls:
           - hosts:
               - *host
