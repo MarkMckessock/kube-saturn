@@ -206,9 +206,11 @@ spec:
                     key: POSTGRES_HOST
     service:
       main:
+        primary: true
         controller: main
         ports:
           http:
+            primary: true
             port: &port 8080
     ingress:
       main:
