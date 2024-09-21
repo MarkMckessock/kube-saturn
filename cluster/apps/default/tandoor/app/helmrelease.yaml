@@ -122,19 +122,6 @@ spec:
               requests:
                 cpu: 250m
                 memory: 64Mi
-            command:
-            - /opt/recipes/venv/bin/gunicorn
-            - -b
-            - :8080
-            - --access-logfile
-            - "-"
-            - --error-logfile
-            - "-"
-            - --log-level
-            - INFO
-            - recipes.wsgi
-            securityContext:
-              runAsUser: 65534
         initContainers:
           init-db:
             image:
