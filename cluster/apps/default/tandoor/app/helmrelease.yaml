@@ -250,3 +250,9 @@ spec:
         globalMounts:
           - path: /opt/recipes/staticfiles
             subPath: files
+      nginx-config:
+        type: configMap
+        name: tandoor-config
+        globalMounts:
+          - path: /etc/nginx/nginx.conf
+            subPath: nginx-config
