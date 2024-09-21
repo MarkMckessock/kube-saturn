@@ -9,3 +9,4 @@ resources:
   - vaultwarden/ks.yaml
   - redis-ha/ks.yaml
   - netbox/ks.yaml
+  - tandoor/ks.yaml
