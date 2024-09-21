@@ -227,6 +227,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
+                  port: 8080
         tls:
           - hosts:
               - *host
