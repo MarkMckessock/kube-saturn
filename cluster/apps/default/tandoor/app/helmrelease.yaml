@@ -244,7 +244,7 @@ spec:
         advancedMounts:
           main:
             nginx:
-              - path: /etc/nginx/html/media
+              - path: /media
                 subPath: files
       static:
         type: persistentVolumeClaim
@@ -258,7 +258,7 @@ spec:
         advancedMounts:
           main:
             nginx:
-              - path: /etc/nginx/html/static
+              - path: /static
                 subPath: files
       nginx-config:
         type: configMap
