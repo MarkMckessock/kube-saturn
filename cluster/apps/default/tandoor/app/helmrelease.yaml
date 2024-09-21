@@ -231,7 +231,7 @@ spec:
         advancedMounts:
           main:
             nginx:
-              - path: /static
+              - path: /media
                 subPath: files
       static:
         type: persistentVolumeClaim
