@@ -198,7 +198,9 @@ spec:
         ports:
           http:
             primary: true
-            port: &port 8080
+            port: &port 80
+          gunicorn:
+            port:  8080
     ingress:
       main:
         enabled: true
@@ -215,6 +217,16 @@ spec:
                 service:
                   name: "{{ .Release.Name }}"
                   port: 8080
+              - path: /media
+                pathType: Prefix
+                service:
+                  name: "{{ .Release.Name }}"
+                  port: 80
+              - path: /static
+                pathType: Prefix
+                service:
+                  name: "{{ .Release.Name }}"
+                  port: 80
         tls:
           - hosts:
               - *host
