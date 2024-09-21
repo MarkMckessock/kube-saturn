@@ -213,7 +213,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  name: "{{ .Release.Name }}"
                   port: 8080
         tls:
           - hosts:
