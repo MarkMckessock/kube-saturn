@@ -16,6 +16,7 @@ data:
   GNS_IP: 10.0.70.133
   SVC_POSTGRES_ADDR: 10.0.70.134
   MC_SERVER_IP: 10.0.70.135
+  RUSTDESK_IP: 10.0.70.136
   CLUSTER_ISSUER: letsencrypt-production
   CLUSTER_NAME: saturn
   STORAGE_CLASS: longhorn

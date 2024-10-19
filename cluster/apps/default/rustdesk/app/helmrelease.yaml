@@ -1,0 +1,115 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: rustdesk
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          hbbr:
+            image:
+              repository: rustdesk/rustdesk-server
+              tag: "1.1.10-3"
+            args: ["hbbr"]
+            resources:
+              limits:
+                cpu: "100m"
+                memory: "256Mi"
+              requests:
+                cpu: "100m"
+                memory: "256Mi"
+          hbbs:
+            image:
+              repository: rustdesk/rustdesk-server
+              tag: "1.1.10-3"
+            args: ["hbbs","-r", "${RUSTDESK_IP}"]
+            resources:
+              limits:
+                cpu: "100m"
+                memory: "256Mi"
+              requests:
+                cpu: "100m"
+                memory: "256Mi"
+    service:
+      # main:
+      #   ports:
+      #     http:
+      #       port: 8043
+      rustdesk:
+        controller: main
+        type: LoadBalancer
+        loadBalancerIP: ${RUSTDESK_IP}
+        # annotations:
+        #   metallb.universe.tf/allow-shared-ip: OMADA
+        externalTrafficPolicy: Local
+        ports:
+          web:
+            enabled: true
+            port: 21114
+            protocol: TCP
+            targetPort: 21114
+          nat-test:
+            enabled: true
+            port: 21115
+            protocol: TCP
+            targetPort: 21115
+          heartbeat:
+            enabled: true
+            port: 21116
+            protocol: UDP
+            targetPort: 21116
+          hole-punch:
+            enabled: true
+            port: 21116
+            protocol: TCP
+            targetPort: 21116
+          relay:
+            enabled: true
+            port: 21117
+            protocol: TCP
+            targetPort: 21117
+          web-client-21118:
+            enabled: true
+            port: 21118
+            protocol: TCP
+            targetPort: 21118
+          web-client-21119:
+            enabled: true
+            port: 21119
+            protocol: TCP
+            targetPort: 21119
+    # persistence:
+    #   data:
+    #     type: persistentVolumeClaim
+    #     size: 5Gi
+    #     storageClass: ceph-block
+    #     globalMounts:
+    #        - path:  /opt/tplink/EAPController/data
+    #     accessMode: ReadWriteOnce
+    #     retain: true
