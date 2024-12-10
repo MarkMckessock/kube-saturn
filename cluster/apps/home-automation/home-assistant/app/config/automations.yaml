@@ -182,3 +182,21 @@
       transition_time: 1
       sync_lights: true
       party_mode_trigger: input_boolean.party_mode
+- id: '1733798762188'
+  alias: Toggle Smart Plug
+  description: ''
+  trigger:
+    - platform: device
+      domain: mqtt
+      device_id: 2e46cb4b1e8531981e7bd7f35fcd9844
+      type: action
+      subtype: single
+      discovery_id: 0x00158d0005724b98 action_single
+  condition: []
+  action:
+    - type: toggle
+      device_id: 1689ed6d029240668a867beeaf00a29c
+      entity_id: 01cc92a3eefb9b888edbf24633e8ea4e
+      domain: switch
+  mode: single
+
