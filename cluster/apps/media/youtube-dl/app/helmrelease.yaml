@@ -32,6 +32,7 @@ spec:
         cronjob:
           schedule: "@daily"
           concurrencyPolicy: Forbid
+          activeDeadlineSeconds: 259200 # 3 Days
         containers:
           main:
             image:
