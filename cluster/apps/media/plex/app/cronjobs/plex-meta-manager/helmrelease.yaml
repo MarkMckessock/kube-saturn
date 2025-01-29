@@ -38,11 +38,11 @@ spec:
         containers:
           main:
             image:
-              repository: meisnate12/plex-meta-manager
-              tag: v1.21.0
+              repository: kometateam/kometa
+              tag: v1.21.1
             env:
-              PMM_READ_ONLY_CONFIG: "true"
-              PMM_RUN: "true"
+              KOMETA_READ_ONLY_CONFIG: "true"
+              KOMETA_RUN: "true"
 
     service:
       main:
