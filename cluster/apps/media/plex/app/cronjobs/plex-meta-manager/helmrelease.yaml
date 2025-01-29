@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: kometateam/kometa
-              tag: v1.21.1
+              tag: v2.1.0
             env:
               KOMETA_READ_ONLY_CONFIG: "true"
               KOMETA_RUN: "true"
