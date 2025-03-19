@@ -29,6 +29,7 @@ includes:
   volsync: .taskfiles/VolSync/Tasks.yaml
   workstation: .taskfiles/workstation
   talos: .taskfiles/talos
+  bootstrap: .taskfiles/bootstrap
 
 tasks:
   default:
