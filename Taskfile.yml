@@ -1,17 +1,23 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-vars:
-  PROJECT_DIR:
-    sh: "git rev-parse --show-toplevel"
-  KUBERNETES_DIR: "{{.PROJECT_DIR}}/kubernetes"
-  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
-  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform"
+set: [pipefail]
+shopt: [globstar]
 
-dotenv: [".config.env"]
+vars:
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
+  TALOS_DIR: '{{.ROOT_DIR}}/talos'
+
+dotenv:
+  - '{{.ROOT_DIR}}/onepassword.env'
+  - '{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env'
 
 env:
-  KUBECONFIG: "{{.PROJECT_DIR}}/kubeconfig"
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  TALOSCONFIG: '{{.ROOT_DIR}}/talosconfig'
+
 
 includes:
   ansible: .taskfiles/AnsibleTasks.yml
@@ -21,44 +27,10 @@ includes:
   pvc: .taskfiles/PVCTasks.yaml
   cnpg: .taskfiles/CloudnativePg/Tasks.yaml
   volsync: .taskfiles/VolSync/Tasks.yaml
+  workstation: .taskfiles/workstation
+  talos: .taskfiles/talos
 
 tasks:
-  init:
-    desc: Initialize workstation dependencies with Brew
-    cmds:
-      - brew install {{.DEPS}} {{.CLI_ARGS}}
-    preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-    vars:
-      DEPS: >-
-        age
-        ansible
-        direnv
-        fluxcd/tap/flux
-        go-task/tap/go-task
-        helm
-        ipcalc
-        jq
-        kubernetes-cli
-        kustomize
-        pre-commit
-        prettier
-        sops
-        stern
-        terraform
-        tflint
-        weaveworks/tap/gitops
-        yamllint
-        yq
-  verify:
-    desc: Verify env settings
-    cmds:
-      - ./configure --verify
-
-  configure:
-    desc: Configure repository from env settings
-    cmds:
-      - ./configure
+  default:
+    cmd: task --list
+    silent: true
