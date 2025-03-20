@@ -51,3 +51,12 @@ metadata:
   namespace: network
 stringData:
   CLOUDFLARE_TUNNEL_ID: op://kubernetes/cloudflare/CLOUDFLARE_TUNNEL_ID
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-deploy-key
+  namespace: flux-system
+stringData:
+  username: markmckessock
+  password: op://kubernetes/flux/FLUX_GITHUB_TOKEN
