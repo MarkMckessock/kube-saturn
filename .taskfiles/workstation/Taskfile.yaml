@@ -19,6 +19,13 @@ tasks:
       - which brew
       - test -f {{.WORKSTATION_RESOURCES_DIR}}/Brewfile
 
+  init:
+    desc: Initialize Helmfile
+    cmds:
+      - helmfile init
+    preconditions:
+      - which helmfile
+
   krew:
     desc: Set up Krew tools
     deps: [brew]
