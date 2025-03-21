@@ -78,7 +78,7 @@ spec:
         useAllNodes: false
         useAllDevices: false
         nodes:
-          - name: triton.neptune.kube.markmckessock.com
+          - name: triton
             devices:
               - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0Y131303J
         config:
