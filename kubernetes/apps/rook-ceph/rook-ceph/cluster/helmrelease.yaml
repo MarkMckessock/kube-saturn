@@ -78,9 +78,9 @@ spec:
         useAllNodes: false
         useAllDevices: false
         devices:
-          - name: "triton"
+          - name: triton.neptune.kube.markmckessock.com
             devices:
-              - /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0Y131303J
+              - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0Y131303J
         config:
           osdsPerDevice: "1"
     cephBlockPools:
