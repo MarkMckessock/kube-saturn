@@ -1,6 +1,6 @@
 ---
 originRequest:
-  originServerName: external.devbu.io
+  originServerName: external.markmckessock.com
 
 ingress:
   - hostname: markmckessock.com
