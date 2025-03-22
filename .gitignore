@@ -22,7 +22,5 @@ render.yaml
 .task/checksum/workstation-brew
 .vscode/settings.json
 worker.yaml
-talos/nodes/10.0.70.61.yaml.j2
 .gitignore
 .gitignore
-talos/controlplane.yaml.j2

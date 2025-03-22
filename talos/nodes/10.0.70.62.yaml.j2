@@ -1,0 +1,22 @@
+machine:
+  install:
+    disk: /dev/disk/by-id/nvme-KINGSTON_OM8PGP4512Q-A0_50026B7381C95635
+    image: factory.talos.dev/installer/de3b865124c5616da8084826167f8c0b0fbc9b905b146290db797024e84097fc:{{ ENV.TALOS_VERSION }}
+    extraKernelArgs:
+      - apparmor=0                          # Less security, faster puter
+      - init_on_alloc=0                     # Less security, faster puter
+      - init_on_free=0                      # Less security, faster puter
+      - mitigations=off                     # Less security, faster puter
+      - security=none                       # Less security, faster puter
+      - talos.auditd.disabled=1             # Less security, faster puter
+  network:
+    hostname: proteus.neptune.kube.markmckessock.com
+    interfaces:
+      - interface: eno1
+        addresses:
+          - 10.0.70.62/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.70.1
+        vip:
+          ip: 10.0.70.60

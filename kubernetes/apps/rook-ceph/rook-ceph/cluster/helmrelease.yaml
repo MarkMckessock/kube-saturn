@@ -81,6 +81,9 @@ spec:
           - name: triton
             devices:
               - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0Y131303J
+          - name: proteus
+            devices:
+              - name: /dev/disk/by-id/ata-CT500MX500SSD1_2150E5F13B4C
         config:
           osdsPerDevice: "1"
     cephBlockPools:
