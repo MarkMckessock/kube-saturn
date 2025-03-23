@@ -15,7 +15,7 @@ dotenv:
   - '{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env'
 
 env:
-  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  # KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
   TALOSCONFIG: '{{.ROOT_DIR}}/talosconfig'
 
 
@@ -26,7 +26,7 @@ includes:
   terraform: .taskfiles/TerraformTasks.yml
   pvc: .taskfiles/PVCTasks.yaml
   cnpg: .taskfiles/CloudnativePg/Tasks.yaml
-  volsync: .taskfiles/VolSync/Tasks.yaml
+  volsync: .taskfiles/volsync/TaskFile.yaml
   workstation: .taskfiles/workstation
   talos: .taskfiles/talos
   bootstrap: .taskfiles/bootstrap

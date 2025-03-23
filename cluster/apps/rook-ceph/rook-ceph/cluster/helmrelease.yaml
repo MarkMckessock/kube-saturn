@@ -115,6 +115,7 @@ spec:
         ssl: false
       mon:
         allowMultiplePerNode: true
+        count: 2
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -127,9 +128,9 @@ spec:
           - name: anthe.saturn.kube.${DOMAIN}
             devices:
               - name: /dev/disk/by-id/scsi-SATA_CT1000MX500SSD1_2421E8B2FF50 #sda
-          - name: aegir.saturn.kube.${DOMAIN}
-            devices:
-              - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C #sda
+          # - name: aegir.saturn.kube.${DOMAIN}
+          #   devices:
+          #     - name: /dev/disk/by-id/scsi-SATA_CT500MX500SSD1_2150E5F13B4C #sda
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -157,7 +158,7 @@ spec:
           name: .mgr
           failureDomain: osd
           replicated:
-            size: 3
+            size: 2
           parameters:
             compression_mode: none
           mirroring:
