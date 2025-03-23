@@ -7,3 +7,4 @@ components:
   - ../../components/common
 resources:
   - ./overseerr/ks.yaml
+  - ./tautulli/ks.yaml
