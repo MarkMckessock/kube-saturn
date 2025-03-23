@@ -30,13 +30,14 @@ spec:
             env:
               TZ: "America/Los_Angeles"
               LOG_LEVEL: "info"
+              PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /ping
+                    path: /api/v1/status
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -49,10 +50,10 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
-                memory: 250Mi
+                cpu: 16m
+                memory: 350M
               limits:
-                memory: 1500Mi
+                memory: 600M
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -62,10 +63,10 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: overseerr
+        controller: *app
         ports:
           http:
-            port: &port 5055
+            port: *port
     route:
       app:
         hostnames: ["{{ .Release.Name }}.markmckessock.com"]
