@@ -8,7 +8,8 @@ machine:
     crt: op://Kubernetes/talos/MACHINE_CA_CRT
     key: op://Kubernetes/talos/MACHINE_CA_KEY
   certSANs: ["10.0.70.60", "neptune.kube.markmckessock.com"]
-
+  network:
+    nameservers: ["192.168.1.1"]
   kubelet:
     image: ghcr.io/siderolabs/kubelet:v1.32.3
     defaultRuntimeSeccompProfileEnabled: true
@@ -66,7 +67,7 @@ machine:
     hostDNS:
       enabled: true
       resolveMemberNames: true
-      forwardKubeDNSToHost: true
+      forwardKubeDNSToHost: false
 cluster:
   id: op://Kubernetes/talos/CLUSTER_ID
   secret: op://Kubernetes/talos/CLUSTER_SECRET
