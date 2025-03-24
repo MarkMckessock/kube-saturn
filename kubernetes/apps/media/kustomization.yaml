@@ -9,7 +9,7 @@ resources:
   - ./overseerr/ks.yaml
   - ./tautulli/ks.yaml
   - ./radarr/ks.yaml
-  # - ./sonarr/ks.yaml
+  - ./sonarr/ks.yaml
   # - ./lidarr/ks.yaml
   - ./prowlarr/ks.yaml
   # - ./plex/ks.yaml

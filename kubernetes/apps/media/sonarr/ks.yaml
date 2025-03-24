@@ -1,0 +1,64 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sonarr
+  namespace: &namespace media
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: sonarr
+  components:
+    - ../../../../components/gatus/external
+    - ../../../../components/volsync
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/apps/media/sonarr/sonarr
+  postBuild:
+    substitute:
+      APP: sonarr
+      VOLSYNC_CAPACITY: 5Gi
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sonarr-4k
+  namespace: &namespace media
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: sonarr-4k
+  components:
+    - ../../../../components/gatus/external
+    - ../../../../components/volsync
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/apps/media/sonarr/sonarr-4k
+  postBuild:
+    substitute:
+      APP: sonarr-4k
+      VOLSYNC_CAPACITY: 5Gi
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false
