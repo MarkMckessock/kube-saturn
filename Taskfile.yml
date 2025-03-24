@@ -25,7 +25,7 @@ includes:
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   pvc: .taskfiles/PVCTasks.yaml
-  cnpg: .taskfiles/CloudnativePg/Tasks.yaml
+  cnpg: .taskfiles/cloudnative_pg/TaskFile.yaml
   volsync: .taskfiles/volsync/TaskFile.yaml
   workstation: .taskfiles/workstation
   talos: .taskfiles/talos

@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-db-{{ ENV.DB_NAME }}
+  namespace: database
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: init-db
+        image: ghcr.io/home-operations/postgres-init:17
+        env:
+          - name: INIT_POSTGRES_DBNAME
+            value: {{ ENV.DB_NAME }}
+          - name: INIT_POSTGRES_USER
+            value: {{ ENV.DB_USER }}
+          - name: INIT_POSTGRES_PASS
+            value: {{ ENV.DB_PASSWORD }}
+          - name: INIT_POSTGRES_SUPER_USER
+            valueFrom:
+              secretKeyRef:
+                name: cloudnative-pg-secret
+                key: username
+          - name: INIT_POSTGRES_SUPER_PASS
+            valueFrom:
+              secretKeyRef:
+                name: cloudnative-pg-secret
+                key: password
+          - name: INIT_POSTGRES_HOST
+            value: postgres-rw
+      restartPolicy: Never
+
+

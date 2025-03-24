@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: restore-${dbName}
+  name: restore-{{ ENV.DB_NAME }}
   namespace: database
 spec:
   ttlSecondsAfterFinished: 100
@@ -15,22 +15,22 @@ spec:
           command:
             - /bin/sh
             - -c
-            - "zcat /backups/last/${dbName}-latest.sql.gz | psql -h $POSTGRES_HOST -U $POSTGRES_USER --dbname=$POSTGRES_DB"
+            - "zcat /backups/last/{{ ENV.DB_NAME }}-latest.sql.gz | psql -h $POSTGRES_HOST -U $POSTGRES_USER --dbname=$POSTGRES_DB"
           env:
             - name: POSTGRES_HOST
               value: postgres-rw
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: cloudnative-pg-postgres-superuser
+                  name: cloudnative-pg-secret
                   key: username
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cloudnative-pg-postgres-superuser
+                  name: cloudnative-pg-secret
                   key: password
             - name: POSTGRES_DB
-              value: "${dbName}"
+              value: "{{ ENV.DB_NAME }}"
           volumeMounts:
             - name: nas-backups
               mountPath: /backups

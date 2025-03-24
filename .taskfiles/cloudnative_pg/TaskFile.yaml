@@ -10,35 +10,37 @@ x-task-vars: &task-vars
   pvcName: '{{.pvcName}}'
 
 vars:
-  initdb_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/init-db.tmpl.yaml"
-  backup_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/db-backup.tmpl.yaml"
-  restore_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/db-restore.tmpl.yaml"
-  loader_template: "{{.ROOT_DIR}}/.taskfiles/CloudnativePg/templates/pgloader-job.tmpl.yaml"
+  CNPG_RESOURCES_DIR: '{{.ROOT_DIR}}/.taskfiles/cloudnative_pg/resources'
 
 tasks:
   init-db:
     desc: Create a new cloudnative-pg database with a provided user
     cmds:
-      - envsubst < <(cat "{{.initdb_template}}") | kubectl apply -f -
-    env: *task-vars
-    vars:
-      dbUser: '{{ or .dbUser (fail "Database User is required") }}'
-      dbName: '{{ or .dbName (fail "Database name is required") }}'
-      dbPassword: '{{ or .dbPassword (fail "Database password is required") }}'
+      - minijinja-cli {{.CNPG_RESOURCES_DIR}}/init-db.yaml.j2 | kubectl apply --server-side --filename -
+    env:
+      DB_NAME: '{{.DB_NAME}}'
+      DB_USER: '{{.DB_USER}}'
+      DB_PASSWORD: '{{.DB_PASSWORD}}'
+    requires:
+      vars: [DB_NAME, DB_USER, DB_PASSWORD]
   backup:
     desc: Create a backup of a cloudnative-pg database
     cmds:
-      - envsubst < <(cat "{{.backup_template}}") | kubectl apply -f -
-    env: *task-vars
+      - minijinja-cli {{.CNPG_RESOURCES_DIR}}/db-backup.yaml.j2 | kubectl apply --server-side --filename -
+    env:
+      DB_NAME: '{{.DB_NAME}}'
+    requires:
+      vars: [DB_NAME]
     vars:
-      dbName: '{{ or .dbName (fail "Database name is required") }}'
+      DB_NAME: '{{ or .DB_NAME (fail "Database name is required") }}'
   restore:
     desc: Restore a backup of a cloudnative-pg database
     cmds:
-      - cat "{{.restore_template}}" | envsubst '$dbName' | kubectl apply -f -
-    env: *task-vars
-    vars:
-      dbName: '{{ or .dbName (fail "Database name is required") }}'
+      - minijinja-cli {{.CNPG_RESOURCES_DIR}}/db-restore.yaml.j2 | kubectl apply --server-side --filename -
+    env:
+      DB_NAME: '{{.DB_NAME}}'
+    requires:
+      vars: [DB_NAME]
   pgloader:
     desc: Load an sqlite database into cloudnative-pg
     cmds:
