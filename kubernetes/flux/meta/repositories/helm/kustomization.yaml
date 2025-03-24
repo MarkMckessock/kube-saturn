@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./cilium.yaml
   - ./rook-ceph.yaml
+  - ./fairwinds.yaml
