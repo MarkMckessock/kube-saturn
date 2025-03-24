@@ -91,6 +91,12 @@ spec:
         path: /volume1/Media
         globalMounts:
           - path: /basalt/media
+      downloads:
+        type: nfs
+        server: granite.markmckessock.com
+        path: /volume1/Downloads
+        globalMounts:
+          - path: /complete
       tmp:
         type: emptyDir
     route:
