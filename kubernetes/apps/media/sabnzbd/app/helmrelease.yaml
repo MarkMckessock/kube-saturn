@@ -90,6 +90,8 @@ spec:
         path: /volume1/Media
         globalMounts:
           - path: /media
+      incomplete:
+        type: emptyDir
       tmp:
         type: emptyDir
     route:
