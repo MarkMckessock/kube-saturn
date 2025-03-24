@@ -56,7 +56,7 @@ spec:
     - name: onepassword
       namespace: external-secrets
   interval: 1h
-  path: ./kubernetes/apps/media/radarr-4k/radarr
+  path: ./kubernetes/apps/media/radarr/radarr-4k
   postBuild:
     substitute:
       APP: radarr-4k
