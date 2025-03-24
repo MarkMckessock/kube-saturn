@@ -86,7 +86,7 @@ spec:
         type: nfs
         server: granite.markmckessock.com
         path: /volume1/Media
-      media_basalt:
+      media-basalt:
         type: nfs
         server: basalt.markmckessock.com
         path: /volume1/Media
