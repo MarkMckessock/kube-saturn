@@ -82,19 +82,19 @@ function bootstrap_talos() {
 }
 
 # Fetch the kubeconfig from a controller node
-function fetch_kubeconfig() {
-    log debug "Fetching kubeconfig"
+# function fetch_kubeconfig() {
+#     log debug "Fetching kubeconfig"
 
-    if ! controller=$(talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]' | shuf -n 1) || [[ -z "${controller}" ]]; then
-        log error "No Talos controller found"
-    fi
+#     if ! controller=$(talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]' | shuf -n 1) || [[ -z "${controller}" ]]; then
+#         log error "No Talos controller found"
+#     fi
 
-    if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name main "$(basename "${KUBECONFIG}")" &>/dev/null; then
-        log error "Failed to fetch kubeconfig"
-    fi
+#     if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name main "$(basename "${KUBECONFIG}")" &>/dev/null; then
+#         log error "Failed to fetch kubeconfig"
+#     fi
 
-    log info "Kubeconfig fetched successfully"
-}
+#     log info "Kubeconfig fetched successfully"
+# }
 
 # Talos requires the nodes to be 'Ready=False' before applying resources
 function wait_for_nodes() {
@@ -217,7 +217,7 @@ function apply_helm_releases() {
 }
 
 function main() {
-    check_env KUBECONFIG KUBERNETES_VERSION TALOS_VERSION
+    check_env KUBERNETES_VERSION TALOS_VERSION
     check_cli helmfile jq kubectl kustomize minijinja-cli op talosctl yq
 
     if ! op whoami --format=json &>/dev/null; then
@@ -227,7 +227,7 @@ function main() {
     # Bootstrap the Talos node configuration
     # apply_talos_config
     # bootstrap_talos
-    fetch_kubeconfig
+    # fetch_kubeconfig
 
     # Apply resources and Helm releases
     wait_for_nodes
