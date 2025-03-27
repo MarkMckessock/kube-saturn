@@ -1,0 +1,22 @@
+machine:
+  install:
+    disk: /dev/nvme0n1
+    image: factory.talos.dev/installer/de3b865124c5616da8084826167f8c0b0fbc9b905b146290db797024e84097fc:{{ ENV.TALOS_VERSION }}
+    extraKernelArgs:
+      - apparmor=0                          # Less security, faster puter
+      - init_on_alloc=0                     # Less security, faster puter
+      - init_on_free=0                      # Less security, faster puter
+      - mitigations=off                     # Less security, faster puter
+      - security=none                       # Less security, faster puter
+      - talos.auditd.disabled=1             # Less security, faster puter
+  network:
+    hostname: nereid.neptune.kube.markmckessock.com
+    interfaces:
+      - interface: enp5s0
+        addresses:
+          - 10.0.70.64/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.70.1
+        vip:
+          ip: 10.0.70.60

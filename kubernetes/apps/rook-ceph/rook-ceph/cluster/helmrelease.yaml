@@ -87,6 +87,9 @@ spec:
           - name: despina
             devices:
               - name: /dev/disk/by-id/ata-CT1000MX500SSD1_2421E8B2FF50
+          - name: nereid
+            devices:
+              - name: /dev/disk/by-id/ata-CT500MX500SSD1_2150E5F13BBE
         config:
           osdsPerDevice: "1"
     cephBlockPools:
