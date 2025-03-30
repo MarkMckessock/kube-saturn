@@ -40,7 +40,7 @@ spec:
     persistence:
       config:
         existingClaim: kometa
-      config:
+      config-secret:
         enabled: true
         type: secret
         name: plex-meta-manager-config
