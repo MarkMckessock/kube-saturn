@@ -1,0 +1,17 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: media
+resources:
+  - ./helmrelease.yaml
+  - ./externalsecret.yaml
+configMapGenerator:
+  - name: plex-meta-manager-collections
+    files:
+      - collections/movies/charts.yaml
+      - collections/movies/holidays.yaml
+      - collections/movies/movies.yaml
+      - collections/movies/studios.yaml
+      - collections/tv/tv-charts.yaml
+generatorOptions:
+  disableNameSuffixHash: true
