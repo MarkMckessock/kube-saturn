@@ -45,6 +45,24 @@ spec:
               privileged: true
               capabilities:
                 add: ["NET_ADMIN"]
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2/app/version
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             envFrom:
               - secretRef:
                   name: pia-vpn-credentials
@@ -56,17 +74,19 @@ spec:
                 memory: 6000Mi
     service:
       app:
-        controller: qbittorrent
+        controller: *app
+        nameOverride: *app
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        controller: *app
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.0.70.95
         ports:
-          http:
-            primary: true
-            port: *port
-          bittorrent:
-            enabled: true
-            port: *torrentPort
+          bittorrent-tcp:
+            port: *bittorrentPort
             protocol: TCP
     route:
       app:
