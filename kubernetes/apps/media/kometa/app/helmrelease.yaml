@@ -11,7 +11,7 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -24,7 +24,8 @@ spec:
         cronjob:
           concurrencyPolicy: Forbid
           schedule: "0 */6 * * *"
-        restartPolicy: OnFailure
+        pod:
+          restartPolicy: OnFailure
         containers:
           main:
             image:
@@ -33,9 +34,9 @@ spec:
             env:
               KOMETA_READ_ONLY_CONFIG: "true"
               KOMETA_RUN: "true"
-
     service:
       main:
+        controller: main
         enabled: false
     persistence:
       config:
