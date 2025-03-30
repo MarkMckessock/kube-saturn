@@ -7,3 +7,4 @@ components:
 resources:
   - ./cloudnative-pg/ks.yaml
   - ./emqx/ks.yaml
+  - ./postgres-backup/ks.yaml

@@ -1,0 +1,51 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: database
+spec:
+  schedule: "0 4 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          containers:
+            - name: postgres-backup
+              image: docker.io/prodrigestivill/postgres-backup-local:16@sha256:e7182c0dac78540405e954597fcb3f4cfa67955d5df008152ab41ce166fe6014
+              imagePullPolicy: IfNotPresent
+              command:
+                - "/backup.sh"
+              env:
+                - name: POSTGRES_HOST
+                  value: postgres-ro.database
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudnative-pg-secret
+                      key: username
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudnative-pg-secret
+                      key: password
+                - name: POSTGRES_DB
+                  value: "home-assistant,radarr-4k,radarr-4k-log,firefly,prowlarr,prowlarr-log,radarr,radarr-log,sonarr,sonarr-log,sonarr-4k,sonarr-4k-log,lidarr,lidarr-log"
+                - name: POSTGRES_EXTRA_OPTS
+                  value: "-Z6 --clean --if-exists"
+              volumeMounts:
+                - name: nas-backups
+                  mountPath: /backups
+          restartPolicy: OnFailure
+          volumes:
+            - name: nas-backups
+              nfs:
+                server: granite.markmckessock.com
+                path: /volume1/Backups/databases/postgresql
