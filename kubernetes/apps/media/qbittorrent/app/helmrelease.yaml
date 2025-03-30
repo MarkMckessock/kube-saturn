@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: binhex/arch-qbittorrentvpn
-              tag: 4.6.7-1-01
+              tag: 5.0.4-3-01
             env:
               TZ: "America/Toronto"
               PUID: 1000
@@ -35,9 +35,10 @@ spec:
               DEBUG: "true"
               VPN_ENABLED: "yes"
               LAN_NETWORK: 10.0.0.0/16,192.168.1.0/24
-              WEBUI_PORT: &port 8080
+              WEBUI_PORT: 8080
               STRICT_PORT_FORWARD: "yes"
-              QBT_TORRENTING_PORT: &torrentPort 50413
+              QBT_TORRENTING_PORT: &bittorrentPort 50413
+              QBT_WEBUI_PORT: &port 8080
               NAME_SERVERS: 1.1.1.1,1.0.0.1,8.8.8.8
               VPN_CLIENT: wireguard
               VPN_PROV: pia
