@@ -37,7 +37,7 @@ spec:
                       name: cloudnative-pg-secret
                       key: password
                 - name: POSTGRES_DB
-                  value: "home-assistant,radarr-4k,radarr-4k-log,firefly,prowlarr,prowlarr-log,radarr,radarr-log,sonarr,sonarr-log,sonarr-4k,sonarr-4k-log,lidarr,lidarr-log"
+                  value: "home-assistant,radarr-4k,radarr_4k_log,firefly,prowlarr,prowlarr_log,radarr,radarr_log,sonarr,sonarr_log,sonarr-4k,sonarr_4k_log,lidarr,lidarr-log"
                 - name: POSTGRES_EXTRA_OPTS
                   value: "-Z6 --clean --if-exists"
               volumeMounts:
