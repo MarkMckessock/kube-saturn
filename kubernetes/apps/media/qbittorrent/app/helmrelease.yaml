@@ -107,7 +107,7 @@ spec:
             command:
               - "/bin/sh"
               - "-c"
-              - "cd /shared && curl -o- -sL https://github.com/VueTorrent/VueTorrent/releases/download/v2.23.1/vuetorrent.zip | unzip -"
+              - "cd /addons && curl -o- -sL https://github.com/VueTorrent/VueTorrent/releases/download/v2.23.1/vuetorrent.zip | unzip -"
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
