@@ -73,9 +73,11 @@ spec:
               - secretRef:
                   name: pia-vpn-credentials
             securityContext:
+              privileged: true
               capabilities:
                 add:
                   - NET_ADMIN
+                  - SYS_MODULE
           port-forward:
             dependsOn: gluetun
             image:
