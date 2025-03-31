@@ -30,6 +30,8 @@ spec:
             env:
               QBT_TORRENTING_PORT: &bittorrentPort 50413
               QBT_WEBUI_PORT: &port 8080
+              QBT_Preferences__WebUI__AlternativeUIEnabled: true
+              QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
               TZ: America/Los_Angeles
             probes:
               liveness: &probes
@@ -85,6 +87,21 @@ spec:
                 add:
                   - NET_ADMIN
                   - SYS_MODULE
+          vuetorrent:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.4.0
+            args:
+              - --repo=https://github.com/VueTorrent/VueTorrent
+              - --ref=latest-release
+              - --period=86400s
+              - --root=/addons
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
           port-forward:
             dependsOn: gluetun
             image:
@@ -97,13 +114,6 @@ spec:
                 value: "8080"
               - name: PORT_FORWARDED
                 value: "/tmp/gluetun/forwarded_port"
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: OnRootMismatch
-              supplementalGroups: [65536]
     defaultPodOptions:
       automountServiceAccountToken: false
     route:
@@ -125,6 +135,10 @@ spec:
         ports:
           http:
             port: *port
+    addons:
+        type: emptyDir
+        globalMounts:
+          - path: /addons
     persistence:
       config:
         existingClaim: *app
