@@ -87,21 +87,6 @@ spec:
                 add:
                   - NET_ADMIN
                   - SYS_MODULE
-          vuetorrent:
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.4.0
-            args:
-              - --repo=https://github.com/VueTorrent/VueTorrent
-              - --ref=latest-release
-              - --period=86400s
-              - --root=/addons
-            resources:
-              requests:
-                cpu: 10m
-                memory: 25Mi
-              limits:
-                memory: 50Mi
           port-forward:
             dependsOn: gluetun
             image:
@@ -114,6 +99,20 @@ spec:
                 value: "8080"
               - name: PORT_FORWARDED
                 value: "/tmp/gluetun/forwarded_port"
+        initContainers:
+          custom-webui:
+            image:
+              repository: docker.io/curlimages/curl
+              tag: 8.12.1
+            command:
+              - "/bin/sh"
+              - "-c"
+              - "cd /shared && curl -o- -sL https://github.com/VueTorrent/VueTorrent/releases/download/v2.23.1/vuetorrent.zip | unzip -"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
     defaultPodOptions:
       automountServiceAccountToken: false
     route:
