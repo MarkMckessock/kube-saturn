@@ -31,7 +31,7 @@ spec:
               QBT_TORRENTING_PORT: &bittorrentPort 50413
               QBT_WEBUI_PORT: &port 8080
               QBT_Preferences__WebUI__AlternativeUIEnabled: true
-              QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
+              QBT_Preferences__WebUI__RootFolder: /addons/vuetorrent
               TZ: America/Los_Angeles
             probes:
               liveness: &probes
