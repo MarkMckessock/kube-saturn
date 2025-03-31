@@ -144,12 +144,6 @@ spec:
         path: /volume1/Downloads
         globalMounts:
           - path: /downloads
-      incomplete:
-        type: nfs
-        server: granite.markmckessock.com
-        path: /volume1/Downloads/incomplete
-        globalMounts:
-          - path: /incomplete
       addons:
         type: emptyDir
         globalMounts:
