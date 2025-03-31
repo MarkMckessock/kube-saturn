@@ -74,6 +74,8 @@ spec:
               PORT_FORWARD_ONLY: "true"
               VPN_PORT_FORWARDING: "on"
               VPN_PORT_FORWARDING_STATUS_FILE: "/tmp/gluetun/forwarded_port"
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.244.0.0/16 # Allow access to k8s subnets
             envFrom:
               - secretRef:
                   name: pia-vpn-credentials
@@ -122,7 +124,7 @@ spec:
         type: ClusterIP
         ports:
           http:
-            port: 8080
+            port: *port
     persistence:
       config:
         existingClaim: *app
