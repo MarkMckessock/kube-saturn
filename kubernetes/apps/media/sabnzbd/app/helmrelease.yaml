@@ -82,7 +82,7 @@ spec:
         server: granite.markmckessock.com
         path: /volume1/Downloads
         globalMounts:
-          - path: /complete
+          - path: /downloads
       media:
         enabled: true
         type: nfs
