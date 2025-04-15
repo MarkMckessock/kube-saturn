@@ -117,7 +117,7 @@ spec:
       image:
         repository: supabase/postgres-meta
         pullPolicy: IfNotPresent
-        tag: "v0.60.7"
+        tag: "v0.88.9"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_PORT: "5432"
