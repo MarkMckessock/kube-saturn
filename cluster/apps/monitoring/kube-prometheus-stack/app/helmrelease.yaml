@@ -114,7 +114,7 @@ spec:
       prometheusSpec:
         externalUrl: https://prometheus.${DOMAIN}
         thanos:
-          image: quay.io/thanos/thanos:v0.33.0
+          image: quay.io/thanos/thanos:v0.38.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.29.0"
         ruleSelectorNilUsesHelmValues: false
