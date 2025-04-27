@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: gotify/server
-              tag: 2.4.0
+              tag: 2.6.3
             probes:
               liveness:
                 enabled: false
