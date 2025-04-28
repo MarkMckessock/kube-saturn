@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: supabase/postgres
-      tag: "15.1.0.71"
+      tag: "15.8.1.079"
 
     env:
       POSTGRES_HOST: /var/run/postgresql

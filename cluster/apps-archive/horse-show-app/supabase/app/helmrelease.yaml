@@ -33,7 +33,7 @@ spec:
       enabled: false
       image:
         repository: supabase/postgres
-        tag: 15.1.0.54-rc0
+        tag: 15.1.0.150-rc0
       secretName: supabase-db
       persistence:
         enabled: false
