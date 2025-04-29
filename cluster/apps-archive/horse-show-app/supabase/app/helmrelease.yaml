@@ -130,7 +130,7 @@ spec:
       image:
         repository: supabase/storage-api
         pullPolicy: IfNotPresent
-        tag: "v0.28.2"
+        tag: "v1.22.9"
       environment:
         DB_HOST: supabase-db.horse-show-app.svc.cluster.local
         DB_USER: supabase_storage_admin
