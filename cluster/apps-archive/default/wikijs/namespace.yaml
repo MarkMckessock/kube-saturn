@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: wikijs
-  annotations:
-    kustomize.toolkit.fluxcd.io/prune: disabled
