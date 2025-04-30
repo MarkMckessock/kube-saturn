@@ -58,6 +58,7 @@ spec:
       - --gateway-name=external
       - --zone-id-filter=$(CF_ZONE_ID)
     triggerLoopOnEvent: true
+    logLevel: debug
     policy: sync
     sources: ["crd", "gateway-httproute"]
     txtOwnerId: default
