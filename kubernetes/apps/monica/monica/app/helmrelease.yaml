@@ -60,6 +60,7 @@ spec:
               limits:
                 memory: 1024Mi
           nginx:
+            enabled: true
             image:
               repository: nginx
               tag: alpine
