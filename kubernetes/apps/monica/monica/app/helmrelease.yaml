@@ -34,7 +34,7 @@ spec:
             image:
               repository: monica
               tag: 5.0-fpm-alpine
-            command: [sh, -c, cp -a /var/www/html/public/* /public]
+            command: [sh, -c, cp -a /var/www/html/* /html]
         containers:
           app:
             image:
@@ -89,18 +89,22 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /var/www/html/storage
-      public:
+      html:
         type: emptyDir
         globalMounts:
-          - path: /public
+          - path: /html
+        advancedMounts:
+          monica:
+            nginx:
+              - path: /var/www/html
       nginx:
         type: configMap
         name: nginx-config
         advancedMounts:
           monica:
             nginx:
-              - path: /etc/nginx/conf.d/default.conf
-                subPath: default.conf
+              - path: /etc/nginx/nginx.conf
+                subPath: nginx.conf
                 readOnly: true
 
     route:

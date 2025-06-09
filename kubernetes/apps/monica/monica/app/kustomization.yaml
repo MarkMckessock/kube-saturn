@@ -8,6 +8,6 @@ resources:
 configMapGenerator:
   - name: nginx-config
     files:
-      - default.conf=./resources/default.conf
+      - nginx.conf=./resources/nginx.conf
 generatorOptions:
   disableNameSuffixHash: true
