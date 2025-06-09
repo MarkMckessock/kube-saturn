@@ -93,6 +93,8 @@ spec:
         type: emptyDir
         advancedMounts:
           monica:
+            copy-public-html:
+              - path: /public
             app:
               - path: /var/www/html/public
             nginx:
