@@ -91,14 +91,12 @@ spec:
           - path: /var/www/html/storage
       public:
         type: emptyDir
+        globalMounts:
+          - path: /public
         advancedMounts:
           monica:
-            copy-public-html:
-              - path: /public
             app:
               - path: /var/www/html/public
-            nginx:
-              - path: /public
       nginx:
         type: configMap
         name: nginx-config
