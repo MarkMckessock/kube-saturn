@@ -31,7 +31,9 @@ spec:
               - secretRef:
                   name: monica-secret
           copy-public-html:
-            image: monica:5.0-fpm-alpine
+            image:
+              repository: monica
+              tag: 5.0-fpm-alpine
             command: [sh, -c, cp -a /var/www/html/public/* /public]
             volumeMounts:
               - name: public
