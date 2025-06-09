@@ -18,7 +18,7 @@ spec:
     - name: volsync
       namespace: volsync-system
   interval: 1h
-  path: "./kubernetes/apps/media/monica/app"
+  path: "./kubernetes/apps/monica/monica/app"
   postBuild:
     substitute:
       APP: *app
