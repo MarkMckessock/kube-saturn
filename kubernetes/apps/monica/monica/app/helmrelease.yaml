@@ -35,9 +35,6 @@ spec:
               repository: monica
               tag: 5.0-fpm-alpine
             command: [sh, -c, cp -a /var/www/html/public/* /public]
-            volumeMounts:
-              - name: public
-                mountPath: /public
         containers:
           app:
             image:
@@ -93,8 +90,12 @@ spec:
           - path: /var/www/html/storage
       public:
         type: emptyDir
-        globalMounts:
-          - path: /var/www/html/public
+        advancedMounts:
+          main:
+            app:
+              - path: /var/www/html/public
+            nginx:
+              - path: /public
       nginx:
         type: configMap
         name: nginx-config
