@@ -92,7 +92,7 @@ spec:
       public:
         type: emptyDir
         advancedMounts:
-          main:
+          monica:
             app:
               - path: /var/www/html/public
             nginx:
@@ -101,7 +101,7 @@ spec:
         type: configMap
         name: nginx-config
         advancedMounts:
-          main:
+          monica:
             nginx:
               - path: /etc/nginx/conf.d/default.conf
                 subPath: default.conf
