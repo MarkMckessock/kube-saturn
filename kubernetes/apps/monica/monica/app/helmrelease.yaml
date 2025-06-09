@@ -30,6 +30,12 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: monica-secret
+          copy-public-html:
+            image: monica:5.0-fpm-alpine
+            command: [sh, -c, cp -a /var/www/html/public/* /public]
+            volumeMounts:
+              - name: public
+                mountPath: /public
         containers:
           app:
             image:
@@ -54,50 +60,49 @@ spec:
                 cpu: 200m
               limits:
                 memory: 1024Mi
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { drop: ["ALL"] }
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 1000
-    #     runAsGroup: 1000
-    #     fsGroup: 1000
-    #     fsGroupChangePolicy: OnRootMismatch
+          nginx:
+            image:
+              repository: nginx
+              tag: alpine
+            envFrom: *envFrom
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /ping
+            #         port: *port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *probes
+            resources:
+              requests:
+                cpu: 200m
+              limits:
+                memory: 1024Mi
+
     persistence:
       config:
         existingClaim: *app
         globalMounts:
           - path: /var/www/html/storage
-      # config-cache:
-      #   existingClaim: sonarr-cache
-      #   globalMounts:
-      #     - path: /config/MediaCover
-      # config-logs:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /config/logs
-      # media:
-      #   type: nfs
-      #   server: granite.markmckessock.com
-      #   path: /volume1/Media
-      #   globalMounts:
-      #     - path: /media
-      # basalt-media:
-      #   type: nfs
-      #   server: basalt.markmckessock.com
-      #   path: /volume1/Media
-      #   globalMounts:
-      #     - path: /basalt/media
-      # downloads:
-      #   type: nfs
-      #   server: granite.markmckessock.com
-      #   path: /volume1/Downloads
-      #   globalMounts:
-      #     - path: /downloads
-      # tmp:
-      #   type: emptyDir
+      public:
+        type: emptyDir
+        globalMounts:
+          - path: /var/www/html/public
+      nginx:
+        type: configMap
+        name: nginx-config
+        advancedMounts:
+          main:
+            nginx:
+              - path: /etc/nginx/conf.d/default.conf
+                subPath: default.conf
+                readOnly: true
+
     route:
       app:
         hostnames:

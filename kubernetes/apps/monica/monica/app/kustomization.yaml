@@ -5,9 +5,9 @@ namespace: monica
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-# configMapGenerator:
-#   - name: nginx-config
-#     files:
-#       - nginx.conf=./resources/nginx.conf
-# generatorOptions:
-#   disableNameSuffixHash: true
+configMapGenerator:
+  - name: nginx-config
+    files:
+      - default.conf=./resources/default.conf
+generatorOptions:
+  disableNameSuffixHash: true
