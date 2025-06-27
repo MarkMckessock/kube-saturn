@@ -71,7 +71,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant-app
+              - name: home-assistant
                 port: *port
     persistence:
       config:
