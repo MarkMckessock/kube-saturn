@@ -41,10 +41,10 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 1Gi
+                memory: 2Gi
     defaultPodOptions:
-      # hostNetwork: true
-      # dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -54,6 +54,9 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "10.0.70.135"
         ports:
           http:
             port: &port 8123
@@ -68,7 +71,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - name: home-assistant-app
                 port: *port
     persistence:
       config:
