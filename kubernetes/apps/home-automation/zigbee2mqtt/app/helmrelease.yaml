@@ -87,6 +87,7 @@ spec:
         ports:
           http:
             port: *port
+            appProtocol: kubernetes.io/ws
     route:
       app:
         hostnames: ["{{ .Release.Name }}.markmckessock.com"]
