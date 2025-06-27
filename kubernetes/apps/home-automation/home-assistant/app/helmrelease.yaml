@@ -55,6 +55,14 @@ spec:
         ports:
           http:
             port: &port 8123
+      homekit-bridge:
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "10.0.70.135"
+        ports:
+          http:
+            port: 21063
     route:
       app:
         hostnames:
