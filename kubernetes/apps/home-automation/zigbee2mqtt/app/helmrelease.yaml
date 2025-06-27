@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: zigbee2mqtt
+  name: &app zigbee2mqtt
 spec:
   interval: 1h
   chartRef:
@@ -82,6 +82,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
+        controller: *app
         ports:
           http:
             port: *port

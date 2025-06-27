@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: home-assistant
+  name: &app home-assistant
 spec:
   interval: 1h
   chartRef:
@@ -51,6 +51,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
+        controller: *app
         ports:
           http:
             port: 8123
