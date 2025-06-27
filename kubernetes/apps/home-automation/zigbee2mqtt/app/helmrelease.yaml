@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      zigbee:
+      zigbee2mqtt:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:

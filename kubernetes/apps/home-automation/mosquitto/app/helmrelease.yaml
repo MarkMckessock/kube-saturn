@@ -68,7 +68,7 @@ spec:
         existingClaim: mosquitto-cache
       config-file:
         type: configMap
-        name: mosquitto
+        name: mosquitto-config
         advancedMounts:
           mosquitto:
             app:
