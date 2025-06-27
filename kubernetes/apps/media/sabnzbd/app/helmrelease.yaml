@@ -114,7 +114,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: home-assistant
+              - name: *app
                 port: *port
     service:
       app:
