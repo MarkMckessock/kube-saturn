@@ -88,6 +88,12 @@ spec:
           - name: nereid
             devices:
               - name: /dev/disk/by-id/ata-CT500MX500SSD1_2150E5F13BBE
+          - name: neso
+            devices:
+              - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0Y427835T
+          - name: halimede
+            devices:
+              - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0Y427892J
         config:
           osdsPerDevice: "1"
     cephBlockPools:
