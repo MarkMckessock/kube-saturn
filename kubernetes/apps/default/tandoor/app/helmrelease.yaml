@@ -205,17 +205,14 @@ spec:
         rules:
           - matches:
             - path:
-                type: Prefix
                 value: /
             backendRefs:
               - name: *app
                 port: 8080
           - matches:
               - path:
-                  type: Prefix
                   value: /static/
               - path:
-                  type: Prefix
                   value: /media/
             backendRefs:
               - name: *app
