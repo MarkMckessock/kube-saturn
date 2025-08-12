@@ -192,7 +192,7 @@ spec:
         ports:
           http:
             primary: true
-            port: &port 80
+            port: 80
           gunicorn:
             port:  8080
     route:
@@ -203,9 +203,23 @@ spec:
             namespace: kube-system
             sectionName: https
         rules:
-          - backendRefs:
+          - matches:
+            - path:
+                type: Prefix
+                value: /
+            backendRefs:
               - name: *app
-                port: *port
+                port: 8080
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /static/
+              - path:
+                  type: Prefix
+                  value: /media/
+            backendRefs:
+              - name: *app
+                port: 80
     persistence:
       media:
         type: persistentVolumeClaim
