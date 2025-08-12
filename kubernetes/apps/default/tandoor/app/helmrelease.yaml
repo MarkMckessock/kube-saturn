@@ -207,8 +207,26 @@ spec:
               - name: *app
                 port: *port
     persistence:
-      config:
-        existingClaim: tandoor
+      media:
+        type: persistentVolumeClaim
+        size: 1Gi
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
+        retain: true
+        globalMounts:
+          - path: /opt/recipes/mediafiles
+            subPath: files
+        advancedMounts:
+          main:
+            nginx:
+              - path: /media
+                subPath: files
+      static:
+        type: persistentVolumeClaim
+        size: 1Gi
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
+        retain: true
         globalMounts:
           - path: /opt/recipes/staticfiles
             subPath: files
