@@ -47,7 +47,7 @@ spec:
     #   create: true
     #   name: tandoor
     controllers:
-      tandoor:
+      main:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
