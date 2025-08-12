@@ -120,32 +120,32 @@ spec:
               repository: ghcr.io/home-operations/postgres-init
               tag: 17
             env:
-              POSTGRES_DB:
+              INIT_POSTGRES_DBNAME:
                 valueFrom:
                   secretKeyRef:
                     name: tandoor-secret
                     key: POSTGRES_DB
-              POSTGRES_USER:
+              INIT_POSTGRES_USER:
                 valueFrom:
                   secretKeyRef:
                     name: tandoor-secret
                     key: POSTGRES_USER
-              POSTGRES_PASS:
+              INIT_POSTGRES_PASS:
                 valueFrom:
                   secretKeyRef:
                     name: tandoor-secret
                     key: POSTGRES_PASSWORD
-              POSTGRES_SUPER_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: tandoor-secret
-                    key: POSTGRES_SUPER_USER
-              POSTGRES_SUPER_PASS:
+              # POSTGRES_SUPER_USER:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: tandoor-secret
+              #       key: POSTGRES_SUPER_USER
+              INIT_POSTGRES_SUPER_PASS:
                 valueFrom:
                   secretKeyRef:
                     name: tandoor-secret
                     key: POSTGRES_SUPER_PASS
-              POSTGRES_HOST:
+              INIT_POSTGRES_HOST:
                 valueFrom:
                   secretKeyRef:
                     name: tandoor-secret
