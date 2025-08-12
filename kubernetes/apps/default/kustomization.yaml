@@ -6,4 +6,5 @@ namespace: default
 components:
   - ../../components/common
 resources:
-  - ./immich/ks.yaml
+  # - ./immich/ks.yaml
+  - ./tandoor/ks.yaml
