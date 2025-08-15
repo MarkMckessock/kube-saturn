@@ -28,3 +28,9 @@ worker.yaml
 10.0.70.62.yaml
 10.0.70.63.yaml
 10.0.70.64.yaml
+10.0.70.65.yaml
+.gitignore
+copy-job.yml
+test-pvc.yaml
+kubernetes/apps/home-automation/home-assistant/app/resources/wh51.yaml
+10.0.70.66.yaml

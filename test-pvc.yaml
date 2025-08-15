@@ -12,28 +12,24 @@ spec:
         [
           "/bin/bash",
           "-c",
-          "apt update && apt install -y wget rsync tmux nano && rsync -rhavP /source/* /config",
+          "apt update && apt install -y wget rsync tmux nano && rsync -rhavP /source/* /dest",
         ]
       volumeMounts:
-        - mountPath: /config
-          name: plex
-        - mountPath: /config/Library/Application Support/Plex Media Server/Cache
-          name: plex-cache
-        - mountPath: /source
-          name: source
+        - mountPath: /basalt
+          name: basalt
+        - mountPath: /granite
+          name: granite
       resources:
         limits:
           memory: "128Mi"
           cpu: "500m"
   volumes:
-    - name: plex
-      persistentVolumeClaim:
-        claimName: plex
-    - name: plex-cache
-      persistentVolumeClaim:
-        claimName: plex-cache
-    - name: source
+    - name: granite
       nfs:
         server: granite.markmckessock.com
-        path: /volume1/Downloads/plex
+        path: /volume1/Media
+    - name: basalt
+      nfs:
+        server: basalt.markmckessock.com
+        path: /volume1/Media
   restartPolicy: Never
