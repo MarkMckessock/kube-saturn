@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app speedtest-tracker
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      speedtest-tracker:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: lscr.io/linuxserver/speedtest-tracker
+              tag: 1.6.6
+            env:
+              - name: PUID
+                value: 1000
+              - name: PGID
+                value: 1000
+              - name: DB_CONNECTION
+                value: sqlite
+              - name: APP_URL
+                value: "https://{{ .Release.Name }}.markmckessock.com"
+              - name: APP_TIMEZONE
+                value: "America/Los_Angeles"
+            envFrom:
+              - secretRef:
+                  name: speedtest-tracker-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  failureThreshold: 3
+                  periodSeconds: 30
+                  httpGet:
+                    path: /
+                    port: 80
+                    scheme: HTTP
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 30
+                  httpGet:
+                    path: /
+                    port: 80
+                    scheme: HTTP
+            resources:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 80
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.markmckessock.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config:
+        existingClaim: *app

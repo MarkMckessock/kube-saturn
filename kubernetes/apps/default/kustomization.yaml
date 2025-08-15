@@ -9,3 +9,4 @@ resources:
   # - ./immich/ks.yaml
   - ./tandoor/ks.yaml
   - ./librespeed/ks.yaml
+  - ./speedtest-tracker/ks.yaml
