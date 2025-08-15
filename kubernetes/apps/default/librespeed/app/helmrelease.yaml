@@ -33,11 +33,11 @@ spec:
                   },
               ]
     controllers:
-      main:
+      librespeed:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/librespeed/speedtest
               tag: 96eeeb4bad3d25f46636bef672eebf52a34ac967c6cd66644294cc585ab799b9
