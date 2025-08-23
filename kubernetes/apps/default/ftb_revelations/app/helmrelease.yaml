@@ -34,6 +34,7 @@ spec:
                 value: "1"
               - name: USER_JVM_ARGS
                 value: "-Xms4G -Xmx8G"
+            tty: true
             probes:
               liveness:
                 enabled: true
