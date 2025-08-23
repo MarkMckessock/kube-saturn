@@ -74,3 +74,4 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /var/lib/minecraft
+            subPath: minecraft
