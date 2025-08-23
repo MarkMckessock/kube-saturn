@@ -65,7 +65,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.0.70.135
+          lbipam.cilium.io/ips: 10.0.70.136
         ports:
           minecraft:
             port: 25565
