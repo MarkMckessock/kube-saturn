@@ -37,13 +37,13 @@ spec:
     fullnameOverride: *app
     image: # TODO: Remove this block when new chart version is released
       repository: registry.k8s.io/external-dns/external-dns
-      tag: v0.18.0
+      tag: v0.19.0
     provider:
       name: webhook
       webhook:
         image:
           repository: ghcr.io/kashalls/external-dns-unifi-webhook
-          tag: v0.5.0@sha256:ba9fd69f477f9fb1a4bf6559cc8c405ccd604ad0937f22917612b6c168c1693f
+          tag: v0.6.2@sha256:cff737eb9d7d7d1e5aec49f510588e3172667dba3d4e7f544f0497b68c5f9c51
         env:
           - name: UNIFI_HOST
             value: https://unifi.internal
