@@ -1,0 +1,15 @@
+---
+machine:
+  network:
+    hostname: halimede.neptune.kube.markmckessock.com
+    interfaces:
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: 58:47:ca:7f:76:1c
+            - hardwareAddr: 58:47:ca:7f:76:1d
+  nodeLabels:
+    topology.kubernetes.io/zone: m
+  type: controlplane
+  install:
+    disk: /dev/disk/by-id/nvme-KINGSTON_OM8TAP41024K1-A00_50026B7383D8F484
