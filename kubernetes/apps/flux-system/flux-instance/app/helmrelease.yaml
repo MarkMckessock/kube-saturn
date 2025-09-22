@@ -30,7 +30,6 @@ spec:
         - notification-controller
       sync:
         kind: GitRepository
-        pullSecret: github-deploy-key
         url: https://github.com/markmckessock/kube-saturn.git
         ref: refs/heads/main
         path: kubernetes/flux/cluster
