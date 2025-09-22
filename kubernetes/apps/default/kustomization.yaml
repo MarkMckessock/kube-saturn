@@ -9,5 +9,5 @@ resources:
   # - ./immich/ks.yaml
   - ./tandoor/ks.yaml
   - ./librespeed/ks.yaml
-  - ./speedtest-tracker/ks.yaml
-  - ./ftb_revelations/ks.yaml
+  # - ./speedtest-tracker/ks.yaml
+  # - ./ftb_revelations/ks.yaml
