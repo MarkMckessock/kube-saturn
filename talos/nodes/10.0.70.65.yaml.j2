@@ -8,8 +8,14 @@ machine:
           deviceSelectors:
             - hardwareAddr: 58:47:ca:7f:4d:f0
             - hardwareAddr: 58:47:ca:7f:4d:f1
+          mode: active-backup
+        vip:
+          ip: 10.0.70.60
+        dhcp: true
+        mtu: 9000
   nodeLabels:
     topology.kubernetes.io/zone: m
+    intel.feature.node.kubernetes.io/gpu: "true"
   type: controlplane
   install:
     disk: /dev/disk/by-id/nvme-KINGSTON_OM8TAP41024K1-A00_50026B7383C07F58
