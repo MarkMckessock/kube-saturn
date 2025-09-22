@@ -1,7 +1,9 @@
 ---
 machine:
   network:
-    hostname: triton.neptune.kube.markmckessock.com
+    hostname: europa.jupiter.kube.markmckessock.com
+    nameservers:
+      - 10.0.70.1
     interfaces:
       - interface: bond0
         bond:
@@ -9,10 +11,11 @@ machine:
             - hardwareAddr: 58:47:ca:7c:05:6e
             - hardwareAddr: 58:47:ca:7c:05:6f
           mode: active-backup
-        vip:
-          ip: 10.0.70.60
-        dhcp: true
-        mtu: 9000
+        addresses:
+          - 10.0.70.61/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.0.70.1
   nodeLabels:
     topology.kubernetes.io/zone: m
     intel.feature.node.kubernetes.io/gpu: "true"

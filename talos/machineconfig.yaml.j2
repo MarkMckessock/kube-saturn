@@ -9,14 +9,6 @@ machine:
     {% endif %}
   features:
     apidCheckExtKeyUsage: true
-    diskQuotaSupport: true
-    hostDNS:
-      enabled: true
-      forwardKubeDNSToHost: false
-      resolveMemberNames: true
-    kubePrism:
-      enabled: true
-      port: 7445
     {% if ENV.IS_CONTROLLER %}
     kubernetesTalosAPIAccess:
       allowedKubernetesNamespaces:
@@ -28,18 +20,10 @@ machine:
     {% endif %}
     rbac: true
     stableHostname: true
+    kubePrism:
+      enabled: true
+      port: 7445
   files:
-    - op: create
-      path: /etc/cri/conf.d/20-customization.part
-      content: |-
-        [plugins]
-          [plugins."io.containerd.grpc.v1.cri"]
-            enable_unprivileged_ports = true
-            enable_unprivileged_icmp = true
-        [plugins."io.containerd.cri.v1.images"]
-          discard_unpacked_layers = false
-        [plugins."io.containerd.cri.v1.runtime"]
-          device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
       permissions: 0o644
@@ -64,10 +48,6 @@ machine:
         - 10.0.70.0/24
   network:
     disableSearchDomain: true
-    extraHostEntries:
-      - ip: 10.0.70.60
-        aliases:
-          - neptune.markmckessock.internal
   sysctls:
     fs.inotify.max_user_instances: "8192"
     fs.inotify.max_user_watches: "1048576"
@@ -85,17 +65,10 @@ cluster:
     {% if ENV.IS_CONTROLLER %}
     key: op://kubernetes/talos/CLUSTER_CA_KEY
     {% endif %}
-  clusterName: neptune
+  clusterName: jupiter
   controlPlane:
-    endpoint: https://neptune.markmckessock.internal:6443
+    endpoint: https://jupiter.kube.markmckessock.internal:6443
   id: op://kubernetes/talos/CLUSTER_ID
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
   network:
     cni:
       name: none
@@ -113,7 +86,7 @@ cluster:
   allowSchedulingOnControlPlanes: true
   apiServer:
     certSANs:
-      - neptune.markmckessock.internal
+      - jupiter.kube.markmckessock.internal
       - 127.0.0.1 # KubePrism
     disablePodSecurityPolicy: true
     extraArgs:
@@ -138,6 +111,7 @@ cluster:
   proxy:
     disabled: true
     image: registry.k8s.io/kube-proxy:v1.34.1
+
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
