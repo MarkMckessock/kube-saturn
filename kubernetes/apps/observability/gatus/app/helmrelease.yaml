@@ -96,8 +96,8 @@ spec:
           - "{{ .Release.Name }}.markmckessock.com"
           - status.markmckessock.com
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
