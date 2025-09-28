@@ -35,3 +35,4 @@ test-pvc.yaml
 kubernetes/apps/home-automation/home-assistant/app/resources/wh51.yaml
 10.0.70.66.yaml
 test-pvc.yaml
+talos/talos-*.iso
