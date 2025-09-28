@@ -117,7 +117,7 @@ spec:
                 name: "repository",
                 nfs: Object.spec.template.spec.volumes.nfs{
                   server: "basalt.markmckessock.com",
-                  path: "/volume1/kopia"
+                  path: "/volume1/volsync"
                 }
               }
             }
