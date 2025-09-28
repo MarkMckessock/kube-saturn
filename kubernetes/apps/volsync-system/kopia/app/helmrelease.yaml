@@ -103,7 +103,7 @@ spec:
       repository:
         type: nfs
         server: basalt.markmckessock.com
-        path: /volume1/volsync
+        path: /volume1/kopia
         globalMounts:
           - path: /repository
       tmpfs:
