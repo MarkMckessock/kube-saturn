@@ -27,9 +27,6 @@ spec:
             image:
               repository: ghcr.io/home-operations/tautulli
               tag: 2.16.0@sha256:2a092f86a51f5718111097b0fced33eaa876b5904a543b7504f92357a4f75635
-            env:
-              TZ: America/Los_Angeles
-              TAUTULLI__PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
@@ -37,7 +34,7 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: *port
+                    port: 8181
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -64,7 +61,7 @@ spec:
         controller: tautulli
         ports:
           http:
-            port: *port
+            port: 8181
     route:
       app:
         hostnames: ["{{ .Release.Name }}.markmckessock.com"]
@@ -72,10 +69,6 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
     persistence:
       config:
         existingClaim: tautulli
