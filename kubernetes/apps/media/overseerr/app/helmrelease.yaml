@@ -74,6 +74,8 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+            timeouts:
+              request: 10s
     persistence:
       config:
         existingClaim: overseerr
