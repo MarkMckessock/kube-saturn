@@ -2,11 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: default
+namespace: immich
 components:
   - ../../components/common
 resources:
-  - ./tandoor/ks.yaml
-  - ./librespeed/ks.yaml
-  # - ./speedtest-tracker/ks.yaml
-  # - ./ftb_revelations/ks.yaml
+  - ./valkey/ks.yaml
+  - ./server/ks.yaml
+  - ./machine-learning/ks.yaml

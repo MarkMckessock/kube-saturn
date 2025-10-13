@@ -1,0 +1,128 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich-server
+  namespace: immich
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 1h
+  driftDetection:
+    mode: enabled
+  values:
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     seccompProfile: {type: RuntimeDefault}
+
+    controllers:
+      main:
+        type: deployment
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.0.0
+              pullPolicy: IfNotPresent
+            env:
+              IMMICH_TELEMETRY_INCLUDE: all
+              REDIS_HOSTNAME: valkey.immich.svc
+              IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
+              # IMMICH_CONFIG_FILE: /config/immich-config.yaml
+            ports:
+              - name: http
+                containerPort: 2283
+                protocol: TCP
+              - name: metrics-api
+                containerPort: 8081
+                protocol: TCP
+              - name: metrics-ms
+                containerPort: 8082
+                protocol: TCP
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server/ping
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server/ping
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 30
+
+    service:
+      main:
+        enabled: true
+        controller: main
+        primary: true
+        type: ClusterIP
+        ports:
+          http:
+            enabled: true
+            primary: true
+            port: 2283
+            targetPort: http
+            protocol: HTTP
+          metrics-api:
+            enabled: true
+            port: 8081
+            targetPort: metrics-api
+            protocol: HTTP
+          metrics-ms:
+            enabled: true
+            port: 8082
+            targetPort: metrics-ms
+            protocol: HTTP
+
+    persistence:
+      photos:
+        type: nfs
+        server: granite.markmckessock.com
+        path: /volume1/Users/mmckessock/Pictures
+        globalMounts:
+          - path: /photos
+            readOnly: true
+
+    route:
+      app:
+        hostnames:
+          - immich.markmckessock.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: http
+
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: metrics-api
+            scheme: http
+          - port: metrics-ms
+            scheme: http
