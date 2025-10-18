@@ -9,4 +9,4 @@ resources:
   - ./tandoor/ks.yaml
   - ./librespeed/ks.yaml
   # - ./speedtest-tracker/ks.yaml
-  # - ./ftb_revelations/ks.yaml
+  - ./ftb_revelations/ks.yaml
