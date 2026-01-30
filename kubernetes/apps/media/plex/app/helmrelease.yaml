@@ -126,7 +126,7 @@ spec:
         globalMounts:
           - path: /basalt/media
             readOnly: true
-      plex_versions:
+      plex-versions:
         type: nfs
         server: basalt.markmckessock.com
         path: /volume1/Media/plex_versions
