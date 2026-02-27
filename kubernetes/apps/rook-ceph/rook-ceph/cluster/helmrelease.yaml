@@ -80,6 +80,7 @@ spec:
           - name: europa
             devices:
               - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0Y131303J
+              - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNJ0L105206X
           - name: ganymede
             devices:
               - name: /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0Y427835T
