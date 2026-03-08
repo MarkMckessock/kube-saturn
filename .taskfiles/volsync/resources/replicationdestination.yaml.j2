@@ -19,5 +19,6 @@ spec:
       runAsGroup: {{ ENV.PGID }}
       fsGroup: {{ ENV.PGID }}
     enableFileDeletion: true
+    cacheCapacity: 50Gi
     cleanupCachePVC: true
     cleanupTempPVC: true
