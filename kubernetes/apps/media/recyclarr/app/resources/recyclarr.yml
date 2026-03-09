@@ -2,11 +2,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 sonarr:
   web-1080p-v4:
-    base_url: http://sonarr:8989
+    base_url: http://sonarr
     api_key: !env_var SONARR_API_KEY
 
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them
@@ -15,11 +14,10 @@ sonarr:
       - template: sonarr-v4-custom-formats-web-1080p
 
   web-2160p-v4:
-    base_url: http://sonarr-4k:8989
+    base_url: http://sonarr-4k
     api_key: !env_var SONARR_4K_API_KEY
 
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them
@@ -35,23 +33,22 @@ sonarr:
           - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
           # HDR10Plus Boost - Uncomment the next line if any of your devices DO support HDR10+
           # - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10Plus Boost
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
 
       # Optional
       - trash_ids:
           - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
-        quality_profiles:
+        assign_scores_to:
           - name: WEB-2160p
             score: 0 # Uncomment this line to enable SDR releases
 
 radarr:
   hd-bluray-web:
-    base_url: http://radarr:7878
+    base_url: http://radarr
     api_key: !env_var RADARR_API_KEY
 
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them
@@ -63,16 +60,15 @@ radarr:
       # Movie Versions
       - trash_ids:
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-        quality_profiles:
+        assign_scores_to:
           - name: HD Bluray + WEB
             # score: 0 # Uncomment this line to disable prioritised IMAX Enhanced releases
 
   uhd-bluray-web:
-    base_url: http://radarr-4k:7878
+    base_url: http://radarr-4k
     api_key: !env_var RADARR_4K_API_KEY
 
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them
@@ -99,13 +95,13 @@ radarr:
           - 1c1a4c5e823891c75bc50380a6866f73 # DTS
           - 240770601cc226190c367ef59aba7463 # AAC
           - c2998bd0d90ed5621d8df281e839436e # DD
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
 
       # Movie Versions
       - trash_ids:
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
             # score: 0 # Uncomment this line to disable prioritised IMAX Enhanced releases
 
@@ -115,11 +111,11 @@ radarr:
           - 923b6abef9b17f937fab56cfcf89e1f1 # DV (WEBDL)
           # HDR10Plus Boost - Uncomment the next line if any of your devices DO support HDR10+
           # - b17886cb4158d9fea189859409975758 # HDR10Plus Boost
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
 
       - trash_ids:
           - 9c38ebb7384dada637be8899efa68e6f # SDR
-        quality_profiles:
+        assign_scores_to:
           - name: UHD Bluray + WEB
             # score: 0 # Uncomment this line to allow SDR releases
