@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: volsync
   dependsOn:
     - name: openebs
-      namespace: openebs
+      namespace: openebs-system
     - name: snapshot-controller
       namespace: kube-system
   healthChecks:
