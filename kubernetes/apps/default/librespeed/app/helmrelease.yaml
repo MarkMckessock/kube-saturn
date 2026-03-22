@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/librespeed/speedtest
-              tag: latest@sha256:f328730f5562ceb27431f87208e99c86bd5f62fc70032421f032125333ddd5c1
+              tag: latest@sha256:e9077bcfae9bd4eda1436d9e35da5b7811c8c7028976c4e15647e1825c30eebd
             env:
               - name: MODE
                 value: standalone
