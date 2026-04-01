@@ -24,7 +24,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/mmckessock/splitflap_webhook
+              repository: ghcr.io/markmckessock/splitflap_webhook
               tag: latest
             env:
               MQTT_HOST: mosquitto.home-automation.svc.cluster.local
