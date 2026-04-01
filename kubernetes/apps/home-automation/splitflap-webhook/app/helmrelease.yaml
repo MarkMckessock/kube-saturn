@@ -83,7 +83,7 @@ spec:
     route:
       app:
         hostnames:
-          - splitflap-webhook.markmckessock.com
+          - splitflap.markmckessock.com
         parentRefs:
           - name: envoy-external
             namespace: network
