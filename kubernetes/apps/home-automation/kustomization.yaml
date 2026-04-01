@@ -9,3 +9,4 @@ resources:
   - ./zigbee2mqtt/ks.yaml
   - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./splitflap-webhook/ks.yaml
