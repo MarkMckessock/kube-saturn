@@ -8,10 +8,6 @@ helmDefaults:
   args:
     - --include-crds
     - --no-hooks
-  postRenderer: bash
-  postRendererArgs:
-    - -c
-    - yq ea -e 'select(.kind == "CustomResourceDefinition")'
 
 releases:
   - name: cloudflare-dns
@@ -19,15 +15,15 @@ releases:
     chart: oci://ghcr.io/home-operations/charts-mirror/external-dns
     version: 1.20.0
 
-  - name: external-secrets
-    namespace: external-secrets
-    chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 2.1.0
-
   - name: envoy-gateway
     namespace: network
-    chart: oci://docker.io/envoyproxy/gateway-helm
-    version: 1.7.0
+    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
+    version: 1.7.1
+
+  - name: grafana-operator
+    namespace: observability
+    chart: oci://ghcr.io/grafana/helm-charts/grafana-operator
+    version: 5.22.1
 
   - name: keda
     namespace: observability
