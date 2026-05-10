@@ -3,9 +3,9 @@
 set quiet := true
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
-mod bootstrap
-mod kubernetes
-mod talos
+mod k8s-bootstrap "bootstrap"
+mod k8s "kubernetes"
+mod talos "talos"
 
 [private]
 default:
@@ -13,8 +13,8 @@ default:
 
 [private]
 log lvl msg *args:
-    gum log -t rfc3339 -s -l "{{ lvl }}" "{{ msg }}" {{ args }}
+  gum log -t rfc3339 -s -l "{{ lvl }}" "{{ msg }}" {{ args }}
 
 [private]
 template file *args:
-    minijinja-cli "{{ file }}" {{ args }} | op inject
+  minijinja-cli "{{ file }}" {{ args }} | op inject
