@@ -51,6 +51,7 @@ metadata:
   name: envoy-external
   labels:
     external-dns: proxied
+    unifi-dns: "true"
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname external.markmckessock.com
 spec:
@@ -82,6 +83,8 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-internal
+  labels:
+    unifi-dns: "true"
   annotations:
     external-dns.alpha.kubernetes.io/target: &hostname internal.markmckessock.com
 spec:

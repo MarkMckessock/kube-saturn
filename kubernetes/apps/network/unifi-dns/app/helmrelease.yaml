@@ -64,6 +64,8 @@ spec:
             port: http-webhook
           initialDelaySeconds: 10
           timeoutSeconds: 5
+    extraArgs:
+      - --gateway-label-filter=unifi-dns=true
     triggerLoopOnEvent: true
     policy: sync
     sources: ["gateway-httproute", "service"]
