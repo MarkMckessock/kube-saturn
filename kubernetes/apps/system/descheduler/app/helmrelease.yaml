@@ -37,6 +37,8 @@ spec:
                   cpu: 50
                   memory: 50
                   pods: 50
+                excludeOwnerKinds:
+                  - Job
             - name: RemoveFailedPods
               args:
                 reasons:
