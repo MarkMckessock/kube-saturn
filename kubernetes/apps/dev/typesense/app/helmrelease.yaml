@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: typesense/typesense
-              tag: 27.0
+              tag: "27.0"
             args:
               - --data-dir=/data
               - --api-key=$(TYPESENSE_API_KEY)
