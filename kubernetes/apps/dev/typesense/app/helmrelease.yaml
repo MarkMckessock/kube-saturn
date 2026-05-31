@@ -35,7 +35,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: typesense-secret
-                    key: apiKey
+                    key: password
             probes:
               liveness:
                 enabled: true
