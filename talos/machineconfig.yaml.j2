@@ -188,13 +188,6 @@ name: bond0
 clientIdentifier: mac
 ---
 apiVersion: v1alpha1
-kind: ResolverConfig
-searchDomains:
-    domains:
-        - markmckessock.com
-    disableDefault: true
----
-apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m

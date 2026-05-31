@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(talosctl -n * get *)",
+      "Bash(talosctl -n * read *)",
+      "Bash(talosctl -n * dmesg *)",
+      "Bash(talosctl -n * logs *)",
+      "Bash(talosctl -n * mounts *)",
+      "Bash(talosctl -n * netstat *)",
+      "Bash(talosctl -n * containers *)",
+      "Bash(rpcinfo -p *)",
+      "Bash(showmount -e *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl describe *)",
+      "Bash(kubectl get *)",
+      "Bash(kubectl debug *)"
+    ]
+  }
+}
