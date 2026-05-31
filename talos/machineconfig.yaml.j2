@@ -3,7 +3,7 @@ version: v1alpha1
 machine:
   ca:
     crt: op://kubernetes/talos/MACHINE_CA_CRT
-    {% if ENV.IS_CONTROLLER %}
+    {% if ENV.CONTROLPLANE %}
     key: op://kubernetes/talos/MACHINE_CA_KEY
     {% endif %}
   features:
@@ -16,14 +16,14 @@ machine:
     kubePrism:
       enabled: true
       port: 7445
-    {% if ENV.IS_CONTROLLER %}
+    {% if ENV.CONTROLPLANE %}
     kubernetesTalosAPIAccess:
+      enabled: true
       allowedKubernetesNamespaces:
         - actions-runner-system
         - system-upgrade
       allowedRoles:
         - os:admin
-      enabled: true
     {% endif %}
     rbac: true
   files:
@@ -33,7 +33,6 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
-          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -47,19 +46,20 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    image: factory.talos.dev/metal-installer/b498485e484a6d996c407ff9a81c18e58620ef413d42f03639c77bde10e17a5c:v1.12.4
+    image: factory.talos.dev/metal-installer/7af7f1f318d397e33e73ecd3f7aa4b8ce16a35ed812aab3072421187a0b5583b:v1.13.0
     wipe: true
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
     extraConfig:
       serializeImagePulls: false
-    image: ghcr.io/siderolabs/kubelet:v1.35.0
+    image: ghcr.io/siderolabs/kubelet:v1.36.0
     nodeIP:
       validSubnets:
         - 10.0.70.0/24
-  network:
-    disableSearchDomain: true
+  nodeLabels:
+    node.kubernetes.io/gpu: "true"
+    topology.kubernetes.io/region: main
   sysctls:
     fs.inotify.max_user_instances: "8192"
     fs.inotify.max_user_watches: "1048576"
@@ -86,12 +86,19 @@ machine:
 cluster:
   ca:
     crt: op://kubernetes/talos/CLUSTER_CA_CRT
-    {% if ENV.IS_CONTROLLER %}
+    {% if ENV.CONTROLPLANE %}
     key: op://kubernetes/talos/CLUSTER_CA_KEY
     {% endif %}
   clusterName: jupiter
   controlPlane:
     endpoint: https://jupiter.kube.markmckessock.internal:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
   id: op://kubernetes/talos/CLUSTER_ID
   network:
     cni:
@@ -103,7 +110,7 @@ cluster:
       - 10.96.0.0/12
   secret: op://kubernetes/talos/CLUSTER_SECRET
   token: op://kubernetes/talos/CLUSTER_TOKEN
-  {% if ENV.IS_CONTROLLER %}
+  {% if ENV.CONTROLPLANE %}
   aggregatorCA:
     crt: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
     key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
@@ -120,13 +127,13 @@ cluster:
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: MutatingAdmissionPolicy=true
-      runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.35.0
+      feature-gates: HPAScaleToZero=true
+    image: registry.k8s.io/kube-apiserver:v1.36.0
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.35.0
+      feature-gates: HPAScaleToZero=true
+    image: registry.k8s.io/kube-controller-manager:v1.36.0
   coreDNS:
     disabled: true
   etcd:
@@ -139,7 +146,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.35.0
+    image: registry.k8s.io/kube-proxy:v1.36.0
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -160,8 +167,50 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.35.0
+    image: registry.k8s.io/kube-scheduler:v1.36.0
   secretboxEncryptionSecret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - net0
+  - net1
+bondMode: active-backup
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: bond0
+clientIdentifier: mac
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+searchDomains:
+    domains:
+        - markmckessock.com
+    disableDefault: true
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+  maxSize: 512GiB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: system_disk
+  maxSize: 256GiB
