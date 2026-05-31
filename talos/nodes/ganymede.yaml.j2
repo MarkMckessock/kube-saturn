@@ -1,0 +1,21 @@
+---
+machine:
+  type: controlplane
+  install:
+    disk: /dev/disk/by-id/nvme-KINGSTON_OM8TAP41024K1-A00_50026B7383C07F58
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: ganymede
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+    match: link.driver == "i40e" && mac(link.permanent_addr) == "58:47:ca:7f:4d:f0"
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net1
+selector:
+    match: link.driver == "i40e" && mac(link.permanent_addr) == "58:47:ca:7f:4d:f1"
