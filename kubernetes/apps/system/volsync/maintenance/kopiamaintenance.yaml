@@ -6,6 +6,7 @@ metadata:
   name: kopia-daily-maintenance
   namespace: volsync
 spec:
+  activeDeadlineSeconds: 86400
   repository:
     repository: volsync-secret
   trigger:
