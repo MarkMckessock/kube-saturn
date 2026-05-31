@@ -4,11 +4,12 @@ apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: envoy-public
-  labels:
-    external-dns-proxied: "false"
 spec:
   endpoints:
     - dnsName: public.markmckessock.com
       recordType: CNAME
       targets:
         - ipv4.markmckessock.com
+      providerSpecific:
+        - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: "false"
