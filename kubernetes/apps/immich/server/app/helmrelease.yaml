@@ -173,7 +173,7 @@ spec:
         rules:
           - backendRefs:
               - name: main
-                port: http
+                port: 2283
 
     serviceMonitor:
       main:
