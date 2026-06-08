@@ -99,5 +99,3 @@ spec:
             port: 6379
             targetPort: redis
             protocol: TCP
-          http:
-            enabled: false

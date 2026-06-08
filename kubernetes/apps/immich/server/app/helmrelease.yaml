@@ -178,8 +178,13 @@ spec:
     serviceMonitor:
       main:
         enabled: true
+        serviceName: main
         endpoints:
           - port: metrics-api
             scheme: http
+      microservices:
+        enabled: true
+        serviceName: microservices
+        endpoints:
           - port: metrics-ms
             scheme: http
