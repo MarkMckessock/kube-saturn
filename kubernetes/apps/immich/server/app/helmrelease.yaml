@@ -24,29 +24,25 @@ spec:
 
     controllers:
       server:
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/home-operations/postgres-init
-              tag: "17"
-            envFrom:
-              - secretRef:
-                  name: immich-secret
         containers:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.0.0
               pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: immich-secret
             env:
               TZ: America/Chicago
               IMMICH_TELEMETRY_INCLUDE: all
               IMMICH_WORKERS_INCLUDE: api
               IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
+              REDIS_HOSTNAME: valkey.immich.svc
+              REDIS_PORT: "6379"
               MPLCONFIGDIR: /tmp/matplotlib
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: uri
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -90,15 +86,19 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.0.0
               pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: immich-secret
             env:
               TZ: America/Chicago
               IMMICH_TELEMETRY_INCLUDE: all
               IMMICH_WORKERS_EXCLUDE: api
               IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
+              REDIS_HOSTNAME: valkey.immich.svc
+              REDIS_PORT: "6379"
               MPLCONFIGDIR: /tmp/matplotlib
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database-app
+                    key: uri
             securityContext: *securityContext
             ports:
               - name: metrics-ms
