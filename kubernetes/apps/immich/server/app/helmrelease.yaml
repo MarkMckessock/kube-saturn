@@ -13,39 +13,50 @@ spec:
   driftDetection:
     mode: enabled
   values:
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: true
-    #     runAsUser: 1000
-    #     runAsGroup: 1000
-    #     fsGroup: 1000
-    #     fsGroupChangePolicy: OnRootMismatch
-    #     seccompProfile: {type: RuntimeDefault}
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
 
     controllers:
-      main:
-        type: deployment
-        strategy: RollingUpdate
+      server:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17"
+            envFrom:
+              - secretRef:
+                  name: immich-secret
         containers:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v2.0.0
               pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: immich-secret
             env:
+              TZ: America/Chicago
               IMMICH_TELEMETRY_INCLUDE: all
-              REDIS_HOSTNAME: valkey.immich.svc
+              IMMICH_WORKERS_INCLUDE: api
               IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
-              # IMMICH_CONFIG_FILE: /config/immich-config.yaml
+              MPLCONFIGDIR: /tmp/matplotlib
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: [ALL]}
             ports:
               - name: http
                 containerPort: 2283
                 protocol: TCP
               - name: metrics-api
                 containerPort: 8081
-                protocol: TCP
-              - name: metrics-ms
-                containerPort: 8082
                 protocol: TCP
             probes:
               liveness: &probes
@@ -72,10 +83,37 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 30
 
+      microservices:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.0.0
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+            env:
+              TZ: America/Chicago
+              IMMICH_TELEMETRY_INCLUDE: all
+              IMMICH_WORKERS_EXCLUDE: api
+              IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
+              MPLCONFIGDIR: /tmp/matplotlib
+            securityContext: *securityContext
+            ports:
+              - name: metrics-ms
+                containerPort: 8082
+                protocol: TCP
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+              limits:
+                gpu.intel.com/i915: 1
+
     service:
       main:
         enabled: true
-        controller: main
+        controller: server
         primary: true
         type: ClusterIP
         ports:
@@ -90,6 +128,10 @@ spec:
             port: 8081
             targetPort: metrics-api
             protocol: HTTP
+      microservices:
+        enabled: true
+        controller: microservices
+        ports:
           metrics-ms:
             enabled: true
             port: 8082
@@ -101,9 +143,24 @@ spec:
         type: nfs
         server: granite.markmckessock.com
         path: /volume1/Users/mmckessock/Pictures
-        globalMounts:
-          - path: /photos
-            readOnly: true
+        advancedMounts:
+          server:
+            main:
+              - path: /photos
+                readOnly: true
+          microservices:
+            main:
+              - path: /photos
+                readOnly: true
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          server:
+            main:
+              - path: /tmp
+          microservices:
+            main:
+              - path: /tmp
 
     route:
       app:

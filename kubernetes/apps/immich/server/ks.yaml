@@ -13,6 +13,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: immich-valkey
+      namespace: immich
   interval: 1h
   path: "./kubernetes/apps/immich/server/app"
   postBuild:

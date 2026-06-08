@@ -74,5 +74,5 @@ spec:
         enabled: true
         size: 10Gi
         type: persistentVolumeClaim
-        accessMode: ReadWriteMany
-        storageClass: rook-ceph
+        accessMode: ReadWriteOnce
+        storageClass: ceph-block
