@@ -11,8 +11,16 @@ spec:
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
 
   superuserSecret:
-    name: immich-secret
+    name: immich-db-superuser
   enableSuperuserAccess: true
+
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        login: true
+        passwordSecret:
+          name: immich-secret
 
   postgresql:
     shared_preload_libraries:
@@ -20,6 +28,9 @@ spec:
 
   bootstrap:
     initdb:
+      database: immich
+      owner: immich
       postInitApplicationSQL:
+        # Runs in the immich database as postgres superuser
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
         - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
