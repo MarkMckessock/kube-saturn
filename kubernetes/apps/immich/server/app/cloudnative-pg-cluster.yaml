@@ -18,6 +18,13 @@ spec:
     shared_preload_libraries:
       - "vchord.so"
 
+  managed:
+    roles:
+      - name: immich
+        login: true
+        passwordSecret:
+          name: immich-db-user
+
   bootstrap:
     initdb:
       database: immich
