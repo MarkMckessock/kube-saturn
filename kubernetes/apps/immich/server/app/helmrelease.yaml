@@ -104,11 +104,6 @@ spec:
               - name: metrics-ms
                 containerPort: 8082
                 protocol: TCP
-            resources:
-              requests:
-                gpu.intel.com/i915: 1
-              limits:
-                gpu.intel.com/i915: 1
 
     service:
       main:
