@@ -84,6 +84,10 @@ spec:
                   failureThreshold: 30
 
       microservices:
+        pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: immich-server-gpu
         containers:
           main:
             image:
@@ -100,6 +104,9 @@ spec:
               IMMICH_MACHINE_LEARNING_URL: http://machine-learning.immich.svc:3003
               MPLCONFIGDIR: /tmp/matplotlib
             securityContext: *securityContext
+            resources:
+              claims:
+                - name: gpu
             ports:
               - name: metrics-ms
                 containerPort: 8082
