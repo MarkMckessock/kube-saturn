@@ -17,6 +17,8 @@ spec:
       namespace: rook-ceph
     - name: onepassword
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/media/radarr/radarr
   postBuild:
@@ -51,6 +53,8 @@ spec:
       namespace: rook-ceph
     - name: onepassword
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/media/radarr/radarr-4k
   postBuild:

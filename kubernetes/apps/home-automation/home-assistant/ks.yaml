@@ -17,6 +17,8 @@ spec:
       namespace: home-automation
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/home-automation/home-assistant/app
   postBuild:

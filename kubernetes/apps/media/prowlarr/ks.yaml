@@ -17,6 +17,8 @@ spec:
       namespace: rook-ceph
     - name: onepassword
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/media/prowlarr/app
   postBuild:
