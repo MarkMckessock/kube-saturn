@@ -37,8 +37,6 @@ spec:
                   cpu: 50
                   memory: 50
                   pods: 50
-                excludeOwnerKinds:
-                  - Job
             - name: RemoveFailedPods
               args:
                 reasons:
@@ -48,8 +46,6 @@ spec:
                   - Terminated
                   - UnexpectedAdmissionError
                 includingInitContainers: true
-                excludeOwnerKinds:
-                  - Job
                 minPodLifetimeSeconds: 1800
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingNodeAffinity
