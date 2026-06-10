@@ -178,7 +178,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: main
+              - name: immich-server-main
                 port: 2283
 
     serviceMonitor:
