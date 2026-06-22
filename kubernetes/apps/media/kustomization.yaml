@@ -19,3 +19,4 @@ resources:
   - ./kometa/ks.yaml
   - ./jellyfin/ks.yaml
   - ./fileflows/ks.yaml
+  - ./maintainerr/ks.yaml
