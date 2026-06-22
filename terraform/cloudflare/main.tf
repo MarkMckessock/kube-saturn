@@ -9,20 +9,19 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.20.0"
+      version = "5.21.0"
     }
-    http = {
-      source  = "hashicorp/http"
-      version = "3.2.1"
-    }
-    sops = {
-      source  = "carlpett/sops"
-      version = "0.7.2"
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "~> 3.2"
     }
   }
-  required_version = ">= 1.3.0"
+  required_version = ">= 1.10.0"
 }
 
-data "sops_file" "secrets" {
-  source_file = "secret.sops.yaml"
+# Ephemeral resources are never written to Terraform state.
+# Requires `op` CLI to be signed in before running terraform plan/apply.
+ephemeral "onepassword_item" "cloudflare" {
+  vault = var.onepassword_kubernetes_vault_id
+  title = "cloudflare-terraform"
 }

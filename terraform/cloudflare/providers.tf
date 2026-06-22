@@ -1,3 +1,7 @@
+provider "onepassword" {
+  account = "my.1password.com"
+}
+
 provider "cloudflare" {
-  api_token = data.sops_file.secrets.data["cloudflare_api_token"]
+  api_token = ephemeral.onepassword_item.cloudflare.password
 }
