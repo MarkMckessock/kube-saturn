@@ -1,0 +1,101 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fileflows
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: fileflows
+  interval: 1h
+  values:
+    controllers:
+      fileflows:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: revenz/fileflows
+              tag: 26.05@sha256:dca58baa4c9b4ba725c8ef57d197334895ba5d936c8040107e509c70f36246c5
+            env:
+              TZ: America/New_York
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 5000
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.markmckessock.com"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /app/Data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/Logs
+      temp:
+        type: emptyDir
+        globalMounts:
+          - path: /temp
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      granite-media:
+        type: nfs
+        server: granite.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /granite/media
+            readOnly: true
+      basalt-media:
+        type: nfs
+        server: basalt.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /basalt/media
+            readOnly: true

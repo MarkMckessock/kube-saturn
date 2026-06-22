@@ -18,3 +18,4 @@ resources:
   - ./recyclarr/ks.yaml
   - ./kometa/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./fileflows/ks.yaml
