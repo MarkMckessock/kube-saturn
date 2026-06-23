@@ -74,6 +74,24 @@ spec:
             env:
               TZ: America/New_York
               FFNODE: "1"
+            lifecycle:
+              postStart:
+                exec:
+                  command: ["/bin/sh", "-c", "date +%s > /tmp/node_started"]
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - "[ -f /tmp/node_started ] && [ $(( $(date +%s) - $(cat /tmp/node_started) )) -lt 28800 ]"
+                  initialDelaySeconds: 600
+                  periodSeconds: 300
+                  failureThreshold: 3
+                  timeoutSeconds: 5
             resources:
               requests:
                 cpu: 500m
