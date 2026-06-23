@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jorkyfin
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: jorkyfin
+  interval: 30m
+  values:
+    controllers:
+      jorkyfin:
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.10@sha256:6497f0245de93fac642926c065b427362ca5e626e659f690516599c8c3817a38
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_PublishedServerUrl: https://jorkyfin.markmckessock.com
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames:
+          - jorkyfin.markmckessock.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /config
+      metadata:
+        size: 10Gi
+        accessMode: ReadWriteOnce
+        suffix: "metadata"
+        globalMounts:
+          - path: /metadata
+            subPath: metadata
+          - path: /config/data/introskipper
+            subPath: introskipper
+      granite-media:
+        type: nfs
+        server: granite.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /media/granite
+            readOnly: true
+      basalt-media:
+        type: nfs
+        server: basalt.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /media/basalt
+            readOnly: true
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          jorkyfin:
+            app:
+              - path: /cache
+                subPath: cache
+              - path: /tmp
+                subPath: tmp
+              - path: /transcode
+                subPath: transcode

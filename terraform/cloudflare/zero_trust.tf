@@ -33,6 +33,16 @@ resource "cloudflare_zero_trust_access_policy" "admin" {
   }]
 }
 
+resource "cloudflare_zero_trust_access_policy" "anonymous" {
+  account_id = local.cloudflare_account_id
+  name       = "Allow anyone"
+  decision   = "bypass"
+
+  include = [{
+    everyone = {}
+  }]
+}
+
 # ── Access Applications ────────────────────────────────────────────────────────
 # Each restricted app needs an access_application referencing one or more
 # reusable policies. Public apps need no entry here.
@@ -46,6 +56,19 @@ resource "cloudflare_zero_trust_access_application" "fileflows" {
 
   policies = [{
     id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
+resource "cloudflare_zero_trust_access_application" "jorkyfin" {
+  account_id       = local.cloudflare_account_id
+  name             = "Jorkyfin"
+  domain           = "jorkyfin.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
     precedence = 1
   }]
 }
