@@ -74,10 +74,6 @@ spec:
             env:
               TZ: America/New_York
               FFNODE: "1"
-            lifecycle:
-              postStart:
-                exec:
-                  command: ["/bin/sh", "-c", "date +%s > /tmp/node_started"]
             probes:
               liveness:
                 enabled: true
@@ -87,11 +83,11 @@ spec:
                     command:
                       - /bin/sh
                       - -c
-                      - "[ -f /tmp/node_started ] && [ $(( $(date +%s) - $(cat /tmp/node_started) )) -lt 28800 ]"
-                  initialDelaySeconds: 600
-                  periodSeconds: 300
-                  failureThreshold: 3
-                  timeoutSeconds: 5
+                      - "! ls /app/Logs/FileFlows-Node-*.log 2>/dev/null | sort | tail -1 | xargs tail -n 20 2>/dev/null | grep -q 'Configuration revision is too old'"
+                  initialDelaySeconds: 120
+                  periodSeconds: 30
+                  failureThreshold: 1
+                  timeoutSeconds: 10
             resources:
               requests:
                 cpu: 500m
