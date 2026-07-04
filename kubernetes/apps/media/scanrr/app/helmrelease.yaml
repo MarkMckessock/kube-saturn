@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/markmckessock/scanrr
-              tag: latest
+              tag: sha-9987cf5  # pin to a built commit (no :latest)
             env:
               TZ: America/New_York
               SCANRR_CONFIG_FILE: /config/scanrr.yaml
