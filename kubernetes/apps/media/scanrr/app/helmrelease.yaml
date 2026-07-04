@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/markmckessock/scanrr
-              tag: sha-94bb686  # pin to a built commit (no :latest)
+              tag: sha-b6935ed  # pin to a built commit (no :latest)
             env:
               TZ: America/New_York
               SCANRR_CONFIG_FILE: /config/scanrr.yaml
@@ -65,9 +65,10 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 100m
-              limits:
+                cpu: "2"      # reserve cores; bursts higher (no CPU limit) on idle node
                 memory: 2Gi
+              limits:
+                memory: 8Gi   # 4 workers × threaded 4K decode
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
