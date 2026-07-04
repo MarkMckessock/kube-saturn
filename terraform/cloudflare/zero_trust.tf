@@ -85,3 +85,17 @@ resource "cloudflare_zero_trust_access_application" "maintainerr" {
     precedence = 1
   }]
 }
+
+# scanrr can trigger media deletion via the arr API — admin-only.
+resource "cloudflare_zero_trust_access_application" "scanrr" {
+  account_id       = local.cloudflare_account_id
+  name             = "scanrr"
+  domain           = "scanrr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}

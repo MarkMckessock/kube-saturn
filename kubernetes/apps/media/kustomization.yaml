@@ -21,3 +21,4 @@ resources:
   - ./jorkyfin/ks.yaml
   - ./fileflows/ks.yaml
   - ./maintainerr/ks.yaml
+  - ./scanrr/ks.yaml

@@ -1,0 +1,124 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app scanrr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: scanrr
+  interval: 1h
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      scanrr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/markmckessock/scanrr
+              tag: latest
+            env:
+              TZ: America/New_York
+              SCANRR_CONFIG_FILE: /config/scanrr.yaml
+              SCANRR_DATABASE_URL: sqlite:////data/scanrr.db
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 8000
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  failureThreshold: 30
+                  periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.markmckessock.com"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+    persistence:
+      # SQLite + runtime state (volsync-backed PVC, backed up + restored).
+      config:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /data
+      # Rendered scanrr.yaml (jobs/settings/arr/pushover) — keys from 1Password.
+      config-file:
+        type: secret
+        name: scanrr-config-secret
+        globalMounts:
+          - path: /config/scanrr.yaml
+            subPath: scanrr.yaml
+            readOnly: true
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      # Media libraries — READ-ONLY (scanrr never writes to the library; the only
+      # destructive action is via the arr API, §9).
+      granite-media:
+        type: nfs
+        server: granite.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /granite/media
+            readOnly: true
+      basalt-media:
+        type: nfs
+        server: basalt.markmckessock.com
+        path: /volume1/Media
+        globalMounts:
+          - path: /basalt/media
+            readOnly: true
