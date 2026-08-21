@@ -1,0 +1,131 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app photoframe-webhook
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      photoframe-webhook:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/markmckessock/photoframe
+              tag: latest
+            env:
+              STORE_DIR: /data
+              PANEL_WIDTH: "1200"
+              PANEL_HEIGHT: "1600"
+              # Letterbox onto white rather than centre-crop: for the group photos this
+              # thing will mostly show, cropping somebody out of frame is worse than a
+              # white bar, and white bars vanish against the panel's own border.
+              IMAGE_CROP: "false"
+              # E-ink primaries are muted; without a pre-boost a dithered photo reads
+              # like a washed-out newspaper print.
+              IMAGE_SATURATION: "1.4"
+              IMAGE_PALETTE: measured
+              DELETE_TWILIO_MEDIA: "true"
+              MQTT_HOST: mosquitto.home-automation.svc.cluster.local
+              MQTT_PORT: "1883"
+              MQTT_TOPIC_ROOT: home/photoframe
+            envFrom:
+              - secretRef:
+                  name: photoframe-webhook-secret
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  httpGet: { path: /healthz, port: 5000 }
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                spec:
+                  httpGet: { path: /healthz, port: 5000 }
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                # Dithering 1.9 megapixels holds the source image, an RGB copy and an
+                # index array at once. A 12 MP phone photo is the sizing case.
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      data:
+        existingClaim: photoframe-data
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    service:
+      # Public-facing. Only /mms is routed here; see `route` below.
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 5000
+      # LAN-only. This is the address the frame is configured with (IMAGE_URL in
+      # firmware/src/secrets.h). Deliberately a separate Service so the image endpoint
+      # has no path to the internet at all: everything on *.markmckessock.com is behind
+      # the Cloudflare tunnel and public by default, and the photos friends send should
+      # not leave the network.
+      lan:
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: photoframe.markmckessock.com
+          # Pick a free address from the Cilium LB IPAM pool. mosquitto holds .131, jellyfin .132.
+          lbipam.cilium.io/ips: "10.0.70.133"
+        ports:
+          http:
+            port: 80
+            targetPort: 5000
+    route:
+      app:
+        hostnames:
+          - photoframe.markmckessock.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          # /mms ONLY. Twilio authenticates itself with a request signature, so this
+          # path is safe to expose; /latest.pfrm and /latest.png are not routed here and
+          # are reachable only through the LAN Service above.
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /mms
+            backendRefs:
+              - name: photoframe-webhook
+                port: 5000

@@ -10,3 +10,4 @@ resources:
   - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
   - ./splitflap-webhook/ks.yaml
+  - ./photoframe-webhook/ks.yaml

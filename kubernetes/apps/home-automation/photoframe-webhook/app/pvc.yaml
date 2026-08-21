@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoframe-data
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      # Only ever holds one ~1 MB blob plus a preview PNG and a little metadata. 1Gi is
+      # the smallest size worth asking ceph-block for.
+      storage: 1Gi
+  storageClassName: ceph-block
