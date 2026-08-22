@@ -81,6 +81,16 @@ spec:
               # That validation is why the VPN sidecar was crash-looping.
               DOT: "off"
               DNS_UPSTREAM_RESOLVER_TYPE: "plain"
+              # With the built-in server off, gluetun requires explicit upstreams.
+              # Public resolvers on purpose rather than cluster DNS (10.96.0.10):
+              # they are outside FIREWALL_OUTBOUND_SUBNETS, so queries go through the
+              # VPN tunnel. Pointing at CoreDNS instead would send every tracker lookup
+              # out over the host's own connection -- a DNS leak, which rather defeats
+              # running the client behind a VPN at all.
+              #
+              # Trade-off: nothing in this pod can resolve cluster service names. Add
+              # 10.96.0.10:53 here if that ever becomes necessary.
+              DNS_UPSTREAM_PLAIN_ADDRESSES: "1.1.1.1:53,1.0.0.1:53"
               FIREWALL_INPUT_PORTS: 8080
               FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.244.0.0/16 # Allow access to k8s subnets
             envFrom:
