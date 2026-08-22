@@ -37,7 +37,13 @@ spec:
                       name: cloudnative-pg-secret
                       key: password
                 - name: POSTGRES_DB
-                  value: "home-assistant,radarr-4k,radarr_4k_log,firefly,prowlarr,prowlarr_log,radarr,radarr_log,sonarr,sonarr_log,sonarr-4k,sonarr_4k_log,lidarr,lidarr-log"
+                  # The databases that actually exist. The previous list named 14 databases,
+                  # none of which are present -- it was left over from an earlier setup
+                  # (arr stack, home-assistant, firefly). pg_dump failed on the first
+                  # name every night and the job never reached the rest, so NOTHING was
+                  # being backed up while tandoor (87 tables) and monica (97 tables)
+                  # sat unprotected. Keep this in sync when adding a database.
+                  value: "tandoor,monica"
                 - name: POSTGRES_EXTRA_OPTS
                   value: "-Z6 --clean --if-exists"
               volumeMounts:
