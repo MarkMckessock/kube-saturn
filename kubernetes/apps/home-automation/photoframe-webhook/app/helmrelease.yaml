@@ -104,8 +104,10 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: photoframe.markmckessock.com
-          # Pick a free address from the Cilium LB IPAM pool. mosquitto holds .131, jellyfin .132.
+          # Deliberately NO external-dns hostname here. photoframe.markmckessock.com
+          # belongs to the public HTTPRoute on envoy-external; if this Service claims it
+          # too, external-dns writes an A record to the private LB IP and the public
+          # route silently stops working. The frame is configured with the raw IP.
           lbipam.cilium.io/ips: "10.0.70.133"
         ports:
           http:
@@ -127,5 +129,7 @@ spec:
                   type: PathPrefix
                   value: /mms
             backendRefs:
-              - name: photoframe-webhook
+              # NOTE: app-template suffixes each service with its key once more than one
+              # is defined, so this is photoframe-webhook-app, not photoframe-webhook.
+              - name: photoframe-webhook-app
                 port: 5000
