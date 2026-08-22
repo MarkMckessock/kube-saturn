@@ -74,7 +74,13 @@ spec:
               PORT_FORWARD_ONLY: "true"
               VPN_PORT_FORWARDING: "on"
               VPN_PORT_FORWARDING_STATUS_FILE: "/tmp/gluetun/forwarded_port"
+              # DOT off means gluetun's built-in DNS-over-TLS server is disabled, which is
+              # what lets the pod keep resolving cluster DNS. DNS_UPSTREAM_RESOLVER_TYPE
+              # defaults to "dot", and newer gluetun rejects that combination outright:
+              #   "upstream type dot must be plain if the built-in DNS server is disabled"
+              # That validation is why the VPN sidecar was crash-looping.
               DOT: "off"
+              DNS_UPSTREAM_RESOLVER_TYPE: "plain"
               FIREWALL_INPUT_PORTS: 8080
               FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.244.0.0/16 # Allow access to k8s subnets
             envFrom:
