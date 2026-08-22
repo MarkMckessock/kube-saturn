@@ -30,7 +30,7 @@ spec:
               # neighbour's cache indefinitely -- imagePullPolicy: Always does not help,
               # because the pull succeeds, just from the wrong place. Renovate bumps this
               # automatically; see .renovate/autoMerge.json5.
-              tag: latest@sha256:f1393226d32892a1e8b60d9157153db769fcfe543e8db3e2d6a210e7dffa254f
+              tag: latest@sha256:dd5dc3e487cd58ac5c5d1931ba950c5913bb07e01155b41eae0271e19d6fac41
             env:
               STORE_DIR: /data
               PANEL_WIDTH: "1200"
