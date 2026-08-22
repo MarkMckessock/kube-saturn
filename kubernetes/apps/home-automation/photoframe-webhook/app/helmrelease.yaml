@@ -47,6 +47,14 @@ spec:
               MQTT_HOST: mosquitto.home-automation.svc.cluster.local
               MQTT_PORT: "1883"
               MQTT_TOPIC_ROOT: home/photoframe
+              # Pushover: one switch for all notifications. Fires when the panel has
+              # actually displayed a new photo, and once when the battery gets low.
+              NOTIFY_ENABLED: "true"
+              # 3500 mV is PF_BATT_MV_RENDER_OK in the firmware -- the point at which
+              # the frame stops rendering new photos. So the alert means "it is about
+              # to stop updating", which is actionable, rather than an arbitrary %.
+              NOTIFY_BATTERY_LOW_MV: "3500"
+              NOTIFY_BATTERY_CLEAR_MV: "3800"
             envFrom:
               - secretRef:
                   name: photoframe-webhook-secret
