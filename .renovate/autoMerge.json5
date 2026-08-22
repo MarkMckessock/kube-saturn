@@ -11,6 +11,19 @@
       ignoreTests: false,
     },
     {
+      description: "Auto-merge first-party image digests",
+      // Images built from our own repos, whose CI has already tested the commit that
+      // produced them. Merged straight to the branch so a push-to-deploy loop does not
+      // wait on a PR round trip.
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["digest"],
+      matchPackageNames: ["/^ghcr\\.io\\/markmckessock\\//"],
+      minimumReleaseAge: "0 minutes",
+      ignoreTests: true,
+    },
+    {
       description: "Auto-merge OCI Charts",
       matchDatasources: ["docker"],
       automerge: true,

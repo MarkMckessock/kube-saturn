@@ -25,7 +25,12 @@ spec:
           app:
             image:
               repository: ghcr.io/markmckessock/photoframe
-              tag: latest
+              # Pinned by digest, not just the tag. Spegel mirrors images by digest and
+              # resolves tags from its peers, so a mutable `latest` gets served from a
+              # neighbour's cache indefinitely -- imagePullPolicy: Always does not help,
+              # because the pull succeeds, just from the wrong place. Renovate bumps this
+              # automatically; see .renovate/autoMerge.json5.
+              tag: latest@sha256:06b6ecb28b03e8accccf10c5e3a6b9714d89d3482d9a052df154a9c4cd647c08
             env:
               STORE_DIR: /data
               PANEL_WIDTH: "1200"
