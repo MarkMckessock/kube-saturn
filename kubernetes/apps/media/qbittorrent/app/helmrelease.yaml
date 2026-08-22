@@ -60,11 +60,9 @@ spec:
               runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
-              fsGroup: 1000
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-              fsGroupChangePolicy: OnRootMismatch
           gluetun:
             dependsOn: main
             image:
@@ -112,10 +110,17 @@ spec:
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: OnRootMismatch
     defaultPodOptions:
       automountServiceAccountToken: false
+      # fsGroup/fsGroupChangePolicy are PodSecurityContext fields and do not exist on a
+      # container's securityContext -- server-side apply rejects them there, which is
+      # what stopped this Deployment being created at all.
+      #
+      # No runAsNonRoot here on purpose: the gluetun sidecar runs privileged with
+      # NET_ADMIN/SYS_MODULE and would fail to start under a pod-wide non-root policy.
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     route:
       app:
         hostnames:
