@@ -35,7 +35,11 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: typesense-secret
-                    key: password
+                    # The 1Password item stores the key in a field called `typesense`;
+                    # `password` exists but is empty. --api-key=$(TYPESENSE_API_KEY)
+                    # therefore expanded to nothing and the server exited with
+                    # "Invalid configuration: API key is not specified" on every start.
+                    key: typesense
             probes:
               liveness:
                 enabled: true
