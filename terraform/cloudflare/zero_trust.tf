@@ -99,3 +99,25 @@ resource "cloudflare_zero_trust_access_application" "scanrr" {
     precedence = 1
   }]
 }
+
+# photoframe-webhook receives MMS webhooks from Twilio, which cannot log in to
+# Cloudflare Access. Without an explicit bypass the catch-all application answers
+# Twilio's POST with a 302 to the login page and Twilio reports "11200 HTTP
+# retrieval failure".
+#
+# Bypassing the whole hostname is safe here: the HTTPRoute publishes only /mms, and
+# the app authenticates every request itself by validating Twilio's X-Twilio-Signature
+# against TWILIO_AUTH_TOKEN. The image endpoints are not routed publicly at all --
+# they are served on a separate LAN-only LoadBalancer.
+resource "cloudflare_zero_trust_access_application" "photoframe" {
+  account_id       = local.cloudflare_account_id
+  name             = "photoframe-webhook"
+  domain           = "photoframe.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
