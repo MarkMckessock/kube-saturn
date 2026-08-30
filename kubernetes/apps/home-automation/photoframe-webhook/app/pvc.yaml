@@ -11,3 +11,22 @@ spec:
       # the smallest size worth asking ceph-block for.
       storage: 1Gi
   storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoframe-archive-db
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      # Just the SQLite index of received photos -- a few hundred bytes per photo, so
+      # 1Gi is thousands of years of texting. It is a separate claim from
+      # photoframe-data on purpose: /data holds the regenerable render cache, whereas
+      # this is the permanent record and is the thing actually worth backing up.
+      #
+      # It also must not live on the NFS mount next to the photos: SQLite locking is
+      # built on POSIX advisory locks, which NFS implements unreliably, and that is a
+      # well known way to corrupt a database. See server/archive.py.
+      storage: 1Gi
+  storageClassName: ceph-block

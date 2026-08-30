@@ -30,7 +30,7 @@ spec:
               # neighbour's cache indefinitely -- imagePullPolicy: Always does not help,
               # because the pull succeeds, just from the wrong place. Renovate bumps this
               # automatically; see .renovate/autoMerge.json5.
-              tag: latest@sha256:6d14de6af6cf89832f1bf27c7df0aa348b1be689017746237d831ccdd5b1be68
+              tag: latest@sha256:b7ebeac933a9e3090928143ccf63a8a54a60255e3cee75745f1f227e6a5c2bda
             env:
               STORE_DIR: /data
               PANEL_WIDTH: "1200"
@@ -44,6 +44,12 @@ spec:
               IMAGE_SATURATION: "1.4"
               IMAGE_PALETTE: measured
               DELETE_TWILIO_MEDIA: "true"
+              # Every photo received is kept, untouched, on the NAS. The mount is a
+              # subdirectory of /volume1/Users/mmckessock/Pictures, which the photo
+              # library already scans, so they turn up there without any import step.
+              # Setting ARCHIVE_DIR is the single switch that turns this on.
+              ARCHIVE_DIR: /archive
+              ARCHIVE_DB: /db/photos.db
               MQTT_HOST: mosquitto.home-automation.svc.cluster.local
               MQTT_PORT: "1883"
               MQTT_TOPIC_ROOT: home/photoframe
@@ -97,6 +103,19 @@ spec:
         existingClaim: photoframe-data
         globalMounts:
           - path: /data
+      # The originals. Quoted because the path contains spaces.
+      archive:
+        type: nfs
+        server: granite.markmckessock.com
+        path: "/volume1/Users/mmckessock/Pictures/Picture Frame Uploads"
+        globalMounts:
+          - path: /archive
+      # The index. Deliberately NOT on the NFS share above -- SQLite over NFS is a
+      # known way to corrupt a database. See server/archive.py in the photoframe repo.
+      archive-db:
+        existingClaim: photoframe-archive-db
+        globalMounts:
+          - path: /db
       tmp:
         type: emptyDir
         globalMounts:
