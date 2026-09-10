@@ -23,6 +23,7 @@ spec:
     substitute:
       APP: sonarr
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "41 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -57,6 +58,7 @@ spec:
     substitute:
       APP: sonarr-4k
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "35 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

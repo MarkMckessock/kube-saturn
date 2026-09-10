@@ -22,6 +22,7 @@ spec:
       VOLSYNC_CACHE_CAPACITY: 5Gi
       VOLSYNC_CLAIM: jorkyfin
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "24 * * * *"
   prune: true
   sourceRef:
     kind: GitRepository

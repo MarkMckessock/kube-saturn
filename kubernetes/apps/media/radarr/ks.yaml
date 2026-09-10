@@ -25,6 +25,7 @@ spec:
     substitute:
       APP: radarr
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "39 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -61,6 +62,7 @@ spec:
     substitute:
       APP: radarr-4k
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "37 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
