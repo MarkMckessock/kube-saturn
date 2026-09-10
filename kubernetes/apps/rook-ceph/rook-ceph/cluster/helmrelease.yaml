@@ -17,6 +17,23 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  # Rook ships CephNodeNetworkPacketDrops with no `for:`, so one scrape above the
+  # 0.5% threshold pages instantly. Debounce it so only sustained loss alerts.
+  # The `test` op pins the rule's position: a chart bump that shifts it fails the
+  # render loudly instead of silently patching a different alert.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: PrometheusRule
+              name: prometheus-ceph-rules
+            patch: |
+              - op: test
+                path: /spec/groups/6/rules/1/alert
+                value: CephNodeNetworkPacketDrops
+              - op: add
+                path: /spec/groups/6/rules/1/for
+                value: 15m
   values:
     monitoring:
       enabled: true
