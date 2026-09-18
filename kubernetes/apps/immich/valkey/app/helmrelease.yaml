@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: docker.io/valkey/valkey
-              tag: 9.0-alpine@sha256:ad4541b28b017bf4cd83ee057c51aafb21ea32e898e3f3b8b75e268650f2ac20
+              tag: 9.2-alpine@sha256:43135a13c2d480c6d99d765119098fe617483b6d03fb9996dd89f7a980f143a5
               pullPolicy: IfNotPresent
             ports:
               - name: redis
