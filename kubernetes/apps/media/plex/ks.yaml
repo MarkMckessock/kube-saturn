@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: intel-gpu-resource-driver
@@ -24,7 +24,9 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_PATH: /web/index.html
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /identity
+      GATUS_PORT: 32400
       VOLSYNC_CACHE_CAPACITY: 200Gi
       VOLSYNC_CAPACITY: 400Gi
       VOLSYNC_SCHEDULE: "52 * * * *"
