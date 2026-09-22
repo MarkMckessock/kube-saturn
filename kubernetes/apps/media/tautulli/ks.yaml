@@ -23,8 +23,8 @@ spec:
     substitute:
       APP: *app
       GATUS_NAMESPACE: *namespace
-      GATUS_PORT: 8181
-      GATUS_STATUS: 303
+      GATUS_PORT: "8181"
+      GATUS_STATUS: "303"
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_SCHEDULE: "14 * * * *"
   prune: true
