@@ -121,3 +121,18 @@ resource "cloudflare_zero_trust_access_application" "photoframe" {
     precedence = 1
   }]
 }
+
+# lidarr can trigger media deletion and exposes indexer credentials via the arr
+# API — admin-only, matching scanrr.
+resource "cloudflare_zero_trust_access_application" "lidarr" {
+  account_id       = local.cloudflare_account_id
+  name             = "Lidarr"
+  domain           = "lidarr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}

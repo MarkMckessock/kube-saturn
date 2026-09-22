@@ -10,7 +10,7 @@ resources:
   - ./tautulli/ks.yaml
   - ./radarr/ks.yaml
   - ./sonarr/ks.yaml
-  # - ./lidarr/ks.yaml
+  - ./lidarr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
   - ./sabnzbd/ks.yaml
