@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: revenz/fileflows
-              tag: 26.05@sha256:dca58baa4c9b4ba725c8ef57d197334895ba5d936c8040107e509c70f36246c5
+              tag: 26.09@sha256:1257d17cca6b2d4ca2ad2cb7ffcbffcd22f66741151a9f5e40b46f2b73efa316
             env:
               TZ: America/New_York
             probes:
@@ -70,7 +70,7 @@ spec:
           node:
             image:
               repository: revenz/fileflows
-              tag: 26.05@sha256:dca58baa4c9b4ba725c8ef57d197334895ba5d936c8040107e509c70f36246c5
+              tag: 26.09@sha256:1257d17cca6b2d4ca2ad2cb7ffcbffcd22f66741151a9f5e40b46f2b73efa316
             env:
               TZ: America/New_York
               FFNODE: "1"
