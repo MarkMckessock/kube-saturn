@@ -6,8 +6,9 @@ metadata:
   name: kopia-daily-maintenance
   namespace: volsync
 spec:
+  activeDeadlineSeconds: 86400
   repository:
     repository: volsync-secret
   trigger:
-    schedule: "30 3,15 * * *"
+    schedule: "30 1,5,9,13,17,21 * * *"
   enabled: true

@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.1.4@sha256:bb82ad6668f8eda1d0fcce6c1341498bfa879155bb1295cd9d314a2c35c07a01
+              tag: 5.2.4@sha256:9307627e03981d5473aa31175ea76ed56ea3752333ca49d601b6af45e281e7ba
             env:
               QBT_TORRENTING_PORT: &bittorrentPort 50413
               QBT_WEBUI_PORT: &port 8080
@@ -60,11 +60,9 @@ spec:
               runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
-              fsGroup: 1000
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-              fsGroupChangePolicy: OnRootMismatch
           gluetun:
             dependsOn: main
             image:
@@ -76,7 +74,23 @@ spec:
               PORT_FORWARD_ONLY: "true"
               VPN_PORT_FORWARDING: "on"
               VPN_PORT_FORWARDING_STATUS_FILE: "/tmp/gluetun/forwarded_port"
+              # DOT off means gluetun's built-in DNS-over-TLS server is disabled, which is
+              # what lets the pod keep resolving cluster DNS. DNS_UPSTREAM_RESOLVER_TYPE
+              # defaults to "dot", and newer gluetun rejects that combination outright:
+              #   "upstream type dot must be plain if the built-in DNS server is disabled"
+              # That validation is why the VPN sidecar was crash-looping.
               DOT: "off"
+              DNS_UPSTREAM_RESOLVER_TYPE: "plain"
+              # With the built-in server off, gluetun requires explicit upstreams.
+              # Public resolvers on purpose rather than cluster DNS (10.96.0.10):
+              # they are outside FIREWALL_OUTBOUND_SUBNETS, so queries go through the
+              # VPN tunnel. Pointing at CoreDNS instead would send every tracker lookup
+              # out over the host's own connection -- a DNS leak, which rather defeats
+              # running the client behind a VPN at all.
+              #
+              # Trade-off: nothing in this pod can resolve cluster service names. Add
+              # 10.96.0.10:53 here if that ever becomes necessary.
+              DNS_UPSTREAM_PLAIN_ADDRESSES: "1.1.1.1:53,1.0.0.1:53"
               FIREWALL_INPUT_PORTS: 8080
               FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.244.0.0/16 # Allow access to k8s subnets
             envFrom:
@@ -112,10 +126,17 @@ spec:
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: OnRootMismatch
     defaultPodOptions:
       automountServiceAccountToken: false
+      # fsGroup/fsGroupChangePolicy are PodSecurityContext fields and do not exist on a
+      # container's securityContext -- server-side apply rejects them there, which is
+      # what stopped this Deployment being created at all.
+      #
+      # No runAsNonRoot here on purpose: the gluetun sidecar runs privileged with
+      # NET_ADMIN/SYS_MODULE and would fail to start under a pod-wide non-root policy.
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     route:
       app:
         hostnames:

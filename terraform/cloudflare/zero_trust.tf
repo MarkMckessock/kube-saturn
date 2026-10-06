@@ -1,0 +1,153 @@
+data "cloudflare_accounts" "me" {}
+
+locals {
+  cloudflare_account_id = data.cloudflare_accounts.me.result[0].id
+}
+
+# ── Reusable Groups ────────────────────────────────────────────────────────────
+
+resource "cloudflare_zero_trust_access_group" "admin" {
+  account_id = local.cloudflare_account_id
+  name       = "Allow admin"
+
+  include = [{
+    email = {
+      email = "mark.mckessock@gmail.com"
+    }
+  }]
+}
+
+# ── Reusable Policies ──────────────────────────────────────────────────────────
+# Account-level policies — referenced by applications via policies[].id.
+# Add new policies here when broader access is needed (e.g. family, guests).
+
+resource "cloudflare_zero_trust_access_policy" "admin" {
+  account_id = local.cloudflare_account_id
+  name       = "Allow admin"
+  decision   = "allow"
+
+  include = [{
+    group = {
+      id = cloudflare_zero_trust_access_group.admin.id
+    }
+  }]
+}
+
+resource "cloudflare_zero_trust_access_policy" "anonymous" {
+  account_id = local.cloudflare_account_id
+  name       = "Allow anyone"
+  decision   = "bypass"
+
+  include = [{
+    everyone = {}
+  }]
+}
+
+# ── Access Applications ────────────────────────────────────────────────────────
+# Each restricted app needs an access_application referencing one or more
+# reusable policies. Public apps need no entry here.
+
+resource "cloudflare_zero_trust_access_application" "fileflows" {
+  account_id       = local.cloudflare_account_id
+  name             = "FileFlows"
+  domain           = "fileflows.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
+resource "cloudflare_zero_trust_access_application" "jorkyfin" {
+  account_id       = local.cloudflare_account_id
+  name             = "Jorkyfin"
+  domain           = "jorkyfin.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+resource "cloudflare_zero_trust_access_application" "maintainerr" {
+  account_id       = local.cloudflare_account_id
+  name             = "Maintainerr"
+  domain           = "maintainerr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
+# scanrr can trigger media deletion via the arr API — admin-only.
+resource "cloudflare_zero_trust_access_application" "scanrr" {
+  account_id       = local.cloudflare_account_id
+  name             = "scanrr"
+  domain           = "scanrr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
+# photoframe-webhook receives MMS webhooks from Twilio, which cannot log in to
+# Cloudflare Access. Without an explicit bypass the catch-all application answers
+# Twilio's POST with a 302 to the login page and Twilio reports "11200 HTTP
+# retrieval failure".
+#
+# Bypassing the whole hostname is safe here: the HTTPRoute publishes only /mms, and
+# the app authenticates every request itself by validating Twilio's X-Twilio-Signature
+# against TWILIO_AUTH_TOKEN. The image endpoints are not routed publicly at all --
+# they are served on a separate LAN-only LoadBalancer.
+resource "cloudflare_zero_trust_access_application" "photoframe" {
+  account_id       = local.cloudflare_account_id
+  name             = "photoframe-webhook"
+  domain           = "photoframe.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: only /sms
+# is routed publicly and the app rejects anything without a valid X-Twilio-Signature.
+resource "cloudflare_zero_trust_access_application" "kd_webhook" {
+  account_id       = local.cloudflare_account_id
+  name             = "kd-webhook"
+  domain           = "kd-webhook.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# lidarr can trigger media deletion and exposes indexer credentials via the arr
+# API — admin-only, matching scanrr.
+resource "cloudflare_zero_trust_access_application" "lidarr" {
+  account_id       = local.cloudflare_account_id
+  name             = "Lidarr"
+  domain           = "lidarr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}

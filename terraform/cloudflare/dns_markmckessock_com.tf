@@ -1,95 +1,92 @@
 data "cloudflare_zones" "public_domain" {
-  filter {
-    name = "markmckessock.com"
-  }
+  name = "markmckessock.com"
 }
 
-resource "cloudflare_record" "host_rpi" {
+resource "cloudflare_dns_record" "host_rpi" {
   name    = "rpi-ha.infra"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.60.20"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.60.20"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-
-resource "cloudflare_record" "host_kari" {
+resource "cloudflare_dns_record" "host_kari" {
   name    = "kari.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.2"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.2"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_titan" {
+resource "cloudflare_dns_record" "host_titan" {
   name    = "titan.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.3"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.3"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_phoebe" {
+resource "cloudflare_dns_record" "host_phoebe" {
   name    = "phoebe.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.4"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.4"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "saturn_cluster" {
+resource "cloudflare_dns_record" "saturn_cluster" {
   name    = "saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.5"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.5"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_janus" {
+resource "cloudflare_dns_record" "host_janus" {
   name    = "anthe.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.7"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.7"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_granite" {
+resource "cloudflare_dns_record" "host_granite" {
   name    = "granite"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.8"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.8"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_tarvos" {
+resource "cloudflare_dns_record" "host_tarvos" {
   name    = "tarvos.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.9"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.9"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "host_aegir" {
+resource "cloudflare_dns_record" "host_aegir" {
   name    = "aegir.saturn.kube"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.10"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.10"
   proxied = false
   type    = "A"
   ttl     = 1
 }
 
-resource "cloudflare_record" "mosquitto" {
+resource "cloudflare_dns_record" "mosquitto" {
   name    = "mosquitto"
-  zone_id = lookup(data.cloudflare_zones.public_domain.zones[0], "id")
-  value   = "10.0.70.131"
+  zone_id = data.cloudflare_zones.public_domain.result[0].id
+  content = "10.0.70.131"
   proxied = false
   type    = "A"
   ttl     = 1

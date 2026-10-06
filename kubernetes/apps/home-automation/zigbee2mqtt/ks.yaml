@@ -17,12 +17,15 @@ spec:
       namespace: home-automation
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/home-automation/zigbee2mqtt/app
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_SCHEDULE: "8 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

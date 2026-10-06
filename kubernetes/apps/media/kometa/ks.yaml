@@ -14,12 +14,15 @@ spec:
   dependsOn:
     - name: plex
       namespace: media
+    - name: volsync
+      namespace: system
   interval: 1h
   path: "./kubernetes/apps/media/kometa/app"
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_SCHEDULE: "43 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -29,4 +32,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-

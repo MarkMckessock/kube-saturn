@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -30,7 +31,7 @@ spec:
           main:
             image:
               repository: docker.io/valkey/valkey
-              tag: 9.0-alpine@sha256:ad4541b28b017bf4cd83ee057c51aafb21ea32e898e3f3b8b75e268650f2ac20
+              tag: 9.0-alpine@sha256:187679e3bd4036959631e3f03983ab2ba503ab21e6fd0454d508e909db2ee989
               pullPolicy: IfNotPresent
             ports:
               - name: redis
@@ -99,5 +100,3 @@ spec:
             port: 6379
             targetPort: redis
             protocol: TCP
-          http:
-            enabled: false

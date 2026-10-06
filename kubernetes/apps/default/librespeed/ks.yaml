@@ -1,4 +1,3 @@
-
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -15,12 +14,15 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: "./kubernetes/apps/default/librespeed/app"
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_SCHEDULE: "2 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

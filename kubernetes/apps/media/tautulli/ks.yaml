@@ -10,17 +10,23 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: "./kubernetes/apps/media/tautulli/app"
   postBuild:
     substitute:
       APP: *app
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /status
+      GATUS_PORT: "8181"
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "14 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -30,4 +36,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-

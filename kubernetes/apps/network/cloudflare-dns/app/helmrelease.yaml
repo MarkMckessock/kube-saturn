@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.20.0
+    tag: 1.23.0
   url: oci://ghcr.io/home-operations/charts-mirror/external-dns
   verify:
     provider: cosign
@@ -55,13 +55,13 @@ spec:
       - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --gateway-name=envoy-external
+      - --gateway-label-filter=external-dns=proxied
       # - --zone-id-filter=$(CF_ZONE_ID)
     triggerLoopOnEvent: true
     logLevel: debug
     policy: sync
     sources: ["crd", "gateway-httproute"]
-    # txtOwnerId: default
+    txtOwnerId: default
     # txtPrefix: k8s.
     domainFilters: ["markmckessock.com"]
     serviceMonitor:

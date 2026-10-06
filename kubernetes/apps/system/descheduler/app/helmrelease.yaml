@@ -39,6 +39,10 @@ spec:
                   pods: 50
             - name: RemoveFailedPods
               args:
+                labelSelector:
+                  matchExpressions:
+                    - key: batch.kubernetes.io/job-name
+                      operator: DoesNotExist
                 reasons:
                   - ContainerStatusUnknown
                   - NodeAffinity
@@ -46,8 +50,6 @@ spec:
                   - Terminated
                   - UnexpectedAdmissionError
                 includingInitContainers: true
-                excludeOwnerKinds:
-                  - Job
                 minPodLifetimeSeconds: 1800
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingNodeAffinity

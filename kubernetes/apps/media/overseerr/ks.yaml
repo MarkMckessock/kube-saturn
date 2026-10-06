@@ -15,12 +15,15 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: "./kubernetes/apps/media/overseerr/app"
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "33 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -30,4 +33,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-

@@ -10,19 +10,24 @@ spec:
     labels:
       app.kubernetes.io/name: radarr
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: onepassword
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/media/radarr/radarr
   postBuild:
     substitute:
       APP: radarr
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /ping
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "39 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -44,19 +49,24 @@ spec:
     labels:
       app.kubernetes.io/name: radarr-4k
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: onepassword
       namespace: external-secrets
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/media/radarr/radarr-4k
   postBuild:
     substitute:
       APP: radarr-4k
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /ping
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "37 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

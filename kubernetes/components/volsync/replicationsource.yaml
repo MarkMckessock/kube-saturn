@@ -7,10 +7,11 @@ metadata:
 spec:
   sourcePVC: "${VOLSYNC_CLAIM:=${APP}}"
   trigger:
-    schedule: "0 * * * *"
+    schedule: "${VOLSYNC_SCHEDULE:=0 * * * *}"
   kopia:
     accessModes:
       - "${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=8Gi}"
     compression: zstd-fastest
     copyMethod: Snapshot
     moverSecurityContext:

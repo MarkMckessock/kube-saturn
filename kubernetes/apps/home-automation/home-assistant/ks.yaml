@@ -17,6 +17,8 @@ spec:
       namespace: home-automation
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: system
   interval: 1h
   path: ./kubernetes/apps/home-automation/home-assistant/app
   postBuild:
@@ -24,6 +26,7 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "10 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
