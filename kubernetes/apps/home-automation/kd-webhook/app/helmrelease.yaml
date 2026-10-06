@@ -106,11 +106,11 @@ spec:
             namespace: network
         rules:
           # /sms ONLY, matching photoframe-webhook. /latest serves the most recent
-          # photo to anyone who asks, with no auth of any kind, so it is deliberately
-          # not routed. The frame therefore cannot fetch images yet -- that needs a
-          # decision first: a Cloudflare Access service token on a second /latest rule
-          # if the frame lives on Kenta's network, or a LAN-only LoadBalancer Service
-          # like photoframe-webhook-lan if it ends up on ours.
+          # photo to anyone who asks, with no auth of any kind, so it must never be
+          # routed here -- everything on this gateway is public by default. It is
+          # served on the LAN instead; see httproute-internal.yaml. That only reaches
+          # a frame on our network: if Kenta's frame sits on his own, it needs a
+          # Cloudflare Access service token on a second rule here instead.
           - matches:
               - path:
                   type: PathPrefix
