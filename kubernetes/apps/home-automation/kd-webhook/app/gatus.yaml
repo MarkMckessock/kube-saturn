@@ -8,9 +8,7 @@ metadata:
 data:
   config.yaml: |
     endpoints:
-      # Probed in-cluster rather than with the gatus/external component: the public
-      # route publishes only /sms, which answers GET with 405, so an external probe
-      # has nothing to hit.
+      # In-cluster: the public route serves only /sms, which answers GET with 405.
       - name: kd-webhook
         group: home-automation
         url: http://kd-webhook.home-automation.svc.cluster.local:5000/health

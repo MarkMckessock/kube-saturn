@@ -5,30 +5,21 @@ kind: HTTPRoute
 metadata:
   name: kd-webhook-internal
 spec:
-  # LAN-only by construction, not by policy: unifi-dns watches gateways labelled
-  # unifi-dns=true (both envoy gateways) and writes a record into UniFi, while
-  # cloudflare-dns watches external-dns=proxied, which envoy-internal does NOT carry.
-  # So this name resolves to internal.markmckessock.com (10.0.70.121) on the LAN and
-  # does not exist in public DNS at all -- nothing about it is reachable through the
-  # Cloudflare tunnel.
-  #
-  # That matters because /latest serves the most recent photo to anyone who asks with
-  # no auth of any kind. Keep this hostname off envoy-external.
+  # LAN-only by construction: envoy-internal carries unifi-dns=true but not
+  # external-dns=proxied, so this name never enters public DNS. /latest has no auth.
   hostnames: ["kd-webhook-internal.markmckessock.com"]
   parentRefs:
     - name: envoy-internal
       namespace: network
       sectionName: https
   rules:
-    # /latest ONLY. /sms stays on the public route in helmrelease.yaml -- Twilio has to
-    # reach it from the internet -- and /health is probed in-cluster by gatus.yaml, so
-    # neither belongs here.
+    # /latest only; /sms must stay public for Twilio and /health is probed in-cluster.
     - matches:
         - path:
             type: PathPrefix
             value: /latest
       backendRefs:
-        # Single service key, so no suffix -- unlike photoframe-webhook-app.
+        # Single service key, so app-template adds no suffix.
         - name: kd-webhook
           namespace: home-automation
           port: 5000

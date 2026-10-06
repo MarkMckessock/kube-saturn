@@ -122,11 +122,8 @@ resource "cloudflare_zero_trust_access_application" "photoframe" {
   }]
 }
 
-# kd-webhook is Kenta's e-ink frame receiver, same Twilio-can't-log-in problem as
-# photoframe above, so it needs the same explicit bypass rather than no entry at all.
-#
-# Narrower than it looks: the HTTPRoute publishes only /sms, and the app rejects any
-# request without a valid X-Twilio-Signature. /latest is not routed publicly.
+# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: only /sms
+# is routed publicly and the app rejects anything without a valid X-Twilio-Signature.
 resource "cloudflare_zero_trust_access_application" "kd_webhook" {
   account_id       = local.cloudflare_account_id
   name             = "kd-webhook"

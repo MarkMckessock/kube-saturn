@@ -24,21 +24,8 @@ spec:
         containers:
           app:
             image:
-              # Kenta's image, not ours. Pinned by digest for the same reason as
-              # photoframe: Spegel mirrors by digest and resolves tags from peers, so a
-              # mutable `latest` gets served from a neighbour's cache indefinitely.
-              #
-              # It matters more here -- upstream CI overwrites :latest on every push to
-              # main, so without a digest whatever Kenta commits lands in our cluster
-              # unreviewed. Renovate will raise digest bumps but will NOT auto-merge
-              # them: .renovate/autoMerge.json5 covers ghcr.io/markmckessock/* only.
-              # Keep it that way and read the upstream diff before merging.
-              #
-              # Post-dkenta12/einkframeserver#2: validates X-Twilio-Signature before
-              # the handler runs, refuses when no auth token is configured, and only
-              # fetches MediaUrls on twilio.com hosts -- the account SID and auth
-              # token go out as basic auth on that fetch, so the allowlist is what
-              # keeps them from being handed to an arbitrary host.
+              # Upstream CI overwrites :latest on every push to main, so pin by digest
+              # and read the diff before bumping -- this is a third-party image.
               repository: ghcr.io/dkenta12/einkframeserver
               tag: latest@sha256:60ad907709719cf82f1f62e169f7e4244e435c64457d233cd409421c2593bf60
             env:
@@ -70,23 +57,12 @@ spec:
                 cpu: 10m
                 memory: 64Mi
               limits:
-                # Holds the downloaded photo in memory and writes it out twice. MMS is
-                # capped at 5 MB, so this is generous.
+                # MMS caps at 5 MB; the app buffers the photo in memory.
                 memory: 256Mi
     defaultPodOptions:
       dnsConfig:
         options:
-          # CoreDNS runs `autopath @kubernetes`, which answers the first search-path
-          # attempt (api.twilio.com.home-automation.svc.cluster.local) with a CNAME to
-          # the real name plus its A records. The resolver stops there and never asks
-          # for the bare name -- but Cilium's DNS proxy keys its FQDN cache on the
-          # question, so networkpolicy.yaml's toFQDNs rules never bind an IP and the
-          # media download is denied as reserved:world. ndots:1 makes the resolver try
-          # api.twilio.com absolutely first, which autopath ignores, so Cilium sees the
-          # name the policy is written against.
-          #
-          # Safe here because this app resolves nothing in-cluster; a bare single-label
-          # service name would still fall back to the search path.
+          # Required by networkpolicy.yaml's toFQDNs rules; see the note there.
           - name: ndots
             value: "1"
       securityContext:
@@ -96,8 +72,7 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     persistence:
-      # The app hardcodes Path(__file__).parent / "received_images", and __file__ is
-      # /app/server.py, so this mount path is not configurable.
+      # Mount path is not configurable: the app hardcodes /app/received_images.
       data:
         existingClaim: kd-webhook-data
         globalMounts:
@@ -120,17 +95,13 @@ spec:
           - name: envoy-external
             namespace: network
         rules:
-          # /sms ONLY, matching photoframe-webhook. /latest serves the most recent
-          # photo to anyone who asks, with no auth of any kind, so it must never be
-          # routed here -- everything on this gateway is public by default. It is
-          # served on the LAN instead; see httproute-internal.yaml. That only reaches
-          # a frame on our network: if Kenta's frame sits on his own, it needs a
-          # Cloudflare Access service token on a second rule here instead.
+          # /sms only. /latest has no auth at all and this gateway is public, so it is
+          # served on the LAN instead; see httproute-internal.yaml.
           - matches:
               - path:
                   type: PathPrefix
                   value: /sms
             backendRefs:
-              # Single service key, so no suffix -- unlike photoframe-webhook-app.
+              # Single service key, so app-template adds no suffix.
               - name: kd-webhook
                 port: 5000

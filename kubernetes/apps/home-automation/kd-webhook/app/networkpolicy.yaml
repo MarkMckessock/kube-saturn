@@ -1,25 +1,16 @@
 ---
-# The first NetworkPolicy in this repo, and deliberately so: this is the only workload
-# running a third-party image that rebuilds on someone else's push, and the app fetches
-# a URL taken from the request body while holding Twilio credentials.
+# Defence in depth for a third-party image that fetches a URL taken from the request
+# body while holding Twilio credentials: selecting this pod for egress makes it
+# default-deny outbound, so a forged /sms has nowhere to send them. Ingress is untouched.
 #
-# Selecting this pod for egress makes it default-deny outbound, so even a forged /sms
-# that slips past signature validation cannot reach an attacker's collector -- the
-# credentials physically have nowhere to go. Ingress is untouched, so Envoy and the
-# kubelet probes still reach it.
+# Inert without ndots:1 in helmrelease.yaml. CoreDNS runs `autopath @kubernetes`, so at
+# the default ndots:5 the pod's first lookup is the search-path form
+# (api.twilio.com.home-automation.svc.cluster.local) and autopath answers it outright.
+# Cilium keys its FQDN cache on the question asked, so nothing matched the names below
+# and every connection was denied as reserved:world.
 #
-# If media downloads start failing, this is the first thing to suspect: Twilio redirects
-# api.twilio.com media links to a CDN or bucket host, and that target has changed before.
-# `cilium fqdn cache list -e <endpoint>` on the pod's node shows what Cilium actually
-# resolved, and `cilium bpf ipcache get <ip>` shows whether it got an FQDN identity or
-# fell through to reserved:world.
-#
-# It failed that way once already, for a reason worth recording: CoreDNS runs
-# `autopath @kubernetes`, so with the default ndots:5 the pod's first lookup is
-# api.twilio.com.home-automation.svc.cluster.local and autopath answers it outright.
-# Cilium keys this cache on the question asked, so nothing ever matched the names below
-# and every connection was denied as reserved:world. helmrelease.yaml pins ndots:1 to
-# stop that -- these rules are inert without it.
+# To debug a failed fetch: `cilium fqdn cache list -e <endpoint>` on the pod's node shows
+# what Cilium resolved, `cilium bpf ipcache get <ip>` whether it got an FQDN identity.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
@@ -29,8 +20,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: kd-webhook
   egress:
-    # Required for toFQDNs below to resolve at all -- Cilium learns the addresses by
-    # proxying these lookups, so without this rule every FQDN match fails closed.
+    # Cilium learns the toFQDNs addresses by proxying these lookups; without this rule
+    # every FQDN match below fails closed.
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
@@ -45,13 +36,11 @@ spec:
             dns:
               - matchPattern: "*"
     - toFQDNs:
-        # Where the credentials are actually sent. The app's allowlist (added in
-        # dkenta12/einkframeserver#1) restricts MediaUrl to twilio.com hosts; this is
-        # the same boundary enforced a second time, below the application.
+        # Where the credentials actually go, as basic auth on the media fetch.
         - matchName: api.twilio.com
         - matchPattern: "*.twilio.com"
-        # Redirect targets for the media download itself. requests strips the
-        # Authorization header on a cross-host redirect, so no credentials reach these.
+        # Redirect targets for the download itself; requests drops the Authorization
+        # header on a cross-host redirect, so no credentials reach these.
         - matchPattern: "*.twiliocdn.com"
         - matchPattern: "*.amazonaws.com"
       toPorts:
