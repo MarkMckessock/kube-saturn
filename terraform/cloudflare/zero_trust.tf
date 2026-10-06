@@ -122,6 +122,24 @@ resource "cloudflare_zero_trust_access_application" "photoframe" {
   }]
 }
 
+# kd-webhook is Kenta's e-ink frame receiver, same Twilio-can't-log-in problem as
+# photoframe above, so it needs the same explicit bypass rather than no entry at all.
+#
+# Narrower than it looks: the HTTPRoute publishes only /sms, and the app rejects any
+# request without a valid X-Twilio-Signature. /latest is not routed publicly.
+resource "cloudflare_zero_trust_access_application" "kd_webhook" {
+  account_id       = local.cloudflare_account_id
+  name             = "kd-webhook"
+  domain           = "kd-webhook.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
 # lidarr can trigger media deletion and exposes indexer credentials via the arr
 # API — admin-only, matching scanrr.
 resource "cloudflare_zero_trust_access_application" "lidarr" {
