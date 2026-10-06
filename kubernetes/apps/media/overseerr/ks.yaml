@@ -23,6 +23,7 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "33 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -32,4 +33,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-

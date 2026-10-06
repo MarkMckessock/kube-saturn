@@ -99,3 +99,55 @@ resource "cloudflare_zero_trust_access_application" "scanrr" {
     precedence = 1
   }]
 }
+
+# photoframe-webhook receives MMS webhooks from Twilio, which cannot log in to
+# Cloudflare Access. Without an explicit bypass the catch-all application answers
+# Twilio's POST with a 302 to the login page and Twilio reports "11200 HTTP
+# retrieval failure".
+#
+# Bypassing the whole hostname is safe here: the HTTPRoute publishes only /mms, and
+# the app authenticates every request itself by validating Twilio's X-Twilio-Signature
+# against TWILIO_AUTH_TOKEN. The image endpoints are not routed publicly at all --
+# they are served on a separate LAN-only LoadBalancer.
+resource "cloudflare_zero_trust_access_application" "photoframe" {
+  account_id       = local.cloudflare_account_id
+  name             = "photoframe-webhook"
+  domain           = "photoframe.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: only /sms
+# is routed publicly and the app rejects anything without a valid X-Twilio-Signature.
+resource "cloudflare_zero_trust_access_application" "kd_webhook" {
+  account_id       = local.cloudflare_account_id
+  name             = "kd-webhook"
+  domain           = "kd-webhook.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# lidarr can trigger media deletion and exposes indexer credentials via the arr
+# API — admin-only, matching scanrr.
+resource "cloudflare_zero_trust_access_application" "lidarr" {
+  account_id       = local.cloudflare_account_id
+  name             = "Lidarr"
+  domain           = "lidarr.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}

@@ -109,6 +109,13 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
+    defaultRules:
+      disabled:
+        # No kube-proxy runs here: Cilium has kubeProxyReplacement: true and there is
+        # no kube-proxy DaemonSet. The rule watches for something deliberately absent,
+        # so it has been a permanent critical -- which is corrosive, because a critical
+        # that is always firing teaches you to ignore criticals.
+        KubeProxyDown: true
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:

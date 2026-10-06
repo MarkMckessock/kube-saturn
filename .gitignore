@@ -39,3 +39,4 @@ talos/talos-*.iso
 talos/configs/*
 secrets.yaml
 test-pvc.yaml
+scripts/fileflows-delete-failed.sh

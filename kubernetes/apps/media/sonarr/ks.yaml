@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: sonarr
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
@@ -22,7 +22,10 @@ spec:
   postBuild:
     substitute:
       APP: sonarr
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /ping
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "41 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -44,7 +47,7 @@ spec:
     labels:
       app.kubernetes.io/name: sonarr-4k
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/internal
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
@@ -56,7 +59,10 @@ spec:
   postBuild:
     substitute:
       APP: sonarr-4k
+      GATUS_NAMESPACE: *namespace
+      GATUS_PATH: /ping
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "35 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

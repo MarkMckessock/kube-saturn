@@ -102,6 +102,11 @@ spec:
             resources: *resources
             securityContext: *securityContext
     defaultPodOptions:
+      # Every ExternalSecret in the cluster depends on this pod. When it was evicted
+      # it sat Pending for 16 hours because both remaining nodes were at 99% of
+      # requested memory and it had priority 0, so it could not preempt anything --
+      # taking the Twilio credentials, Alertmanager and everything else with it.
+      priorityClassName: system-cluster-critical
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
