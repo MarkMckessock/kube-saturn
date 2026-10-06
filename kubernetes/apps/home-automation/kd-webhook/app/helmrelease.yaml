@@ -34,15 +34,13 @@ spec:
               # them: .renovate/autoMerge.json5 covers ghcr.io/markmckessock/* only.
               # Keep it that way and read the upstream diff before merging.
               #
-              # This digest is post-#1, so forged POSTs are rejected -- but the #1
-              # merge left a dead call to a deleted global behind, so a *correctly*
-              # signed POST /sms raises NameError and 500s. Fix is open upstream as
-              # dkenta12/einkframeserver#2; re-pin once it merges and CI republishes.
-              # Deploying the broken image is deliberate: nothing leaks (the
-              # signature check runs first), it just drops messages, and Twilio
-              # retries on 500 so a backlog may flush once the fix lands.
+              # Post-dkenta12/einkframeserver#2: validates X-Twilio-Signature before
+              # the handler runs, refuses when no auth token is configured, and only
+              # fetches MediaUrls on twilio.com hosts -- the account SID and auth
+              # token go out as basic auth on that fetch, so the allowlist is what
+              # keeps them from being handed to an arbitrary host.
               repository: ghcr.io/dkenta12/einkframeserver
-              tag: latest@sha256:ac5dd9ffce67802bb47abc4e1e2b5260a7d86649d275c3531552089203e3b42c
+              tag: latest@sha256:60ad907709719cf82f1f62e169f7e4244e435c64457d233cd409421c2593bf60
             env:
               PORT: "5000"
             envFrom:
