@@ -12,7 +12,7 @@
     "github>MarkMckessock/kube-saturn//.renovate/labels.json5",
     "github>MarkMckessock/kube-saturn//.renovate/overrides.json5",
     "github>MarkMckessock/kube-saturn//.renovate/semanticCommits.json5",
-    ":automergeBranch",
+    ":automergePr",
     ":dependencyDashboard",
     ":semanticCommits",
     ":timezone(America/New_York)",
