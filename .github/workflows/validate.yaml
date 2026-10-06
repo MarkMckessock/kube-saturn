@@ -1,0 +1,125 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Validate
+
+# No paths filter: a required check that gets skipped never reports and blocks the PR.
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  FLATE_PATH: kubernetes
+  FLATE_KUBE_VERSION: "1.36.0"
+  FLATE_NO_PROGRESS: "true"
+  KUBECONFORM_VERSION: v0.8.0
+  YAMLLINT_VERSION: 1.38.0
+
+jobs:
+  yamllint:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Lint
+        run: pipx run --spec "yamllint==${YAMLLINT_VERSION}" yamllint --strict .
+
+  flux:
+    name: Validate Flux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Setup flate
+        uses: home-operations/flate/action@631b76b69c4e58c6f4d1cb01e23616fa61aebafa # v0.6.5
+        with:
+          base: ""
+          cache: true
+
+      - name: Test
+        run: flate test all
+
+  kubeconform:
+    name: Validate schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Setup flate
+        uses: home-operations/flate/action@631b76b69c4e58c6f4d1cb01e23616fa61aebafa # v0.6.5
+        with:
+          base: ""
+          cache: true
+
+      - name: Setup kubeconform
+        run: |
+          curl -fsSL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" \
+            | sudo tar xz -C /usr/local/bin kubeconform
+
+      - name: Render
+        run: flate build all > "${RUNNER_TEMP}/rendered.yaml"
+
+      # volsync v1alpha1 has no upstream schema carrying the kopia mover.
+      - name: Validate
+        run: |
+          kubeconform \
+            -strict -summary -ignore-missing-schemas \
+            -kubernetes-version "${FLATE_KUBE_VERSION}" \
+            -skip ReplicationSource,ReplicationDestination \
+            -schema-location default \
+            -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+            "${RUNNER_TEMP}/rendered.yaml"
+
+  diff:
+    name: Diff render
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup flate
+        uses: home-operations/flate/action@631b76b69c4e58c6f4d1cb01e23616fa61aebafa # v0.6.5
+        with:
+          base: origin/${{ github.base_ref }}
+          cache: true
+
+      - name: Diff
+        run: |
+          flate diff all --output github > "${RUNNER_TEMP}/diff.md"
+          if [[ ! -s "${RUNNER_TEMP}/diff.md" ]]; then
+            echo "No changes to the rendered cluster." > "${RUNNER_TEMP}/diff.md"
+          fi
+
+      - name: Comment
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: flate-diff
+          path: ${{ runner.temp }}/diff.md
