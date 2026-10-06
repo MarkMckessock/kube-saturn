@@ -74,6 +74,21 @@ spec:
                 # capped at 5 MB, so this is generous.
                 memory: 256Mi
     defaultPodOptions:
+      dnsConfig:
+        options:
+          # CoreDNS runs `autopath @kubernetes`, which answers the first search-path
+          # attempt (api.twilio.com.home-automation.svc.cluster.local) with a CNAME to
+          # the real name plus its A records. The resolver stops there and never asks
+          # for the bare name -- but Cilium's DNS proxy keys its FQDN cache on the
+          # question, so networkpolicy.yaml's toFQDNs rules never bind an IP and the
+          # media download is denied as reserved:world. ndots:1 makes the resolver try
+          # api.twilio.com absolutely first, which autopath ignores, so Cilium sees the
+          # name the policy is written against.
+          #
+          # Safe here because this app resolves nothing in-cluster; a bare single-label
+          # service name would still fall back to the search path.
+          - name: ndots
+            value: "1"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

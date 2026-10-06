@@ -10,7 +10,16 @@
 #
 # If media downloads start failing, this is the first thing to suspect: Twilio redirects
 # api.twilio.com media links to a CDN or bucket host, and that target has changed before.
-# `cilium monitor --type drop -n home-automation` shows what was blocked.
+# `cilium fqdn cache list -e <endpoint>` on the pod's node shows what Cilium actually
+# resolved, and `cilium bpf ipcache get <ip>` shows whether it got an FQDN identity or
+# fell through to reserved:world.
+#
+# It failed that way once already, for a reason worth recording: CoreDNS runs
+# `autopath @kubernetes`, so with the default ndots:5 the pod's first lookup is
+# api.twilio.com.home-automation.svc.cluster.local and autopath answers it outright.
+# Cilium keys this cache on the question asked, so nothing ever matched the names below
+# and every connection was denied as reserved:world. helmrelease.yaml pins ndots:1 to
+# stop that -- these rules are inert without it.
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
