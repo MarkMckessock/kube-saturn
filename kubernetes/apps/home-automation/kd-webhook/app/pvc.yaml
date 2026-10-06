@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kd-webhook-data
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      # Every MMS is kept forever -- the app writes a timestamped file per image and
+      # never prunes. A few MB per photo, so 5Gi is a long runway, but this will grow
+      # without bound and is worth an eye on. Not backed up: these are a friend's
+      # photos on a friend's frame, and volsync is reserved for our own data.
+      storage: 5Gi
+  storageClassName: ceph-block

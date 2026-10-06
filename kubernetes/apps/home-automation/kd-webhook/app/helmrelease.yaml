@@ -1,0 +1,123 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kd-webhook
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      kd-webhook:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              # Kenta's image, not ours. Pinned by digest for the same reason as
+              # photoframe: Spegel mirrors by digest and resolves tags from peers, so a
+              # mutable `latest` gets served from a neighbour's cache indefinitely.
+              #
+              # It matters more here -- upstream CI overwrites :latest on every push to
+              # main, so without a digest whatever Kenta commits lands in our cluster
+              # unreviewed. Renovate will raise digest bumps but will NOT auto-merge
+              # them: .renovate/autoMerge.json5 covers ghcr.io/markmckessock/* only.
+              # Keep it that way and read the upstream diff before merging.
+              #
+              # This digest is post-#1, so forged POSTs are rejected -- but the #1
+              # merge left a dead call to a deleted global behind, so a *correctly*
+              # signed POST /sms raises NameError and 500s. Fix is open upstream as
+              # dkenta12/einkframeserver#2; re-pin once it merges and CI republishes.
+              # Deploying the broken image is deliberate: nothing leaks (the
+              # signature check runs first), it just drops messages, and Twilio
+              # retries on 500 so a backlog may flush once the fix lands.
+              repository: ghcr.io/dkenta12/einkframeserver
+              tag: latest@sha256:ac5dd9ffce67802bb47abc4e1e2b5260a7d86649d275c3531552089203e3b42c
+            env:
+              PORT: "5000"
+            envFrom:
+              - secretRef:
+                  name: kd-webhook-secret
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  httpGet: { path: /health, port: 5000 }
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                spec:
+                  httpGet: { path: /health, port: 5000 }
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                # Holds the downloaded photo in memory and writes it out twice. MMS is
+                # capped at 5 MB, so this is generous.
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      # The app hardcodes Path(__file__).parent / "received_images", and __file__ is
+      # /app/server.py, so this mount path is not configurable.
+      data:
+        existingClaim: kd-webhook-data
+        globalMounts:
+          - path: /app/received_images
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 5000
+    route:
+      app:
+        hostnames:
+          - kd-webhook.markmckessock.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          # /sms ONLY, matching photoframe-webhook. /latest serves the most recent
+          # photo to anyone who asks, with no auth of any kind, so it is deliberately
+          # not routed. The frame therefore cannot fetch images yet -- that needs a
+          # decision first: a Cloudflare Access service token on a second /latest rule
+          # if the frame lives on Kenta's network, or a LAN-only LoadBalancer Service
+          # like photoframe-webhook-lan if it ends up on ours.
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /sms
+            backendRefs:
+              # Single service key, so no suffix -- unlike photoframe-webhook-app.
+              - name: kd-webhook
+                port: 5000

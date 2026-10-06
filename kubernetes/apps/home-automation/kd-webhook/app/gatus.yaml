@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kd-webhook-gatus-ep
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |
+    endpoints:
+      # Probed in-cluster rather than with the gatus/external component: the public
+      # route publishes only /sms, which answers GET with 405, so an external probe
+      # has nothing to hit.
+      - name: kd-webhook
+        group: home-automation
+        url: http://kd-webhook.home-automation.svc.cluster.local:5000/health
+        interval: 1m
+        conditions:
+          - "[STATUS] == 200"
+        alerts:
+          - type: pushover
