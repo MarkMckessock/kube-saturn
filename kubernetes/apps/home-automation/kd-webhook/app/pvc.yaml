@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kd-webhook-data
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      # Grows without bound: the app never prunes. Deliberately not volsync-backed.
+      storage: 5Gi
+  storageClassName: ceph-block
