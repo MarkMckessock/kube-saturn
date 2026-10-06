@@ -36,10 +36,10 @@
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "3 days",
-      ignoreTests: true,
+      ignoreTests: false,
     },
     {
       description: "Auto-merge trusted GitHub Actions",
@@ -56,12 +56,14 @@
     },
     {
       description: "Auto-merge GitHub Releases",
+      // These ship CRDs, so they change the rendered cluster and must clear the
+      // render checks; branch automerge cannot see pull_request checks.
       matchDatasources: ["github-releases"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
-      ignoreTests: true,
+      ignoreTests: false,
     },
   ],
 }
