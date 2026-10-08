@@ -10,6 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/gatus/external
     - ../../../../components/gpu
   dependsOn:
     - name: rook-ceph-cluster
@@ -21,6 +22,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_PATH: /api/server/ping
+      GATUS_SUBDOMAIN: immich
   prune: true
   retryInterval: 2m
   sourceRef:
