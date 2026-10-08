@@ -25,6 +25,17 @@ spec:
 
     controllers:
       server:
+        pod:
+          # Both controllers mount the same RWO data PVC, so they must share a node.
+          # microservices is the anchor because its GPU claim limits where it can run.
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/instance: immich-server
+                      app.kubernetes.io/controller: microservices
         containers:
           main:
             image:
