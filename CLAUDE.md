@@ -15,3 +15,12 @@ If the new app should be access-controlled:
 3. Run a Terraform reconcile in the `terraform/cloudflare/` workspace to apply the changes.
 
 If the app should be fully public, no Zero Trust entry is needed.
+
+## Comments
+
+Use comments sparingly — only where the code is not self-explanatory. Prefer making the
+code clear over explaining unclear code.
+
+99% of comments should be a single line. Reserve longer blocks for the rare case where a
+non-obvious constraint genuinely cannot be stated in one, and never restate what the
+code already says.

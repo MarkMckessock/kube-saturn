@@ -18,6 +18,17 @@ spec:
           labels:
             severity: critical
 
+        # guarded is excluded because its success == 0 is the desired state
+        - alert: GatusInternalEndpointDown
+          expr: |
+            gatus_results_endpoint_success{group!="external", group!="guarded"} == 0
+          for: 5m
+          annotations:
+            summary: >-
+              The {{ $labels.name }} internal endpoint is down
+          labels:
+            severity: warning
+
         - alert: GatusEndpointExposed
           expr: |
             gatus_results_endpoint_success{group="guarded"} == 0

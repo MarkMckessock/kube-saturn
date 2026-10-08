@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: kometateam/kometa
-              tag: v2.3.0
+              tag: v2.5.1
             env:
               KOMETA_READ_ONLY_CONFIG: "true"
               KOMETA_RUN: "true"
@@ -62,18 +62,18 @@ spec:
         advancedMounts:
           main:
             main:
-            - subPath: charts.yaml
-              path: /collections/movies-charts.yaml
-              readOnly: true
-            - subPath: movies.yaml
-              path: /collections/movies-movies.yaml
-              readOnly: true
-            - subPath: holidays.yaml
-              path: /collections/movies-holidays.yaml
-              readOnly: true
-            - subPath: studios.yaml
-              path: /collections/movies-studios.yaml
-              readOnly: true
-            - subPath: tv-charts.yaml
-              path: /collections/tv-charts.yaml
-              readOnly: true
+              - subPath: charts.yaml
+                path: /collections/movies-charts.yaml
+                readOnly: true
+              - subPath: movies.yaml
+                path: /collections/movies-movies.yaml
+                readOnly: true
+              - subPath: holidays.yaml
+                path: /collections/movies-holidays.yaml
+                readOnly: true
+              - subPath: studios.yaml
+                path: /collections/movies-studios.yaml
+                readOnly: true
+              - subPath: tv-charts.yaml
+                path: /collections/tv-charts.yaml
+                readOnly: true
