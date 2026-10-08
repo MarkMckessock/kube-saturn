@@ -10,7 +10,7 @@ data:
     endpoints:
       - name: photoframe-webhook
         group: home-automation
-        url: http://photoframe-webhook.home-automation.svc.cluster.local:5000/healthz
+        url: http://photoframe-webhook-app.home-automation.svc.cluster.local:5000/healthz
         interval: 1m
         conditions:
           - "[STATUS] == 200"

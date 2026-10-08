@@ -47,19 +47,6 @@ resource "cloudflare_zero_trust_access_policy" "anonymous" {
 # Each restricted app needs an access_application referencing one or more
 # reusable policies. Public apps need no entry here.
 
-resource "cloudflare_zero_trust_access_application" "fileflows" {
-  account_id       = local.cloudflare_account_id
-  name             = "FileFlows"
-  domain           = "fileflows.markmckessock.com"
-  session_duration = "24h"
-  type             = "self_hosted"
-
-  policies = [{
-    id         = cloudflare_zero_trust_access_policy.admin.id
-    precedence = 1
-  }]
-}
-
 resource "cloudflare_zero_trust_access_application" "jorkyfin" {
   account_id       = local.cloudflare_account_id
   name             = "Jorkyfin"
@@ -113,6 +100,21 @@ resource "cloudflare_zero_trust_access_application" "photoframe" {
   account_id       = local.cloudflare_account_id
   name             = "photoframe-webhook"
   domain           = "photoframe.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: only /sms
+# is routed publicly and the app rejects anything without a valid X-Twilio-Signature.
+resource "cloudflare_zero_trust_access_application" "kd_webhook" {
+  account_id       = local.cloudflare_account_id
+  name             = "kd-webhook"
+  domain           = "kd-webhook.markmckessock.com"
   session_duration = "24h"
   type             = "self_hosted"
 
