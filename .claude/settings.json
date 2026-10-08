@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
+  },
   "permissions": {
     "allow": [
       "Bash(talosctl -n * get *)",
@@ -16,7 +19,7 @@
       "Bash(kubectl debug *)"
     ]
   },
-  "env": {
-    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
   }
 }

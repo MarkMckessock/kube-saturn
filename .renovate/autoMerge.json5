@@ -11,6 +11,18 @@
       ignoreTests: false,
     },
     {
+      description: "Auto-merge first-party image digests",
+      // Images built from our own repos, whose CI has already tested the commit that
+      // produced them, so these are proposed with no release-age delay.
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["digest"],
+      matchPackageNames: ["/^ghcr\\.io\\/markmckessock\\//"],
+      minimumReleaseAge: "0 minutes",
+      ignoreTests: false,
+    },
+    {
       description: "Auto-merge OCI Charts",
       matchDatasources: ["docker"],
       automerge: true,
@@ -23,10 +35,10 @@
       description: "Auto-merge GitHub Actions",
       matchManagers: ["github-actions"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "3 days",
-      ignoreTests: true,
+      ignoreTests: false,
     },
     {
       description: "Auto-merge trusted GitHub Actions",
@@ -36,19 +48,20 @@
         "/^renovatebot\//",
       ],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "1 minute",
-      ignoreTests: true,
+      ignoreTests: false,
     },
     {
       description: "Auto-merge GitHub Releases",
+      // These ship CRDs, so they change the rendered cluster and must clear the render checks.
       matchDatasources: ["github-releases"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
-      ignoreTests: true,
+      ignoreTests: false,
     },
   ],
 }

@@ -26,6 +26,7 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "10 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
