@@ -1,0 +1,107 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kd-webhook
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      kd-webhook:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              # Upstream CI overwrites :latest on every push to main, so pin by digest
+              # and read the diff before bumping -- this is a third-party image.
+              repository: ghcr.io/dkenta12/einkframeserver
+              tag: latest@sha256:60ad907709719cf82f1f62e169f7e4244e435c64457d233cd409421c2593bf60
+            env:
+              PORT: "5000"
+            envFrom:
+              - secretRef:
+                  name: kd-webhook-secret
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  httpGet: { path: /health, port: 5000 }
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                spec:
+                  httpGet: { path: /health, port: 5000 }
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                # MMS caps at 5 MB; the app buffers the photo in memory.
+                memory: 256Mi
+    defaultPodOptions:
+      dnsConfig:
+        options:
+          # Required by networkpolicy.yaml's toFQDNs rules; see the note there.
+          - name: ndots
+            value: "1"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      # Mount path is not configurable: the app hardcodes /app/received_images.
+      data:
+        existingClaim: kd-webhook-data
+        globalMounts:
+          - path: /app/received_images
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 5000
+    route:
+      app:
+        hostnames:
+          - kd-webhook.markmckessock.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          # /sms only. /latest has no auth at all and this gateway is public, so it is
+          # served on the LAN instead; see httproute-internal.yaml.
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /sms
+            backendRefs:
+              # Single service key, so app-template adds no suffix.
+              - name: kd-webhook
+                port: 5000
