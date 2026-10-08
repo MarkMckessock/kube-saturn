@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: smartctl-exporter-rules
+spec:
+  groups:
+    - name: smartctl-exporter.rules
+      rules:
+        # The 6h lookback compares against devices seen recently, so a permanent removal self-resolves
+        - alert: SmartctlDeviceDisappeared
+          expr: |-
+            max_over_time(smartctl_device[6h]) unless on(node, device) smartctl_device
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $labels.device }} ({{ $labels.model_name }}, serial {{ $labels.serial_number }})
+              has left the bus on {{ $labels.node }} and needs a reseat
+          labels:
+            severity: critical
+
+        - alert: SmartctlDeviceSmartFailed
+          expr: |-
+            smartctl_device_smart_status == 0
+          for: 5m
+          annotations:
+            summary: >-
+              {{ $labels.device }} on {{ $labels.node }} is reporting overall SMART health as failed
+          labels:
+            severity: critical
+
+        - alert: SmartctlDeviceCriticalWarning
+          expr: |-
+            smartctl_device_critical_warning > 0
+          for: 5m
+          annotations:
+            summary: >-
+              {{ $labels.device }} on {{ $labels.node }} has NVMe critical warning
+              bits set ({{ $value }})
+          labels:
+            severity: critical
+
+        - alert: SmartctlDeviceMediaErrors
+          expr: |-
+            increase(smartctl_device_media_errors[1h]) > 0
+          annotations:
+            summary: >-
+              {{ $labels.device }} on {{ $labels.node }} logged unrecovered data
+              integrity errors in the last hour
+          labels:
+            severity: critical
+
+        - alert: SmartctlDeviceErrorLogGrowing
+          expr: |-
+            increase(smartctl_device_num_err_log_entries[1h]) > 0
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $labels.device }} on {{ $labels.node }} is adding controller error
+              log entries, which precedes a link dropout
+          labels:
+            severity: warning
