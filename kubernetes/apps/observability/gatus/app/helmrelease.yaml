@@ -26,6 +26,7 @@ spec:
           init-config:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
+              # 1.30.11 OOMKills watching all namespaces, even at 256Mi
               tag: 1.30.2@sha256:cdb361e67b1b5c4945b6e943fbf5909badaaeb51595eaf75fb7493b3abbbe10f
             env:
               FOLDER: /config
@@ -39,12 +40,12 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 128Mi
+                memory: 256Mi
         containers:
           app:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.16.0@sha256:bb738c87cf2e2a08b8fff180cfc433e7b8b87bb1779c1fb1b00f8b748673e3c3
+              tag: v5.37.0@sha256:094eb186e55235db367e90e9d56140e5897b7044c41de23cde4cc18e6da1242e
             env:
               TZ: America/New_York
               GATUS_CONFIG_PATH: /config
