@@ -47,19 +47,6 @@ resource "cloudflare_zero_trust_access_policy" "anonymous" {
 # Each restricted app needs an access_application referencing one or more
 # reusable policies. Public apps need no entry here.
 
-resource "cloudflare_zero_trust_access_application" "fileflows" {
-  account_id       = local.cloudflare_account_id
-  name             = "FileFlows"
-  domain           = "fileflows.markmckessock.com"
-  session_duration = "24h"
-  type             = "self_hosted"
-
-  policies = [{
-    id         = cloudflare_zero_trust_access_policy.admin.id
-    precedence = 1
-  }]
-}
-
 resource "cloudflare_zero_trust_access_application" "jorkyfin" {
   account_id       = local.cloudflare_account_id
   name             = "Jorkyfin"
