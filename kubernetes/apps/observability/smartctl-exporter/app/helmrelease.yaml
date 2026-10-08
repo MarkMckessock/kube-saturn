@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app smartctl-exporter
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      smartctl-exporter:
+        type: daemonset
+        containers:
+          app:
+            image:
+              repository: quay.io/prometheuscommunity/smartctl-exporter
+              tag: v0.15.0@sha256:a76e08dbf5db4781fefd1ed81c65ad46ae8d2849dae6b6d3acebcde2fc4e59d6
+            args:
+              - --web.listen-address=:9633
+              - --smartctl.path=/usr/sbin/smartctl
+              - --smartctl.interval=120s
+              - --smartctl.rescan=5m
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /metrics
+                    port: &port 9633
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              # SMART ioctls need raw block access, so this cannot run unprivileged
+              privileged: true
+              runAsUser: 0
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 128Mi
+    defaultPodOptions:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+    service:
+      app:
+        controller: smartctl-exporter
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            interval: 1m
+            scrapeTimeout: 30s
+            relabelings:
+              # smartctl metrics are labelled only by device, so carry the node name through
+              - sourceLabels: ["__meta_kubernetes_pod_node_name"]
+                targetLabel: node
+    persistence:
+      dev:
+        type: hostPath
+        hostPath: /dev
+        globalMounts:
+          - path: /dev
