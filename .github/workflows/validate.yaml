@@ -113,10 +113,20 @@ jobs:
 
       - name: Diff
         run: |
-          flate diff all --output github > "${RUNNER_TEMP}/diff.md"
-          if [[ ! -s "${RUNNER_TEMP}/diff.md" ]]; then
+          flate diff all --output github > "${RUNNER_TEMP}/diff.raw"
+          if [[ ! -s "${RUNNER_TEMP}/diff.raw" ]]; then
             echo "No changes to the rendered cluster." > "${RUNNER_TEMP}/diff.md"
+            exit 0
           fi
+          # GFM reads bare '+ ' and '- ' lines as list bullets, so fence the diff.
+          {
+            printf '````diff\n'
+            head -c 60000 "${RUNNER_TEMP}/diff.raw"
+            printf '\n````\n'
+            if (( $(wc -c < "${RUNNER_TEMP}/diff.raw") > 60000 )); then
+              printf '\n> Diff truncated at 60 kB; run `flate diff all` locally for the rest.\n'
+            fi
+          } > "${RUNNER_TEMP}/diff.md"
 
       - name: Comment
         uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
