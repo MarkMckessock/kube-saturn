@@ -1,4 +1,3 @@
-
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -11,6 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/gatus/external
     - ../../../../components/gpu
   dependsOn:
     - name: rook-ceph-cluster
@@ -22,6 +22,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_PATH: /api/server/ping
+      GATUS_SUBDOMAIN: immich
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -31,4 +33,3 @@ spec:
   targetNamespace: *namespace
   timeout: 5m
   wait: false
-

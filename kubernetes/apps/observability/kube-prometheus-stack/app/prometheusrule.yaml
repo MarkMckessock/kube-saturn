@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: node-rules
+spec:
+  groups:
+    - name: node.rules
+      rules:
+        # The node still reports Ready with no pressure conditions, so nodeInfo going Unknown is the only signal
+        - alert: NodeContainerRuntimeUnreachable
+          expr: |-
+            kube_node_info{container_runtime_version=~".*Unknown.*"} == 1
+          for: 5m
+          annotations:
+            summary: >-
+              Kubelet on {{ $labels.node }} cannot reach its container runtime, so
+              the node still schedules pods but cannot start them
+          labels:
+            severity: critical

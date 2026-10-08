@@ -19,30 +19,30 @@ spec:
       retries: 3
   values:
     configMaps:
-        config:
-          data:
-            nginx-config: |-
-              events {
-                worker_connections 1024;
-              }
-              http {
-                include mime.types;
-                server {
-                  listen 80;
-                  server_name _;
+      config:
+        data:
+          nginx-config: |-
+            events {
+              worker_connections 1024;
+            }
+            http {
+              include mime.types;
+              server {
+                listen 80;
+                server_name _;
 
-                  client_max_body_size 16M;
+                client_max_body_size 16M;
 
-                  # serve static files
-                  location /static/ {
-                    alias /static/;
-                  }
-                  # serve media files
-                  location /media/ {
-                    alias /media/;
-                  }
+                # serve static files
+                location /static/ {
+                  alias /static/;
+                }
+                # serve media files
+                location /media/ {
+                  alias /media/;
                 }
               }
+            }
     # serviceAccount:
     #   create: true
     #   name: tandoor
@@ -94,16 +94,16 @@ spec:
                 cpu: 250m
                 memory: 64Mi
             command:
-            - /opt/recipes/venv/bin/gunicorn
-            - -b
-            - :8080
-            - --access-logfile
-            - "-"
-            - --error-logfile
-            - "-"
-            - --log-level
-            - INFO
-            - recipes.wsgi
+              - /opt/recipes/venv/bin/gunicorn
+              - -b
+              - :8080
+              - --access-logfile
+              - "-"
+              - --error-logfile
+              - "-"
+              - --log-level
+              - INFO
+              - recipes.wsgi
             securityContext:
               runAsUser: 65534
           nginx:
@@ -171,20 +171,20 @@ spec:
               - secretRef:
                   name: tandoor-secret
             command:
-            - sh
-            - -c
-            - |
-              set -e
-              source venv/bin/activate
-              echo "Updating database"
-              python manage.py migrate
-              python manage.py collectstatic_js_reverse
-              python manage.py collectstatic --noinput
-              echo "Setting media file attributes"
-              chown -R 65534:65534 /opt/recipes/mediafiles
-              find /opt/recipes/mediafiles -type d | xargs -r chmod 755
-              find /opt/recipes/mediafiles -type f | xargs -r chmod 644
-              echo "Done"
+              - sh
+              - -c
+              - |
+                set -e
+                source venv/bin/activate
+                echo "Updating database"
+                python manage.py migrate
+                python manage.py collectstatic_js_reverse
+                python manage.py collectstatic --noinput
+                echo "Setting media file attributes"
+                chown -R 65534:65534 /opt/recipes/mediafiles
+                find /opt/recipes/mediafiles -type d | xargs -r chmod 755
+                find /opt/recipes/mediafiles -type f | xargs -r chmod 644
+                echo "Done"
     service:
       main:
         primary: true
@@ -194,7 +194,7 @@ spec:
             primary: true
             port: 80
           gunicorn:
-            port:  8080
+            port: 8080
     route:
       app:
         hostnames: ["{{ .Release.Name }}.markmckessock.com"]
@@ -204,8 +204,8 @@ spec:
             sectionName: https
         rules:
           - matches:
-            - path:
-                value: /
+              - path:
+                  value: /
             backendRefs:
               - name: *app
                 port: 8080
