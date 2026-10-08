@@ -1,0 +1,8 @@
+# configMapGenerator payloads, embedded verbatim so their exact bytes matter
+**/resources/**
+kubernetes/components/gatus/*/config.yaml
+kubernetes/apps/home-automation/zigbee2mqtt/app/lokirule.yaml
+kubernetes/apps/media/kometa/app/collections/**
+
+*.sops.*
+*.cloudinit.*
