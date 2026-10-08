@@ -1,0 +1,49 @@
+---
+# Defence in depth for a third-party image that fetches a URL taken from the request
+# body while holding Twilio credentials: selecting this pod for egress makes it
+# default-deny outbound, so a forged /sms has nowhere to send them. Ingress is untouched.
+#
+# Inert without ndots:1 in helmrelease.yaml. CoreDNS runs `autopath @kubernetes`, so at
+# the default ndots:5 the pod's first lookup is the search-path form
+# (api.twilio.com.home-automation.svc.cluster.local) and autopath answers it outright.
+# Cilium keys its FQDN cache on the question asked, so nothing matched the names below
+# and every connection was denied as reserved:world.
+#
+# To debug a failed fetch: `cilium fqdn cache list -e <endpoint>` on the pod's node shows
+# what Cilium resolved, `cilium bpf ipcache get <ip>` whether it got an FQDN identity.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: kd-webhook
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: kd-webhook
+  egress:
+    # Cilium learns the toFQDNs addresses by proxying these lookups; without this rule
+    # every FQDN match below fails closed.
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        # Where the credentials actually go, as basic auth on the media fetch.
+        - matchName: api.twilio.com
+        - matchPattern: "*.twilio.com"
+        # Redirect targets for the download itself; requests drops the Authorization
+        # header on a cross-host redirect, so no credentials reach these.
+        - matchPattern: "*.twiliocdn.com"
+        - matchPattern: "*.amazonaws.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
