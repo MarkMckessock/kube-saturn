@@ -6,6 +6,6 @@ namespace: default
 components:
   - ../../components/common
 resources:
-  - ./tandoor/ks.yaml
+  # - ./tandoor/ks.yaml
   - ./librespeed/ks.yaml
   # - ./speedtest-tracker/ks.yaml

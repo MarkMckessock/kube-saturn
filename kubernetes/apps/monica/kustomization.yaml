@@ -5,5 +5,5 @@ kind: Kustomization
 namespace: monica
 components:
   - ../../components/common
-resources:
-  - ./monica/ks.yaml
+resources: []
+# - ./monica/ks.yaml
