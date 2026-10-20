@@ -4,17 +4,17 @@ Homelab Kubernetes cluster (Saturn) managed with Flux GitOps, Talos Linux, and T
 
 ## Cloudflare Zero Trust
 
-All apps exposed via the Cloudflare Tunnel (`*.markmckessock.com`) are **publicly accessible by default**. Restricted apps must have explicit Zero Trust entries.
+All apps exposed via the Cloudflare Tunnel (`*.markmckessock.com`) are **locked down by default**: a wildcard
+`*.markmckessock.com` Access application with no policies denies any hostname without its own entry.
+Very few apps should be public, and each one needs an explicit Zero Trust entry to be reachable at all.
 
 ### When adding a new app
 
-If the new app should be access-controlled:
+Every externally exposed app needs a `cloudflare_zero_trust_access_application` in `terraform/cloudflare/zero_trust.tf`:
 
-1. Add a `cloudflare_access_application` and `cloudflare_access_policy` block to `terraform/cloudflare/zero_trust.tf`.
-2. Reference the reusable `cloudflare_access_group.admin` group for owner-only access. Add additional groups/policies as needed for broader access.
+1. Default to the reusable `admin` policy (backed by `cloudflare_zero_trust_access_group.admin`) for owner-only access. Add groups/policies only when broader access is genuinely needed.
+2. Use the `anonymous` (bypass) policy only for apps that must be public, e.g. webhook receivers called by third parties. Confirm with the owner before making anything public.
 3. Run a Terraform reconcile in the `terraform/cloudflare/` workspace to apply the changes.
-
-If the app should be fully public, no Zero Trust entry is needed.
 
 ## Comments
 
