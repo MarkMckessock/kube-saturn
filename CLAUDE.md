@@ -16,6 +16,13 @@ If the new app should be access-controlled:
 
 If the app should be fully public, no Zero Trust entry is needed.
 
+## Pull requests
+
+Claude may squash-merge PRs it opened in this repo without waiting for review, once any
+checks pass. After merging, reconcile Flux and verify the change is healthy on the cluster
+(and from the public internet for anything externally exposed) before reporting done.
+Renovate PRs are excluded unless explicitly asked.
+
 ## Comments
 
 Use comments sparingly — only where the code is not self-explanatory. Prefer making the
