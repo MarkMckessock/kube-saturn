@@ -1,0 +1,29 @@
+---
+# Lumen runs on a LAN host outside the cluster, so the Service has no selector.
+apiVersion: v1
+kind: Service
+metadata:
+  name: lumen
+spec:
+  ports:
+    - name: http
+      port: 7373
+      targetPort: 7373
+      protocol: TCP
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: lumen-1
+  labels:
+    kubernetes.io/service-name: lumen
+    endpointslice.kubernetes.io/managed-by: flux
+addressType: IPv4
+endpoints:
+  - addresses: ["192.168.1.83"]
+    conditions:
+      ready: true
+ports:
+  - name: http
+    port: 7373
+    protocol: TCP
