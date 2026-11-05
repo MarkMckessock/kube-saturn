@@ -13,3 +13,4 @@ resources:
   - ./photoframe-webhook/ks.yaml
   - ./kd-webhook/ks.yaml
   - ./lumen/ks.yaml
+  - ./frigate/ks.yaml

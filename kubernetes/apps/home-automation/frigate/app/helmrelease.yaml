@@ -1,0 +1,170 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app frigate
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      frigate:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/blakeblackshear/frigate
+              tag: 0.18.2@sha256:fd60f99ffd4eb6c42360ed4e14953e270586f239309ab3983e55b2e97ffac09a
+            env:
+              TZ: America/Los_Angeles
+            envFrom:
+              - secretRef:
+                  name: frigate-secret
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: 5000
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: 5000
+                  periodSeconds: 10
+                  failureThreshold: 30
+            securityContext:
+              allowPrivilegeEscalation: false
+            resources:
+              requests:
+                cpu: 500m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 8971
+            appProtocol: kubernetes.io/ws
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.markmckessock.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    configMaps:
+      config:
+        data:
+          config.yml: |
+            # Must track the release: Frigate can't migrate a read-only config.
+            version: 0.18-0
+            mqtt:
+              enabled: false
+            tls:
+              enabled: false
+            # All three iGPUs are exclusively claimed by Plex, Jellyfin and Immich.
+            detectors:
+              ov:
+                type: openvino
+                device: CPU
+            model:
+              width: 300
+              height: 300
+              input_tensor: nhwc
+              input_pixel_format: bgr
+              path: /openvino-model/ssdlite_mobilenet_v2.xml
+              labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+            record:
+              enabled: true
+              continuous:
+                days: 3
+              motion:
+                days: 7
+              alerts:
+                retain:
+                  days: 30
+                  mode: all
+              detections:
+                retain:
+                  days: 30
+                  mode: all
+            snapshots:
+              enabled: true
+            go2rtc:
+              streams:
+                reolink:
+                  - "ffmpeg:http://10.0.60.62/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+                reolink_sub:
+                  - "ffmpeg:http://10.0.60.62/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}"
+            cameras:
+              reolink:
+                ffmpeg:
+                  inputs:
+                    - path: rtsp://127.0.0.1:8554/reolink
+                      input_args: preset-rtsp-restream
+                      roles:
+                        - record
+                    - path: rtsp://127.0.0.1:8554/reolink_sub
+                      input_args: preset-rtsp-restream
+                      roles:
+                        - detect
+                detect:
+                  enabled: true
+                  fps: 5
+    persistence:
+      config:
+        existingClaim: frigate
+        globalMounts:
+          - path: /config
+      config-file:
+        type: configMap
+        name: frigate-config
+        globalMounts:
+          - path: /config/config.yml
+            subPath: config.yml
+            readOnly: true
+      media:
+        type: nfs
+        server: basalt.markmckessock.com
+        path: /volume1/Media/frigate
+        globalMounts:
+          - path: /media/frigate
+      cache:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 1Gi
+        globalMounts:
+          - path: /tmp/cache
+      shm:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 512Mi
+        globalMounts:
+          - path: /dev/shm
