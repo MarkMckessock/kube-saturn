@@ -32,6 +32,8 @@ spec:
             envFrom:
               - secretRef:
                   name: frigate-secret
+              - secretRef:
+                  name: frigate-kiosk-secret
             probes:
               liveness: &probe
                 enabled: true
@@ -68,6 +70,14 @@ spec:
           http:
             port: &port 8971
             appProtocol: kubernetes.io/ws
+      rtsp:
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "10.0.70.134"
+        ports:
+          rtsp:
+            port: 8554
     route:
       app:
         hostnames: ["{{ .Release.Name }}.markmckessock.com"]
@@ -118,6 +128,9 @@ spec:
             snapshots:
               enabled: true
             go2rtc:
+              rtsp:
+                username: "{FRIGATE_KIOSK_USER}"
+                password: "{FRIGATE_KIOSK_PASSWORD}"
               streams:
                 reolink:
                   - "ffmpeg:http://10.0.60.62/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
