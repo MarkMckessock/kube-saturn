@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/networking.k8s.io/networkpolicy_v1.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pelican-k8s-gateway-from-panel
+spec:
+  # Cilium drops same-node panel replies under the chart's ingress-only gateway policy.
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: pelican-gateway
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: pelican-panel
