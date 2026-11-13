@@ -68,9 +68,6 @@ spec:
               - subPath: movies.yaml
                 path: /collections/movies-movies.yaml
                 readOnly: true
-              - subPath: holidays.yaml
-                path: /collections/movies-holidays.yaml
-                readOnly: true
               - subPath: studios.yaml
                 path: /collections/movies-studios.yaml
                 readOnly: true
