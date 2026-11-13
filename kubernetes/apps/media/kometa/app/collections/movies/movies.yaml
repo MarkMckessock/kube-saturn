@@ -218,7 +218,7 @@ collections:
   Fantastic Four:
     template: { name: Collection, collection: 9744 }
   The Fast and the Furious:
-    template: { name: Collection, collection: "9485, 688042" }
+    template: { name: Collection, collection: 9485 }
   Fifty Shades:
     template: { name: Collection, collection: 344830 }
   Final Destination:
@@ -498,7 +498,7 @@ collections:
   Ong Bak:
     template: { name: Collection, collection: 94589 }
   Oz:
-    template: { name: Collection, collection: 627517, movie: "13155, 68728" }
+    template: { name: Collection, movie: "630, 13155, 68728" }
   Pacific Rim:
     template: { name: Collection, collection: 363369 }
   Paddington:
@@ -666,7 +666,7 @@ collections:
     imdb_list: https://www.imdb.com/list/ls022966050/
     summary: Tom and Jerry's animated feature-length films based on the series.
   Tomb Raider:
-    template: { name: Collection, collection: "2467, 621142" }
+    template: { name: Collection, collection: 2467, movie: 338970 }
   Tomie:
     template: { name: Collection, collection: 139394 }
   Toy Story:
