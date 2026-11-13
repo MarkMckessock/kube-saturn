@@ -44,8 +44,7 @@ resource "cloudflare_zero_trust_access_policy" "anonymous" {
 }
 
 # ── Access Applications ────────────────────────────────────────────────────────
-# Each restricted app needs an access_application referencing one or more
-# reusable policies. Public apps need no entry here.
+# Every exposed app needs an access_application; the wildcard default denies the rest.
 
 resource "cloudflare_zero_trust_access_application" "jorkyfin" {
   account_id       = local.cloudflare_account_id
@@ -115,6 +114,20 @@ resource "cloudflare_zero_trust_access_application" "kd_webhook" {
   account_id       = local.cloudflare_account_id
   name             = "kd-webhook"
   domain           = "kd-webhook.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
+
+# GitHub cannot log in to Access; only /hook/ is routed and the receiver path is the secret.
+resource "cloudflare_zero_trust_access_application" "flux_webhook" {
+  account_id       = local.cloudflare_account_id
+  name             = "flux-webhook"
+  domain           = "flux-webhook.markmckessock.com/hook"
   session_duration = "24h"
   type             = "self_hosted"
 
