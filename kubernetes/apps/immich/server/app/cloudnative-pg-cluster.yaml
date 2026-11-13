@@ -5,6 +5,8 @@ metadata:
   name: immich-database
 spec:
   instances: 1
+  # A single instance's PDB never allows eviction, so it blocks every node drain
+  enablePDB: false
 
   storage:
     size: 5Gi

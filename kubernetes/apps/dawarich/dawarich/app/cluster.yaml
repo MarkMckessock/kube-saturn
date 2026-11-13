@@ -6,6 +6,8 @@ metadata:
   name: dawarich-postgres
 spec:
   instances: 1
+  # A single instance's PDB never allows eviction, so it blocks every node drain
+  enablePDB: false
   imageName: ghcr.io/cloudnative-pg/postgis:17.6-3.6.0-standard-trixie
   storage:
     size: 10Gi
