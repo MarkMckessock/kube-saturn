@@ -9,6 +9,11 @@ spec:
     kind: OCIRepository
     name: envoy-gateway
   interval: 1h
+  # Each Envoy Gateway release needs its matching Gateway API and Envoy Gateway CRDs
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     global:
       imageRegistry: mirror.gcr.io
