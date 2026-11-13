@@ -13,3 +13,8 @@ spec:
     cdi:
       staticPath: /var/cdi/static
       dynamicPath: /var/cdi/dynamic
+    kubeletPlugin:
+      # No xpumd on Talos, so query the GPU directly instead of monitoring through it
+      privileged: true
+      healthMonitoring:
+        enabled: false
