@@ -28,18 +28,17 @@ collections:
   Popular:
     template: { name: Chart, num: 3 }
     tmdb_popular: 40
-    imdb_list:
-      url: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries
-      limit: 40
+    imdb_chart: popular_shows
     summary: Popular Shows across the internet
   Top Rated:
     template: { name: Chart, num: 4 }
-    imdb_list:
-      url: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&num_votes=20000,&sort=user_rating,desc
-      limit: 100
+    imdb_chart: top_shows
     tmdb_top_rated: 100
-    summary: Top Rated Movies across the internet
+    summary: Top Rated Shows across the internet
   Emmy Winners:
     template: { name: Chart, num: 5 }
-    imdb_list: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&groups=emmy_winner
+    imdb_search:
+      type: tv_series, tv_mini_series
+      event.winning: emmy
+      limit: 0
     summary: Emmy Winning Shows
