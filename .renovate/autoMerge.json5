@@ -102,6 +102,16 @@
       automerge: false,
     },
     {
+      description: "Review Talos and Kubernetes patches, which roll node reboots",
+      matchUpdateTypes: ["patch"],
+      matchPackageNames: [
+        "/siderolabs/",
+        "/factory\\.talos\\.dev/",
+        "/registry\\.k8s\\.io\\/kube-/",
+      ],
+      automerge: false,
+    },
+    {
       description: "Never auto-merge majors, even once approved",
       matchUpdateTypes: ["major"],
       automerge: false,
