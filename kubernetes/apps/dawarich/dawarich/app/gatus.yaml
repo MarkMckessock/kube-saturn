@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dawarich-owntracks-gatus-ep
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |
+    endpoints:
+      # Keyless POST: 401 proves the Access /api bypass and the app are up; 302 means Access is blocking trackers.
+      - name: dawarich-owntracks
+        group: external
+        url: https://dawarich.markmckessock.com/api/v1/owntracks/points
+        method: POST
+        interval: 1m
+        client:
+          dns-resolver: tcp://1.1.1.1:53
+        conditions:
+          - "[STATUS] == 401"
