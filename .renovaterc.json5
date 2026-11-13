@@ -21,6 +21,8 @@
   prConcurrentLimit: 25,
   prHourlyLimit: 4,
   minimumReleaseAge: "3 days",
+  // Registries like ghcr.io and quay.io publish no release timestamps, which would hold those updates forever
+  minimumReleaseAgeBehaviour: "timestamp-optional",
   packageRules: [
     {
       description: "Hold majors behind dashboard approval",
