@@ -72,6 +72,19 @@ resource "cloudflare_zero_trust_access_application" "maintainerr" {
   }]
 }
 
+resource "cloudflare_zero_trust_access_application" "tandoor" {
+  account_id       = local.cloudflare_account_id
+  name             = "Tandoor"
+  domain           = "tandoor.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
 # scanrr can trigger media deletion via the arr API — admin-only.
 resource "cloudflare_zero_trust_access_application" "scanrr" {
   account_id       = local.cloudflare_account_id
