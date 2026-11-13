@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: dawarich-postgres
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgis:17.6-3.6.0-standard-trixie
+  storage:
+    size: 10Gi
+  enableSuperuserAccess: true
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
+  bootstrap:
+    initdb:
+      database: dawarich
+      owner: dawarich
+      # The app role isn't a superuser, so it can't create these during migrations.
+      postInitApplicationSQL:
+        - CREATE EXTENSION IF NOT EXISTS postgis;
+        - CREATE EXTENSION IF NOT EXISTS pgcrypto;
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 2Gi

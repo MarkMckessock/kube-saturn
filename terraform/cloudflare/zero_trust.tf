@@ -194,3 +194,31 @@ resource "cloudflare_zero_trust_access_application" "lidarr" {
     precedence = 1
   }]
 }
+
+# Location history is sensitive: the web UI is admin-only.
+resource "cloudflare_zero_trust_access_application" "dawarich" {
+  account_id       = local.cloudflare_account_id
+  name             = "Dawarich"
+  domain           = "dawarich.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
+# Phone trackers (Dawarich iOS, OwnTracks, Overland) can't log in to Access; /api requires a Dawarich API key.
+resource "cloudflare_zero_trust_access_application" "dawarich_api" {
+  account_id       = local.cloudflare_account_id
+  name             = "Dawarich API"
+  domain           = "dawarich.markmckessock.com/api"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.anonymous.id
+    precedence = 1
+  }]
+}
