@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: pelican-k8s
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 2.2.4
+  url: oci://ghcr.io/claiyc/pelican-k8s/charts/pelican-k8s
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pelican-k8s
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: pelican-k8s
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    gateway:
+      panelURL: http://pelican-panel.games.svc.cluster.local
+      allowedOrigins:
+        - https://pelican.markmckessock.com
+      existingSecret: pelican-k8s-node-secret
+      sftp:
+        service:
+          type: LoadBalancer
+          annotations:
+            lbipam.cilium.io/ips: 10.0.70.136
+    tls:
+      enabled: true
+    defaultClass:
+      spec:
+        storage:
+          storageClassName: ceph-block
+        exposure:
+          mode: LoadBalancer
+          loadBalancer:
+            ipAnnotation: lbipam.cilium.io/ips
+            sharingAnnotation: lbipam.cilium.io/sharing-key
+          # Allocation IPs offered in the Panel; each one pins its servers to one node under Local.
+          externalIPs:
+            - 10.0.70.140
+            - 10.0.70.141
+            - 10.0.70.142
+            - 10.0.70.143
