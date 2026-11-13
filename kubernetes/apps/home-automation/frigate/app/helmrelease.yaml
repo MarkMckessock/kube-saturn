@@ -151,6 +151,20 @@ spec:
                 detect:
                   enabled: true
                   fps: 5
+                zones:
+                  inside_fence:
+                    friendly_name: Inside fence
+                    coordinates: 0.311,1,0.473,0.816,0.579,0.71,0.577,0.646,0.66,0.586,0.667,0.352,0.709,0.292,0.715,0,1,0,1,1
+                    inertia: 3
+                    loitering_time: 0
+                # Ignore sidewalk activity outside the fence.
+                review:
+                  alerts:
+                    required_zones:
+                      - inside_fence
+                  detections:
+                    required_zones:
+                      - inside_fence
     persistence:
       config:
         existingClaim: frigate
