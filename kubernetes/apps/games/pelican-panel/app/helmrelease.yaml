@@ -1,0 +1,53 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: pelican-panel
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.1.4
+  url: oci://ghcr.io/claiyc/pelican-k8s/charts/pelican-panel
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pelican-panel
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: pelican-panel
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    panel:
+      url: https://pelican.markmckessock.com
+      behindProxy: true
+      trustedProxies: 10.244.0.0/16
+      timezone: America/Los_Angeles
+      existingSecret: pelican-panel-secret
+      existingSecretAppKeyKey: APP_KEY
+    database:
+      connection: sqlite
+    persistence:
+      existingClaim: pelican-panel
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 1Gi

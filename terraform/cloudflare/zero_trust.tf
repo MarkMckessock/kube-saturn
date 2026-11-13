@@ -85,6 +85,19 @@ resource "cloudflare_zero_trust_access_application" "tandoor" {
   }]
 }
 
+resource "cloudflare_zero_trust_access_application" "pelican" {
+  account_id       = local.cloudflare_account_id
+  name             = "Pelican"
+  domain           = "pelican.markmckessock.com"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
 # scanrr can trigger media deletion via the arr API — admin-only.
 resource "cloudflare_zero_trust_access_application" "scanrr" {
   account_id       = local.cloudflare_account_id
