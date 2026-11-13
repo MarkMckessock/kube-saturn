@@ -2,9 +2,14 @@
 ######################################################
 #                Chart Collections                   #
 ######################################################
+templates:
+  Chart:
+    sort_title: +1_<<num>><<collection_name>>
+    sync_mode: sync
+    smart_label: random
 collections:
   Plex Popular:
-    sync_mode: sync
+    template: { name: Chart, num: 1 }
     collection_order: custom
     tautulli_popular:
       list_days: 30
@@ -12,10 +17,13 @@ collections:
     summary: Movies Popular on Plex
   Top Rated:
     template: { name: Chart, num: 4 }
-    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250/
+    imdb_chart: top_movies
     tmdb_top_rated: 250
     summary: Top Rated Movies across the internet
   Oscars:
-    imdb_list:
-      list_id: https://www.imdb.com/search/title/?title_type=feature,documentary&groups=oscar_winner
+    template: { name: Chart, num: 5 }
+    imdb_search:
+      type: movie
+      event.winning: oscar
+      limit: 0
     summary: Oscar Winning Movies
