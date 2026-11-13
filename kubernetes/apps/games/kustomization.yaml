@@ -6,4 +6,5 @@ namespace: games
 components:
   - ../../components/common
 resources:
+  - ./pelican-k8s/ks.yaml
   - ./pelican-panel/ks.yaml
