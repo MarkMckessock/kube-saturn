@@ -16,6 +16,13 @@ Every externally exposed app needs a `cloudflare_zero_trust_access_application` 
 2. Use the `anonymous` (bypass) policy only for apps that must be public, e.g. webhook receivers called by third parties. Confirm with the owner before making anything public.
 3. Run a Terraform reconcile in the `terraform/cloudflare/` workspace to apply the changes.
 
+## Pull requests
+
+Claude may squash-merge PRs it opened in this repo without waiting for review, once any
+checks pass. After merging, reconcile Flux and verify the change is healthy on the cluster
+(and from the public internet for anything externally exposed) before reporting done.
+Renovate PRs are excluded unless explicitly asked.
+
 ## Comments
 
 Use comments sparingly — only where the code is not self-explanatory. Prefer making the

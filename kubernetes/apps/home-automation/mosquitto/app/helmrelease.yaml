@@ -47,7 +47,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mosquitto.markmckessock.com
+          external-dns.kubernetes.io/hostname: mosquitto.markmckessock.com
           lbipam.cilium.io/ips: "10.0.70.131"
         ports:
           http:

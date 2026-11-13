@@ -19,11 +19,3 @@ collections:
     imdb_list:
       list_id: https://www.imdb.com/search/title/?title_type=feature,documentary&groups=oscar_winner
     summary: Oscar Winning Movies
-  # 2025 Oscar Nominees:
-  #   imdb_list:
-  #     list_id: ls597676647
-  #   summary: 2025 Oscar Nominees
-  2026 Oscar Nominees:
-    imdb_list:
-      list_id: ls4102637648
-    summary: 2026 Oscar Nominees

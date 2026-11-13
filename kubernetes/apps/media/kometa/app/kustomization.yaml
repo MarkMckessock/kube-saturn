@@ -9,7 +9,6 @@ configMapGenerator:
   - name: plex-meta-manager-collections
     files:
       - collections/movies/charts.yaml
-      - collections/movies/holidays.yaml
       - collections/movies/movies.yaml
       - collections/movies/studios.yaml
       - collections/tv/tv-charts.yaml

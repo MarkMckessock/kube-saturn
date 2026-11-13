@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: lumen
+spec:
+  # LAN-only: Lumen has no auth (panic, raw DMX, config writes), so never attach to envoy-external.
+  hostnames: ["lumen.markmckessock.com"]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: lumen
+          port: 7373
+---
+# Replaces the gateway-wide policy for this route: drops compression and retries (busk is
+# live control and POSTs aren't idempotent) while keeping the unlimited timeout for the busk WebSocket.
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: lumen
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: lumen
+  tcpKeepalive: {}
+  timeout:
+    http:
+      requestTimeout: 0s

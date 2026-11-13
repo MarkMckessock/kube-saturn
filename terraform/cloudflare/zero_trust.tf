@@ -139,6 +139,23 @@ resource "cloudflare_zero_trust_access_application" "flux_webhook" {
 
 # lidarr can trigger media deletion and exposes indexer credentials via the arr
 # API — admin-only, matching scanrr.
+# Cameras: tighter session and cookies than the 24h default.
+resource "cloudflare_zero_trust_access_application" "frigate" {
+  account_id                 = local.cloudflare_account_id
+  name                       = "Frigate"
+  domain                     = "frigate.markmckessock.com"
+  session_duration           = "1h"
+  type                       = "self_hosted"
+  http_only_cookie_attribute = true
+  same_site_cookie_attribute = "lax"
+  enable_binding_cookie      = true
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.admin.id
+    precedence = 1
+  }]
+}
+
 resource "cloudflare_zero_trust_access_application" "lidarr" {
   account_id       = local.cloudflare_account_id
   name             = "Lidarr"
