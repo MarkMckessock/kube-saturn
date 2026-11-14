@@ -96,7 +96,7 @@ spec:
           redis:
             image:
               repository: docker.io/library/redis
-              tag: 8.2-alpine
+              tag: 8.10-alpine
             args: ["redis-server", "--save", "300", "10", "--appendonly", "no"]
             probes:
               liveness: &redisProbes
