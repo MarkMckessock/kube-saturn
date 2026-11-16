@@ -134,8 +134,8 @@ resource "cloudflare_zero_trust_access_application" "photoframe" {
   }]
 }
 
-# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: only /sms
-# is routed publicly and the app rejects anything without a valid X-Twilio-Signature.
+# Twilio cannot log in to Access, same as photoframe above. Safe to bypass: /sms rejects
+# anything without a valid X-Twilio-Signature, and /latest is gated by kd_webhook_latest.
 resource "cloudflare_zero_trust_access_application" "kd_webhook" {
   account_id       = local.cloudflare_account_id
   name             = "kd-webhook"
@@ -147,6 +147,54 @@ resource "cloudflare_zero_trust_access_application" "kd_webhook" {
     id         = cloudflare_zero_trust_access_policy.anonymous.id
     precedence = 1
   }]
+}
+
+# The frame cannot log in, so it presents this token; the more specific path overrides the bypass above.
+resource "cloudflare_zero_trust_access_service_token" "kd_frame" {
+  account_id = local.cloudflare_account_id
+  name       = "kd-frame"
+  duration   = "forever"
+}
+
+resource "cloudflare_zero_trust_access_policy" "kd_frame" {
+  account_id = local.cloudflare_account_id
+  name       = "Allow kd-frame service token"
+  decision   = "non_identity"
+
+  include = [{
+    service_token = {
+      token_id = cloudflare_zero_trust_access_service_token.kd_frame.id
+    }
+  }]
+}
+
+resource "cloudflare_zero_trust_access_application" "kd_webhook_latest" {
+  account_id       = local.cloudflare_account_id
+  name             = "kd-webhook-latest"
+  domain           = "kd-webhook.markmckessock.com/latest"
+  session_duration = "24h"
+  type             = "self_hosted"
+
+  policies = [
+    {
+      id         = cloudflare_zero_trust_access_policy.kd_frame.id
+      precedence = 1
+    },
+    {
+      id         = cloudflare_zero_trust_access_policy.admin.id
+      precedence = 2
+    },
+  ]
+}
+
+resource "onepassword_item" "kd_frame_token" {
+  vault      = var.onepassword_kubernetes_vault_id
+  title      = "kd-webhook-frame-access"
+  category   = "login"
+  url        = "https://kd-webhook.markmckessock.com/latest"
+  username   = cloudflare_zero_trust_access_service_token.kd_frame.client_id
+  password   = cloudflare_zero_trust_access_service_token.kd_frame.client_secret
+  note_value = "Send as CF-Access-Client-Id (username) and CF-Access-Client-Secret (password) headers."
 }
 
 # GitHub cannot log in to Access; only /hook/ is routed and the receiver path is the secret.

@@ -95,12 +95,14 @@ spec:
           - name: envoy-external
             namespace: network
         rules:
-          # /sms only. /latest has no auth at all and this gateway is public, so it is
-          # served on the LAN instead; see httproute-internal.yaml.
+          # /latest has no app auth; Cloudflare Access requires the kd-frame service token.
           - matches:
               - path:
                   type: PathPrefix
                   value: /sms
+              - path:
+                  type: PathPrefix
+                  value: /latest
             backendRefs:
               # Single service key, so app-template adds no suffix.
               - name: kd-webhook
