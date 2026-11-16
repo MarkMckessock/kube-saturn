@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: docker.io/library/influxdb
-              tag: 2.7.12-alpine@sha256:991673dc2d237bd79b15d6627410d72de111387e7dac673dbb92cf3333ffcc8c
+              tag: 2.9.1-alpine@sha256:cc8083573dc3969c191d1bfb768954eaf7a4c615af12e661034fd4f63c7b5570
             env:
               # Setup only runs while the data volume is empty.
               DOCKER_INFLUXDB_INIT_MODE: setup
