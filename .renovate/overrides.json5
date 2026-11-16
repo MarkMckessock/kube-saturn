@@ -13,5 +13,11 @@
       matchPackageNames: ["/factory\\.talos\\.dev/"],
       overridePackageName: "ghcr.io/siderolabs/installer",
     },
+    {
+      description: "kubernetes-api offers versions the installed Flux may not serve; remove once the alerts/providers CRDs serve v1",
+      matchDatasources: ["kubernetes-api"],
+      matchPackageNames: ["/^(alert|provider)$/i"],
+      enabled: false,
+    },
   ],
 }
