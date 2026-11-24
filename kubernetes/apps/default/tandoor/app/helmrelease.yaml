@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/tandoorrecipes/recipes
-              tag: 2.7.7
+              tag: 2.7.8
             env:
               DEBUG: "0"
               ALLOWED_HOSTS: "*"
